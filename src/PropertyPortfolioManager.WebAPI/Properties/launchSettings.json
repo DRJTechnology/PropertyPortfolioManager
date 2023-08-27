@@ -34,10 +34,6 @@
     "iis": {
       "applicationUrl": "https://nbh-api.dev.local/",
       "sslPort": 0
-    },
-    "iisExpress": {
-      "applicationUrl": "http://localhost:8304",
-      "sslPort": 44353
     }
   }
 }

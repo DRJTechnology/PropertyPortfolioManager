@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\PropertyPortfolioManager\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj" />
+    <ProjectReference Include="..\..\..\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Repositories.Interfaces\PropertyPortfolioManager.WebAPI.Repositories.Interfaces.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj" />
   </ItemGroup>
