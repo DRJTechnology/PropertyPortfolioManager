@@ -400,3 +400,5 @@ FodyWeavers.xsd
 */appsettings.Development.json
 /src/PropertyPortfolioManager.WebUI/wwwroot/dist/*
 
+/src/PropertyPortfolioManager.WebUI/appsettings.Development.json
+/src/PropertyPortfolioManager.WebAPI/appsettings.Development.json
