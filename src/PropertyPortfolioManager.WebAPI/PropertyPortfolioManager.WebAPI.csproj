@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-PropertyPortfolioManager.WebAPI-55a75aaf-52be-4c9f-9f2d-816ad823ddc7</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="7.0.10" />
+    <PackageReference Include="Microsoft.Identity.Web" Version="2.13.3" />
+    <PackageReference Include="Microsoft.Identity.Web.MicrosoftGraph" Version="2.13.3" />
+    <PackageReference Include="Microsoft.Identity.Web.UI" Version="2.13.3" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\PropertyPortfolioManager\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Repositories\PropertyPortfolioManager.WebAPI.Repositories.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services\PropertyPortfolioManager.WebAPI.Services.csproj" />
+  </ItemGroup>
+
+</Project>

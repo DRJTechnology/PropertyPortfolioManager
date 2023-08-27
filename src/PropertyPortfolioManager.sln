@@ -1,0 +1,75 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebUI", "PropertyPortfolioManager.WebUI\PropertyPortfolioManager.WebUI.csproj", "{DDEA86E7-8DC0-4F74-BBA3-03C746A2A723}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI", "PropertyPortfolioManager.WebAPI\PropertyPortfolioManager.WebAPI.csproj", "{7C0094F9-4663-43F8-871A-D4AC0EA7DFF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Repositories", "PropertyPortfolioManager.WebAPI.Repositories\PropertyPortfolioManager.WebAPI.Repositories.csproj", "{3487DABC-9FCA-415C-AA6A-A23D05DD4561}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Repositories.Interfaces", "PropertyPortfolioManager.WebAPI.Repositories.Interfaces\PropertyPortfolioManager.WebAPI.Repositories.Interfaces.csproj", "{1B6FE4B3-6A5E-4131-A6B0-5751A15D06E2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Services", "PropertyPortfolioManager.WebAPI.Services\PropertyPortfolioManager.WebAPI.Services.csproj", "{7577C722-7F4B-4F32-917B-748E802D41AD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Services.Interfaces", "PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj", "{8669F35B-DEB0-4BAA-B965-E4322F2D5B62}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Models", "PropertyPortfolioManager.Models\PropertyPortfolioManager.Models.csproj", "{87EDC298-ED76-4BE7-818B-1402839332F0}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PropertyPortfolioManager.Database", "PropertyPortfolioManager.Database\PropertyPortfolioManager.Database.sqlproj", "{05DEB012-55A2-44C0-A464-637412F4D858}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DRJTechnology.Cache", "..\..\..\..\PropertyPortfolioManager\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj", "{4A165904-ED8E-4875-9477-0B51FB5E6233}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DDEA86E7-8DC0-4F74-BBA3-03C746A2A723}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDEA86E7-8DC0-4F74-BBA3-03C746A2A723}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDEA86E7-8DC0-4F74-BBA3-03C746A2A723}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDEA86E7-8DC0-4F74-BBA3-03C746A2A723}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7C0094F9-4663-43F8-871A-D4AC0EA7DFF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7C0094F9-4663-43F8-871A-D4AC0EA7DFF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7C0094F9-4663-43F8-871A-D4AC0EA7DFF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7C0094F9-4663-43F8-871A-D4AC0EA7DFF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3487DABC-9FCA-415C-AA6A-A23D05DD4561}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3487DABC-9FCA-415C-AA6A-A23D05DD4561}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3487DABC-9FCA-415C-AA6A-A23D05DD4561}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3487DABC-9FCA-415C-AA6A-A23D05DD4561}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6FE4B3-6A5E-4131-A6B0-5751A15D06E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6FE4B3-6A5E-4131-A6B0-5751A15D06E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6FE4B3-6A5E-4131-A6B0-5751A15D06E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6FE4B3-6A5E-4131-A6B0-5751A15D06E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7577C722-7F4B-4F32-917B-748E802D41AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7577C722-7F4B-4F32-917B-748E802D41AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7577C722-7F4B-4F32-917B-748E802D41AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7577C722-7F4B-4F32-917B-748E802D41AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8669F35B-DEB0-4BAA-B965-E4322F2D5B62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8669F35B-DEB0-4BAA-B965-E4322F2D5B62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8669F35B-DEB0-4BAA-B965-E4322F2D5B62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8669F35B-DEB0-4BAA-B965-E4322F2D5B62}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87EDC298-ED76-4BE7-818B-1402839332F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87EDC298-ED76-4BE7-818B-1402839332F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87EDC298-ED76-4BE7-818B-1402839332F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87EDC298-ED76-4BE7-818B-1402839332F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{4A165904-ED8E-4875-9477-0B51FB5E6233}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A165904-ED8E-4875-9477-0B51FB5E6233}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A165904-ED8E-4875-9477-0B51FB5E6233}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A165904-ED8E-4875-9477-0B51FB5E6233}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9434998A-54E2-4C9D-A28E-118C2C55C7E4}
+	EndGlobalSection
+EndGlobal
