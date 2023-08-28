@@ -19,8 +19,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Mo
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PropertyPortfolioManager.Database", "PropertyPortfolioManager.Database\PropertyPortfolioManager.Database.sqlproj", "{05DEB012-55A2-44C0-A464-637412F4D858}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DRJTechnology.Cache", "..\..\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj", "{29CE9B8B-029B-4671-BAB0-907CDBE04FD2}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,10 +59,6 @@ Global
 		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Build.0 = Release|Any CPU
 		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{29CE9B8B-029B-4671-BAB0-907CDBE04FD2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29CE9B8B-029B-4671-BAB0-907CDBE04FD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29CE9B8B-029B-4671-BAB0-907CDBE04FD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29CE9B8B-029B-4671-BAB0-907CDBE04FD2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

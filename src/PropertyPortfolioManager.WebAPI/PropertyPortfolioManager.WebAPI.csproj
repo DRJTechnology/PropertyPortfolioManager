@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Repositories\PropertyPortfolioManager.WebAPI.Repositories.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services\PropertyPortfolioManager.WebAPI.Services.csproj" />

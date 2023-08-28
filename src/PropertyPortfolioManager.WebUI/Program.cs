@@ -39,12 +39,13 @@ builder.Services.AddRazorPages()
 builder.Services.AddScoped<IUserService, UserService>();
 
 // Set up caching.
-var environmentName = builder.Configuration.GetValue<string>("EnvironmentName");
+var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");
 builder.Services.AddDistributedCache(opt =>
 {
-    opt.RedisConnectionString = builder.Configuration.GetConnectionString("CacheConnectionString");
-    opt.KeyPrefix = $"{environmentName}_WebUI";
-    opt.DefaultExpiryInMinutes = 60;
+    opt.Enabled = builder.Configuration.GetValue<bool>("DRJCache:Enabled");
+    opt.ConnectionString = builder.Configuration.GetValue<string>("DRJCache:ConnectionString") ?? string.Empty;
+    opt.KeyPrefix = $"{keyPrefix}_WebUI_";
+    opt.DefaultExpiryInMinutes = builder.Configuration.GetValue<int>("DRJCache:DefaultExpiryInMinutes");
 });
 
 var app = builder.Build();

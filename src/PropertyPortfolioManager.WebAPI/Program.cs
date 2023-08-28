@@ -28,12 +28,13 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddSingleton<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));
 
 // Set up caching.
-var environmentName = builder.Configuration.GetValue<string>("EnvironmentName");
+var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");
 builder.Services.AddDistributedCache(opt =>
 {
-    opt.RedisConnectionString = builder.Configuration.GetConnectionString("CacheConnectionString");
-    opt.KeyPrefix = $"{environmentName}_WebApi";
-    opt.DefaultExpiryInMinutes = 60;
+    opt.Enabled = builder.Configuration.GetValue<bool>("DRJCache:Enabled");
+    opt.ConnectionString = builder.Configuration.GetValue<string>("DRJCache:ConnectionString") ?? string.Empty;
+    opt.KeyPrefix = $"{keyPrefix}_API_";
+    opt.DefaultExpiryInMinutes = builder.Configuration.GetValue<int>("DRJCache:DefaultExpiryInMinutes");
 });
 
 var app = builder.Build();

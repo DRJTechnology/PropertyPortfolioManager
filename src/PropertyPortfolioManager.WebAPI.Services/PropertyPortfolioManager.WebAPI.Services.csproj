@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DRJTechnology.Cache" Version="1.0.0" />
     <PackageReference Include="Microsoft.Graph" Version="4.11.0" />
     <PackageReference Include="Microsoft.Identity.Web" Version="2.13.3" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\DRJTechnology.Cache\DRJTechnology.Cache\DRJTechnology.Cache.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Repositories.Interfaces\PropertyPortfolioManager.WebAPI.Repositories.Interfaces.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj" />
   </ItemGroup>
