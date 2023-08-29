@@ -58,25 +58,24 @@
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
     <Folder Include="Properties" />
-    <Folder Include="profile\" />
-    <Folder Include="profile\Tables\" />
     <Folder Include="Security\" />
-    <Folder Include="profile\Stored Procedures\" />
-    <Folder Include="profile\Tables\profile" />
-    <Folder Include="profile\Tables\property" />
-    <Folder Include="profile\Tables\general" />
+    <Folder Include="Stored Procedures" />
+    <Folder Include="Tables" />
+    <Folder Include="Tables\general" />
+    <Folder Include="Tables\profile" />
+    <Folder Include="Tables\property" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\db_executor.sql" />
     <Build Include="Security\profile.sql" />
-    <Build Include="profile\Stored Procedures\User_GetByObjectIdentifier.sql" />
-    <Build Include="profile\Stored Procedures\User_Create.sql" />
-    <Build Include="profile\Tables\profile\User.sql" />
-    <Build Include="profile\Tables\property\Portfolio.sql" />
     <Build Include="Security\property.sql" />
-    <Build Include="profile\Tables\property\Unit.sql" />
-    <Build Include="profile\Tables\general\Address.sql" />
     <Build Include="Security\general.sql" />
-    <Build Include="profile\Stored Procedures\Unit_Create.sql" />
+    <Build Include="Stored Procedures\Unit_Create.sql" />
+    <Build Include="Stored Procedures\User_Create.sql" />
+    <Build Include="Stored Procedures\User_GetByObjectIdentifier.sql" />
+    <Build Include="Tables\general\Address.sql" />
+    <Build Include="Tables\profile\User.sql" />
+    <Build Include="Tables\property\Portfolio.sql" />
+    <Build Include="Tables\property\Unit.sql" />
   </ItemGroup>
 </Project>
