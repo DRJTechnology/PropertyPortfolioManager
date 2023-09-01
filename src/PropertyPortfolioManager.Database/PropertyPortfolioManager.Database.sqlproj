@@ -64,6 +64,7 @@
     <Folder Include="Tables\general" />
     <Folder Include="Tables\profile" />
     <Folder Include="Tables\property" />
+    <Folder Include="Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\db_executor.sql" />
@@ -77,5 +78,9 @@
     <Build Include="Tables\profile\User.sql" />
     <Build Include="Tables\property\Portfolio.sql" />
     <Build Include="Tables\property\Unit.sql" />
+    <Build Include="Tables\property\UnitType.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Scripts\PopulateLookupData.sql" />
   </ItemGroup>
 </Project>

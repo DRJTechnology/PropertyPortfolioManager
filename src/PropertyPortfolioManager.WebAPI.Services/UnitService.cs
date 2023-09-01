@@ -1,4 +1,6 @@
-﻿using DRJTechnology.Cache;
+﻿using AutoMapper;
+using DRJTechnology.Cache;
+using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
@@ -9,16 +11,19 @@ namespace PropertyPortfolioManager.WebAPI.Services
     {
         private readonly IUnitRepository unitRepository;
         private readonly ICacheService cacheService;
+        private readonly IMapper mapper;
 
-        public UnitService(IUnitRepository unitRepository, ICacheService cacheService)
+        public UnitService(IUnitRepository unitRepository, ICacheService cacheService, IMapper mapper)
         {
             this.unitRepository = unitRepository;
             this.cacheService = cacheService;
+            this.mapper = mapper;
         }
 
-        public Task<int> Create(int currentUserId, UnitRequestModel unit)
+        public async Task<int> Create(int currentUserId, UnitEditModel unit)
         {
-            throw new NotImplementedException();
+            var unitDto = this.mapper.Map<UnitDto>(unit);
+            return await this.unitRepository.Create(currentUserId, unitDto);
         }
 
         public Task<bool> Delete(int currentUserId, int unitId)
@@ -26,19 +31,22 @@ namespace PropertyPortfolioManager.WebAPI.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<UnitResponseModel>> GetAll()
+        public async Task<List<UnitResponseModel>> GetAll()
         {
-            throw new NotImplementedException();
+            var unitList = await this.unitRepository.GetAll();
+            return this.mapper.Map<List<UnitResponseModel>>(unitList);
         }
 
-        public Task<UnitResponseModel> GetById(int unitId)
+        public async Task<UnitResponseModel> GetById(int unitId)
         {
-            throw new NotImplementedException();
+            var unit = await this.unitRepository.GetById(unitId);
+            return this.mapper.Map<UnitResponseModel>(unit);
         }
 
-        public Task<int> Update(int currentUserId, UnitRequestModel unit)
+        public async Task<bool> Update(int currentUserId, UnitEditModel unit)
         {
-            throw new NotImplementedException();
+            var unitDto = this.mapper.Map<UnitDto>(unit);
+            return await this.unitRepository.Update(currentUserId, unitDto);
         }
     }
 }

@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace PropertyPortfolioManager.Models.Model.General
+﻿namespace PropertyPortfolioManager.Models.Model.General
 {
-    public class AddressResponseModel
+    public class AddressResponseModel : AddressEditModel
     {
     }
 }

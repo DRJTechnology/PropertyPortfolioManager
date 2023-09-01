@@ -1,7 +1,9 @@
+using AutoMapper;
 using DRJTechnology.Cache;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Web;
+using PropertyPortfolioManager.Models.Automapper;
 using PropertyPortfolioManager.WebAPI.Repositories;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using PropertyPortfolioManager.WebAPI.Services;
@@ -36,6 +38,14 @@ builder.Services.AddDistributedCache(opt =>
     opt.KeyPrefix = $"{keyPrefix}_API_";
     opt.DefaultExpiryInMinutes = builder.Configuration.GetValue<int>("DRJCache:DefaultExpiryInMinutes");
 });
+
+// Auto Mapper Configurations
+var mappingConfig = new MapperConfiguration(mc =>
+{
+    mc.AddProfile(new MappingProfile());
+});
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 
