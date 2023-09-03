@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
@@ -46,11 +47,14 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             var parameters = new DynamicParameters();
             parameters.Add("@Id", id);
 
-            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("profile.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
+            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
             {
                 var unit = multipleResults.Read<UnitDto>().SingleOrDefault();
 
-                unit.Address = multipleResults.Read<UnitDto>().SingleOrDefault();
+                if (unit != null)
+                {
+                    unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
+                }
 
                 return unit;
             }

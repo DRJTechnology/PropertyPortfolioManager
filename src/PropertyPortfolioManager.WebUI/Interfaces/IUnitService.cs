@@ -1,0 +1,13 @@
+﻿using PropertyPortfolioManager.Models.Dto.Profile;
+using PropertyPortfolioManager.Models.Model.Property;
+
+namespace PropertyPortfolioManager.WebUI.Interfaces
+{
+    public interface IUnitService
+    {
+        Task<List<UnitResponseModel>> GetAll();
+        Task<UnitResponseModel> GetById(int unitId);
+        Task<int> Create(UnitEditModel unit);
+        Task<bool> Update(UnitEditModel unit);
+    }
+}
