@@ -71,7 +71,7 @@
     <Build Include="Security\profile.sql" />
     <Build Include="Security\property.sql" />
     <Build Include="Security\general.sql" />
-    <Build Include="Stored Procedures\Unit_Create.sql" />
+    <Build Include="Stored Procedures\Unit_Update.sql" />
     <Build Include="Stored Procedures\User_Create.sql" />
     <Build Include="Stored Procedures\User_GetByObjectIdentifier.sql" />
     <Build Include="Tables\general\Address.sql" />
@@ -79,6 +79,8 @@
     <Build Include="Tables\property\Portfolio.sql" />
     <Build Include="Tables\property\Unit.sql" />
     <Build Include="Tables\property\UnitType.sql" />
+    <Build Include="Stored Procedures\Unit_Create.sql" />
+    <Build Include="Stored Procedures\Unit_GetById.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PopulateLookupData.sql" />
