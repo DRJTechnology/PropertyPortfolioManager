@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebUI.Interfaces;
+using System.Reflection;
 
 namespace PropertyPortfolioManager.WebUI.Controllers
 {
@@ -13,9 +14,9 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             this.unitService = unitService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var units = unitService.GetAll();
+            var units = await unitService.GetAll();
             return View(units);
         }
 
@@ -25,11 +26,25 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             return View(unit);
         }
 
-        [HttpPost]
-        public IActionResult Create(UnitEditModel unit)
+        [HttpGet]
+        public IActionResult Create()
         {
-            var unitId = unitService.Create(unit);
+            var model = new UnitEditModel();
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(UnitEditModel unit)
+        {
+            var unitId = await unitService.Create(unit);
             return RedirectToAction("Details", new { unitId = unitId });
+        }
+
+        [HttpGet]
+        public IActionResult Update(int unitId)
+        {
+            var unit = unitService.GetById(unitId);
+            return View(unit);
         }
 
         [HttpPost]

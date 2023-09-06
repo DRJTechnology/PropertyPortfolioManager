@@ -31,10 +31,10 @@ namespace PropertyPortfolioManager.WebAPI.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<UnitResponseModel>> GetAll()
+        public async Task<List<UnitBasicResponseModel>> GetAll()
         {
             var unitList = await this.unitRepository.GetAll();
-            return this.mapper.Map<List<UnitResponseModel>>(unitList);
+            return this.mapper.Map<List<UnitBasicResponseModel>>(unitList);
         }
 
         public async Task<UnitResponseModel> GetById(int unitId)

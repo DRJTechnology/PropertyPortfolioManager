@@ -81,6 +81,7 @@
     <Build Include="Tables\property\UnitType.sql" />
     <Build Include="Stored Procedures\Unit_Create.sql" />
     <Build Include="Stored Procedures\Unit_GetById.sql" />
+    <Build Include="Stored Procedures\Unit_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PopulateLookupData.sql" />

@@ -23,23 +23,37 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 throw new ArgumentNullException("newUnit");
             }
 
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-            parameters.Add("@Code", newUnit.Code);
-            parameters.Add("@StreetAddress", newUnit.Address.StreetAddress);
-            parameters.Add("@TownCity", newUnit.Address.TownCity);
-            parameters.Add("@CountyRegion", newUnit.Address.CountyRegion);
-            parameters.Add("@PostCode", newUnit.Address.PostCode);
-            parameters.Add("@CurrentUserId", userId);
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parameters.Add("@Code", newUnit.Code);
+                parameters.Add("@UnitTypeId", newUnit.UnitTypeId);
+                parameters.Add("@StreetAddress", newUnit.Address.StreetAddress);
+                parameters.Add("@TownCity", newUnit.Address.TownCity);
+                parameters.Add("@CountyRegion", newUnit.Address.CountyRegion);
+                parameters.Add("@PostCode", newUnit.Address.PostCode);
+                parameters.Add("@PurchasePrice", newUnit.PurchasePrice);
+                parameters.Add("@PurchaseDate", newUnit.PurchaseDate);
+                parameters.Add("@SalePrice", newUnit.SalePrice);
+                parameters.Add("@SaleDate", newUnit.SaleDate);
+                parameters.Add("@CurrentUserId", userId);
 
-            await this.dbConnection.ExecuteAsync("profile.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
+                await this.dbConnection.ExecuteAsync("profile.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
 
-            return parameters.Get<int>("@Id");
+                return parameters.Get<int>("@Id");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public Task<List<UnitDto>> GetAll()
+        public async Task<List<UnitBasicDto>> GetAll()
         {
-            throw new NotImplementedException();
+            var units = await this.dbConnection.QueryAsync<UnitBasicDto>("profile.Unit_GetAll", commandType: CommandType.StoredProcedure);
+
+            return units.ToList(); ;
         }
 
         public async Task<UnitDto> GetById(int id)

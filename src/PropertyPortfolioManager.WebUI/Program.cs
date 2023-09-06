@@ -37,6 +37,7 @@ builder.Services.AddRazorPages()
 
 // TODO load mappings in separate class
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUnitService, UnitService>();
 
 // Set up caching.
 var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");

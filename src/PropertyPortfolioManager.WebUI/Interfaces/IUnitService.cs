@@ -5,7 +5,7 @@ namespace PropertyPortfolioManager.WebUI.Interfaces
 {
     public interface IUnitService
     {
-        Task<List<UnitResponseModel>> GetAll();
+        Task<List<UnitBasicResponseModel>> GetAll();
         Task<UnitResponseModel> GetById(int unitId);
         Task<int> Create(UnitEditModel unit);
         Task<bool> Update(UnitEditModel unit);

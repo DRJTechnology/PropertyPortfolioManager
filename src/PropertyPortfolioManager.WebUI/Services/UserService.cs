@@ -1,18 +1,15 @@
-﻿using Microsoft.Graph;
-using Microsoft.Identity.Abstractions;
+﻿using Microsoft.Identity.Abstractions;
 using PropertyPortfolioManager.Models.Dto.Profile;
-using PropertyPortfolioManager.WebUI.Controllers;
 using PropertyPortfolioManager.WebUI.Interfaces;
-using System.Security.Cryptography.Pkcs;
 
 namespace PropertyPortfolioManager.WebUI.Services
 {
     public class UserService : IUserService
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly ILogger<UserService> _logger;
         private IDownstreamApi _downstreamApi;
 
-        public UserService(ILogger<HomeController> logger, IDownstreamApi ppmService)
+        public UserService(ILogger<UserService> logger, IDownstreamApi ppmService)
         {
             _logger = logger;
             _downstreamApi = ppmService;

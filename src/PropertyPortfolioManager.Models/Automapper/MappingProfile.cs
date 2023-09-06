@@ -11,10 +11,13 @@ namespace PropertyPortfolioManager.Models.Automapper
         public MappingProfile()
         {
             this.CreateMap<UnitDto, UnitResponseModel>();
+            this.CreateMap<UnitBasicDto, UnitBasicResponseModel>();
             this.CreateMap<UnitEditModel, UnitDto>();
 
             this.CreateMap<AddressDto, AddressResponseModel>();
             this.CreateMap<AddressEditModel, AddressDto>();
+
+            this.CreateMap<UnitTypeDto, UnitTypeModel>();
         }
     }
 }

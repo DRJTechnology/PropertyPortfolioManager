@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
 
@@ -17,8 +18,8 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetByAll")]
-        public async Task<List<UnitResponseModel>> GetAll()
+        [Route("GetAll")]
+        public async Task<List<UnitBasicResponseModel>> GetAll()
         {
             return await this.unitService.GetAll();
         }
@@ -32,10 +33,27 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<int> Create(UnitEditModel unit)
+        public async Task<ApiCreateResponse> Create(UnitEditModel unit)
         {
-            var currentUser = this.UserService.GetCurrent(User);
-            return await this.unitService.Create(currentUser.Id, unit);
+            try
+            {
+                var currentUser = this.UserService.GetCurrent(User);
+                var newUnitId = await this.unitService.Create(currentUser.Id, unit);
+                return new ApiCreateResponse()
+                {
+                    CreatedId = newUnitId,
+                    Success = true,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ApiCreateResponse()
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                };
+            }
+
         }
 
         [HttpPost]

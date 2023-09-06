@@ -12,10 +12,12 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
     public class UnitServiceTests
     {
         private List<UnitDto> unitList;
+        private List<UnitBasicDto> basicUnitList;
 
         public UnitServiceTests()
         {
             this.unitList = this.PopulateUnits();
+            this.basicUnitList = this.PopulateBasicUnits();
         }
 
         [Fact]
@@ -23,7 +25,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         {
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
             unitRepositoryMock.Setup(r => r.GetAll())
-                                        .Returns(Task.FromResult(this.unitList));
+                                        .Returns(Task.FromResult(this.basicUnitList));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
             var units = await unitService.GetAll();
@@ -97,7 +99,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",
-                    CountryRegion = "StrangeRegion",
+                    CountyRegion = "StrangeRegion",
                     PostCode = "AB12 34DE",
                 }
             };
@@ -125,7 +127,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",
-                    CountryRegion = "StrangeRegion",
+                    CountyRegion = "StrangeRegion",
                     PostCode = "AB12 34DE",
                 }
             };
@@ -153,7 +155,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",
-                    CountryRegion = "StrangeRegion",
+                    CountyRegion = "StrangeRegion",
                     PostCode = "AB12 34DE",
                 }
             };
@@ -175,6 +177,24 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         private UnitDto GetById(int unitId)
         {
             return this.unitList.Where(u => u.Id == unitId).FirstOrDefault();
+        }
+
+        private List<UnitBasicDto> PopulateBasicUnits()
+        {
+            var properties = new List<UnitBasicDto>();
+            for (int i = 1; i < 11; i++)
+            {
+                properties.Add(
+                    new UnitBasicDto()
+                    {
+                        Id = i,
+                        Code = $"PR{i}",
+                        UnitType = "Detached House",
+                        StreetAddress = $"{1} Long Road"
+                    }
+                );
+            }
+            return properties;
         }
 
         private List<UnitDto> PopulateUnits()
