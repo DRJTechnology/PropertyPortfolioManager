@@ -16,13 +16,13 @@ namespace PropertyPortfolioManager.Models.Dto.Property
 
         public Int16 UnitTypeId { get; set; }
 
-        public SqlMoney PurchasePrice { get; set; }
+        public SqlMoney? PurchasePrice { get; set; }
 
-        public DateTime PurchaseDate { get; set; }
+        public DateTime? PurchaseDate { get; set; }
 
-        public SqlMoney SalePrice { get; set; }
+        public SqlMoney? SalePrice { get; set; }
 
-        public DateTime SaleDate { get; set; }
+        public DateTime? SaleDate { get; set; }
 
         public AddressDto Address { get; set; }
 

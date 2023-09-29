@@ -65,13 +65,13 @@
     <Folder Include="Tables\profile" />
     <Folder Include="Tables\property" />
     <Folder Include="Scripts" />
+    <Folder Include="Stored Procedures\property" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\db_executor.sql" />
     <Build Include="Security\profile.sql" />
     <Build Include="Security\property.sql" />
     <Build Include="Security\general.sql" />
-    <Build Include="Stored Procedures\Unit_Update.sql" />
     <Build Include="Stored Procedures\User_Create.sql" />
     <Build Include="Stored Procedures\User_GetByObjectIdentifier.sql" />
     <Build Include="Tables\general\Address.sql" />
@@ -79,9 +79,10 @@
     <Build Include="Tables\property\Portfolio.sql" />
     <Build Include="Tables\property\Unit.sql" />
     <Build Include="Tables\property\UnitType.sql" />
-    <Build Include="Stored Procedures\Unit_Create.sql" />
-    <Build Include="Stored Procedures\Unit_GetById.sql" />
-    <Build Include="Stored Procedures\Unit_GetAll.sql" />
+    <Build Include="Stored Procedures\property\Unit_Create.sql" />
+    <Build Include="Stored Procedures\property\Unit_GetAll.sql" />
+    <Build Include="Stored Procedures\property\Unit_GetById.sql" />
+    <Build Include="Stored Procedures\property\Unit_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\PopulateLookupData.sql" />

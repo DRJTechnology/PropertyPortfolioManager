@@ -1,7 +1,6 @@
 ﻿using Dapper;
 using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
-using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using System.Data;
 
@@ -39,7 +38,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 parameters.Add("@SaleDate", newUnit.SaleDate);
                 parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("profile.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
+                await this.dbConnection.ExecuteAsync("property.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
 
                 return parameters.Get<int>("@Id");
             }
@@ -51,26 +50,33 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
         public async Task<List<UnitBasicDto>> GetAll()
         {
-            var units = await this.dbConnection.QueryAsync<UnitBasicDto>("profile.Unit_GetAll", commandType: CommandType.StoredProcedure);
+            var units = await this.dbConnection.QueryAsync<UnitBasicDto>("property.Unit_GetAll", commandType: CommandType.StoredProcedure);
 
             return units.ToList(); ;
         }
 
         public async Task<UnitDto> GetById(int id)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", id);
-
-            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
+            try
             {
-                var unit = multipleResults.Read<UnitDto>().SingleOrDefault();
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", id);
 
-                if (unit != null)
+                using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
                 {
-                    unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
-                }
+                    var unit = multipleResults.Read<UnitDto>().SingleOrDefault();
 
-                return unit;
+                    if (unit != null)
+                    {
+                        unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
+                    }
+
+                    return unit;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
@@ -90,7 +96,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             parameters.Add("@PostCode", existingUnit.Address.PostCode);
             parameters.Add("@CurrentUserId", userId);
 
-            await this.dbConnection.ExecuteAsync("profile.Unit_Update", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.Unit_Update", parameters, commandType: CommandType.StoredProcedure);
 
             return true;
         }

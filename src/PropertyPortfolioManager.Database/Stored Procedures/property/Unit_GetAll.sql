@@ -3,7 +3,7 @@
 -- Create date: 03 Sep 2023
 -- Description:	Get all property unit records (Basic)
 -- =============================================
-CREATE PROCEDURE [profile].[Unit_GetAll]
+CREATE PROCEDURE [property].[Unit_GetAll]
 AS
 BEGIN
 	SET NOCOUNT ON;

@@ -3,7 +3,7 @@
 -- Create date: 01 Sep 2023
 -- Description:	Updates a property unit record
 -- =============================================
-CREATE PROCEDURE [profile].[Unit_Update]
+CREATE PROCEDURE [property].[Unit_Update]
 	@Id					INT, 
 	@Code				NVARCHAR(50),
 	@StreetAddress		NVARCHAR(255) = NULL,
@@ -17,7 +17,7 @@ BEGIN
 
 	DECLARE @AddressID INT
 
-	SELECT	@AddressID = AddressID
+	SELECT	@AddressID = AddressId
 	FROM	property.Unit
 	Where	Id = @Id
 

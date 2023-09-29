@@ -3,7 +3,7 @@
 -- Create date: 23 Aug 2023
 -- Description:	Creates a property unit record
 -- =============================================
-CREATE PROCEDURE [profile].[Unit_Create]
+CREATE PROCEDURE [property].[Unit_Create]
 	@Id					INT OUTPUT, 
 	@Code				NVARCHAR(50),
 	@UnitTypeId			INT,
@@ -12,9 +12,9 @@ CREATE PROCEDURE [profile].[Unit_Create]
 	@CountyRegion		NVARCHAR(128) = NULL,
 	@PostCode			NVARCHAR(50) = NULL,
 	@PurchasePrice		MONEY = NULL,
-	@PurchaseDate		DATETIME = NULL,
+	@PurchaseDate		DATE = NULL,
 	@SalePrice			MONEY = NULL,
-	@SaleDate			DATETIME = NULL,
+	@SaleDate			DATE = NULL,
 	@CurrentUserId		INT
 AS
 BEGIN

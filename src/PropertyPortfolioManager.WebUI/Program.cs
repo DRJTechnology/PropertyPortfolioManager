@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using PropertyPortfolioManager.WebUI.Helpers;
 using PropertyPortfolioManager.WebUI.Interfaces;
 using PropertyPortfolioManager.WebUI.Services;
 
@@ -38,6 +39,7 @@ builder.Services.AddRazorPages()
 // TODO load mappings in separate class
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<IPpmApiFacade, PpmApiFacade>();
 
 // Set up caching.
 var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");

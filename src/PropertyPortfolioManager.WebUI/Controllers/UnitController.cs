@@ -20,9 +20,9 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             return View(units);
         }
 
-        public IActionResult Details(int unitId)
+        public async Task<IActionResult> Details(int id)
         {
-            var unit = unitService.GetById(unitId);
+            var unit = await unitService.GetById(id);
             return View(unit);
         }
 
@@ -37,13 +37,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         public async Task<IActionResult> Create(UnitEditModel unit)
         {
             var unitId = await unitService.Create(unit);
-            return RedirectToAction("Details", new { unitId = unitId });
+            return RedirectToAction("Details", new { id = unitId });
         }
 
         [HttpGet]
-        public IActionResult Update(int unitId)
+        public IActionResult Update(int id)
         {
-            var unit = unitService.GetById(unitId);
+            var unit = unitService.GetById(id);
             return View(unit);
         }
 
@@ -51,7 +51,7 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         public IActionResult Update(UnitEditModel unit)
         {
             var unitId = unitService.Update(unit);
-            return RedirectToAction("Details", new { unitId = unitId });
+            return RedirectToAction("Details", new { unitId });
         }
     }
 }

@@ -3,13 +3,13 @@
 -- Create date: 01 Sep 2023
 -- Description:	Get a property unit record with address
 -- =============================================
-CREATE PROCEDURE [profile].[Unit_GetById]
+CREATE PROCEDURE [property].[Unit_GetById]
 	@Id					INT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	Id, Code, AddressId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate
+    SELECT	Id, Code, AddressId, UnitTypeId, PurchaseDate, PurchasePrice, SaleDate, SalePrice, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate
 	FROM	[property].[Unit]
 	WHERE	Id = @Id
 
