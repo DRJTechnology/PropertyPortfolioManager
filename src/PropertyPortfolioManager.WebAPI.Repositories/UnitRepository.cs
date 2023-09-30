@@ -88,12 +88,17 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
 
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@Id", existingUnit.Id);
             parameters.Add("@Code", existingUnit.Code);
+            parameters.Add("@UnitTypeId", existingUnit.UnitTypeId);
             parameters.Add("@StreetAddress", existingUnit.Address.StreetAddress);
             parameters.Add("@TownCity", existingUnit.Address.TownCity);
             parameters.Add("@CountyRegion", existingUnit.Address.CountyRegion);
             parameters.Add("@PostCode", existingUnit.Address.PostCode);
+            parameters.Add("@PurchasePrice", existingUnit.PurchasePrice);
+            parameters.Add("@PurchaseDate", existingUnit.PurchaseDate);
+            parameters.Add("@SalePrice", existingUnit.SalePrice);
+            parameters.Add("@SaleDate", existingUnit.SaleDate);
             parameters.Add("@CurrentUserId", userId);
 
             await this.dbConnection.ExecuteAsync("property.Unit_Update", parameters, commandType: CommandType.StoredProcedure);

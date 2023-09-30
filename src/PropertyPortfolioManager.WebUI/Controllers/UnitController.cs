@@ -29,29 +29,32 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new UnitEditModel();
-            return View(model);
+            var model = new UnitResponseModel();
+            return View("Edit", model);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(UnitEditModel unit)
+        public async Task<IActionResult> CreateUpdate(UnitEditModel unit)
         {
-            var unitId = await unitService.Create(unit);
+            int unitId = unit.Id;
+
+            if (unit.Id == 0)
+            {
+                unitId = await unitService.Create(unit);
+            }
+            else
+            {
+                await unitService.Update(unit);
+            }
+
             return RedirectToAction("Details", new { id = unitId });
         }
 
         [HttpGet]
-        public IActionResult Update(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            var unit = unitService.GetById(id);
+            var unit = await unitService.GetById(id);
             return View(unit);
-        }
-
-        [HttpPost]
-        public IActionResult Update(UnitEditModel unit)
-        {
-            var unitId = unitService.Update(unit);
-            return RedirectToAction("Details", new { unitId });
         }
     }
 }

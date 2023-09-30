@@ -1,21 +1,14 @@
 ﻿@model PropertyPortfolioManager.Models.Model.Property.UnitResponseModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Property";
 }
 
-<h1>Details</h1>
+<h1>@Model.Code - @Model.Address.StreetAddress</h1>
 
 <div>
-    <h4>UnitResponseModel</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Id)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Code)
         </dt>
@@ -23,10 +16,28 @@
             @Html.DisplayFor(model => model.Code)
         </dd>
         <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AddressId)
+            @Html.DisplayNameFor(model => model.Address.StreetAddress)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AddressId)
+            @Html.DisplayFor(model => model.Address.StreetAddress)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.TownCity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.TownCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.TownCity)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.TownCity)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Address.PostCode)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Address.PostCode)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.UnitTypeId)

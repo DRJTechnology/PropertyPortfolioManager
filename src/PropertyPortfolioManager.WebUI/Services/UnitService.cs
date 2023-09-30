@@ -51,9 +51,17 @@ namespace PropertyPortfolioManager.WebUI.Services
             }
         }
 
-        public Task<bool> Update(UnitEditModel unit)
+        public async Task<bool> Update(UnitEditModel unit)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var unitId = await this.ppmApiFacade.PostAsync<UnitEditModel>(unit, "Unit/Update");
+                return unitId > 0;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

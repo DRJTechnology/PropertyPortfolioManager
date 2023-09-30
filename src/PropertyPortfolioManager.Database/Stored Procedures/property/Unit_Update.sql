@@ -6,10 +6,15 @@
 CREATE PROCEDURE [property].[Unit_Update]
 	@Id					INT, 
 	@Code				NVARCHAR(50),
+	@UnitTypeId			INT,
 	@StreetAddress		NVARCHAR(255) = NULL,
 	@TownCity			NVARCHAR(128) = NULL,
 	@CountyRegion		NVARCHAR(128) = NULL,
 	@PostCode			NVARCHAR(50) = NULL,
+	@PurchasePrice		MONEY = NULL,
+	@PurchaseDate		DATE = NULL,
+	@SalePrice			MONEY = NULL,
+	@SaleDate			DATE = NULL,
 	@CurrentUserId		INT
 AS
 BEGIN
@@ -32,6 +37,11 @@ BEGIN
 
 	UPDATE	[property].[Unit]
 	SET		Code = @Code,
+			UnitTypeId = @UnitTypeId,
+			PurchasePrice = @PurchasePrice,
+			PurchaseDate = @PurchaseDate,
+			SalePrice = @SalePrice,
+			SaleDate = @SaleDate,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
 	WHERE	Id =@Id

@@ -37,7 +37,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
         {
             try
             {
-                var currentUser = this.UserService.GetCurrent(User);
+                var currentUser = await this.UserService.GetCurrent(User);
                 var newUnitId = await this.unitService.Create(currentUser.Id, unit);
                 return new ApiCreateResponse()
                 {
@@ -53,15 +53,40 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
                     ErrorMessage = ex.Message,
                 };
             }
-
         }
 
         [HttpPost]
         [Route("Update")]
-        public async Task<bool> Update(UnitEditModel unit)
+        public async Task<ApiCreateResponse> Update(UnitEditModel unit)
         {
-            var currentUser = this.UserService.GetCurrent(User);
-            return await this.unitService.Update(currentUser.Id, unit);
+            try
+            {
+                var currentUser = await this.UserService.GetCurrent(User);
+                if (await this.unitService.Update(currentUser.Id, unit))
+                {
+                    return new ApiCreateResponse()
+                    {
+                        CreatedId = unit.Id,
+                        Success = true,
+                    };
+                }
+                else
+                {
+                    return new ApiCreateResponse()
+                    {
+                        Success = false,
+                        ErrorMessage = $"Failed to update unitId {unit.Id}"
+                    };
+                }
+            }
+            catch (Exception ex)
+            {
+                return new ApiCreateResponse()
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                };
+            }
         }
 
     }
