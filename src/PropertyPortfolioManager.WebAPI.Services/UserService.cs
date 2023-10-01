@@ -1,15 +1,9 @@
 ﻿using DRJTechnology.Cache;
-using Microsoft.Graph;
 using Microsoft.Identity.Web;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace PropertyPortfolioManager.WebAPI.Services

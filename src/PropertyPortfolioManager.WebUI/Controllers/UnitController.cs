@@ -12,8 +12,8 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         private readonly IUnitService unitService;
         private readonly IUnitTypeService unitTypeService;
 
-        public UnitController(IUserService userService, IUnitTypeService unitTypeService, IUnitService unitService)
-            : base(userService)
+        public UnitController(IUserService userService, IPortfolioService portfolioService, IUnitTypeService unitTypeService, IUnitService unitService)
+            : base(userService, portfolioService)
         {
             this.unitService = unitService;
             this.unitTypeService = unitTypeService;

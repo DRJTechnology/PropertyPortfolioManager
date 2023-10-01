@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebUI.Interfaces;
-using PropertyPortfolioManager.WebUI.Models;
 
 namespace PropertyPortfolioManager.WebUI.Controllers
 {
@@ -9,8 +8,8 @@ namespace PropertyPortfolioManager.WebUI.Controllers
     {
         private readonly IUnitTypeService unitTypeService;
 
-        public UnitTypeController(IUserService userService, IUnitTypeService unitTypeService)
-            : base(userService)
+        public UnitTypeController(IUserService userService, IPortfolioService portfolioService, IUnitTypeService unitTypeService)
+            : base(userService, portfolioService)
         {
             this.unitTypeService = unitTypeService;
         }

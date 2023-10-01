@@ -10,8 +10,9 @@ BEGIN
 	SET NOCOUNT ON;
 
     SELECT	Id,
+			SelectedPortfolioId,
 			ObjectIdentifier,
-			Name,
+			[Name],
 			CreateDate,
 			AmendDate
 	FROM	[profile].[User]

@@ -13,7 +13,8 @@
 
     <div class="container-fluid">
         <div class="row flex-nowrap">
-            <partial name="_Navigation" />
+            @*<partial name="_Navigation" />*@
+            @await Component.InvokeAsync("Navigation")
             <div class="col py-3">
                 @RenderBody()
             </div>

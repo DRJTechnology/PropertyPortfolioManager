@@ -6,16 +6,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
 {
     public class PortfolioController : BaseController
     {
-        private readonly IPortfolioService portfolioService;
-
         public PortfolioController(IUserService userService, IPortfolioService portfolioService)
-            : base(userService)
+            : base(userService, portfolioService)
         {
-            this.portfolioService = portfolioService;
         }
         public async Task<IActionResult> Index()
         {
-            var portfolios = await portfolioService.GetAll();
+            var portfolios = await PortfolioService.GetAll();
             return View(portfolios);
         }
 
@@ -34,11 +31,11 @@ namespace PropertyPortfolioManager.WebUI.Controllers
 
             if (unitType.Id == 0)
             {
-                unitId = await portfolioService.Create(unitType);
+                unitId = await PortfolioService.Create(unitType);
             }
             else
             {
-                await portfolioService.Update(unitType);
+                await PortfolioService.Update(unitType);
             }
 
             return RedirectToAction("Index");
@@ -47,7 +44,7 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = await portfolioService.GetById(id);
+            var model = await PortfolioService.GetById(id);
 
             return View(model);
         }

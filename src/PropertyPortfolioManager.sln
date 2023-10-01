@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Mo
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PropertyPortfolioManager.Database", "PropertyPortfolioManager.Database\PropertyPortfolioManager.Database.sqlproj", "{05DEB012-55A2-44C0-A464-637412F4D858}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPortfolioManager.WebAPI.Services.Tests", "PropertyPortfolioManager.WebAPI.Services.Tests\PropertyPortfolioManager.WebAPI.Services.Tests.csproj", "{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Services.Tests", "PropertyPortfolioManager.WebAPI.Services.Tests\PropertyPortfolioManager.WebAPI.Services.Tests.csproj", "{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

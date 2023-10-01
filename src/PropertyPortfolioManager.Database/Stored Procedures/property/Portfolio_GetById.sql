@@ -16,5 +16,4 @@ BEGIN
 	WHERE	p.Id = @Id
 		AND pu.UserId = @UserId
 		AND p.Deleted = 0
-
 END

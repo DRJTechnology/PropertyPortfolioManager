@@ -50,28 +50,43 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
         public async Task<PortfolioDto> GetById(int id, int userId)
         {
+            try
             {
-                try
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@Id", id);
-                    parameters.Add("@UserId", userId);
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", id);
+                parameters.Add("@UserId", userId);
 
-                    var portfolio = await this.dbConnection.QuerySingleAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
+                var portfolio = await this.dbConnection.QuerySingleAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
 
-                    if (portfolio != null)
-                    {
-                        return portfolio!;
-                    }
-                    else
-                    {
-                        throw new Exception($"Error: Portfolio (Id {id}) not found!");
-                    }
-                }
-                catch (Exception ex)
+                if (portfolio != null)
                 {
-                    throw;
+                    return portfolio!;
                 }
+                else
+                {
+                    throw new Exception($"Error: Portfolio (Id {id}) not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<PortfolioDto> GetByUserObjectIdentifier(Guid userObjectIdentifier)
+        {
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@ObjectIdentifier", userObjectIdentifier);
+
+                var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetByUserObjectIdentifier", parameters, commandType: CommandType.StoredProcedure);
+
+                return portfolio;
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 

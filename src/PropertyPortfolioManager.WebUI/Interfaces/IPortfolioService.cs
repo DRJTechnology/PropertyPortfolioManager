@@ -8,5 +8,6 @@ namespace PropertyPortfolioManager.WebUI.Interfaces
         Task<PortfolioModel> GetById(int portfolioId);
         Task<int> Create(PortfolioModel portfolio);
         Task<bool> Update(PortfolioModel portfolio);
+        Task<PortfolioModel> GetCurrent();
     }
 }

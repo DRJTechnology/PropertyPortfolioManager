@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DRJTechnology.Cache;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph;
-using Microsoft.Identity.Web;
+using PropertyPortfolioManager.WebUI.Interfaces;
 using PropertyPortfolioManager.WebUI.Models;
 using System.Diagnostics;
-using Microsoft.Identity.Abstractions;
-using PropertyPortfolioManager.WebUI.Interfaces;
-using DRJTechnology.Cache;
 
 namespace PropertyPortfolioManager.WebUI.Controllers
 {
@@ -16,8 +13,8 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly ICacheService cacheService;
 
-        public HomeController(ILogger<HomeController> logger, IUserService userService, ICacheService cacheService)
-        : base(userService)
+        public HomeController(IUserService userService, IPortfolioService portfolioService, ILogger<HomeController> logger, ICacheService cacheService)
+        : base(userService, portfolioService)
         {
             _logger = logger;
             this.cacheService = cacheService;

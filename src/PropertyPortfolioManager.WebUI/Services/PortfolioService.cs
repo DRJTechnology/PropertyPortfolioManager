@@ -1,4 +1,6 @@
-﻿using PropertyPortfolioManager.Models.Model.Property;
+﻿using Microsoft.Identity.Abstractions;
+using PropertyPortfolioManager.Models.Dto.Profile;
+using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebUI.Helpers;
 using PropertyPortfolioManager.WebUI.Interfaces;
 
@@ -44,6 +46,18 @@ namespace PropertyPortfolioManager.WebUI.Services
             try
             {
                 return await this.ppmApiFacade.GetAsync<PortfolioModel>($"Portfolio/GetById/{portfolioId}");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        public async Task<PortfolioModel> GetCurrent()
+        {
+            try
+            {
+                return await this.ppmApiFacade.GetAsync<PortfolioModel>($"Portfolio/GetCurrent");
             }
             catch (Exception ex)
             {

@@ -32,6 +32,13 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             return await this.portfolioService.GetById(portfolioId, (await this.GetCurrentUser()).Id);
         }
 
+        [HttpGet]
+        [Route("GetCurrent")]
+        public async Task<PortfolioModel> GetCurrent()
+        {
+            return await this.portfolioService.GetCurrent(User);
+        }
+
         [HttpPost]
         [Route("Create")]
         public async Task<ApiCreateResponse> Create(PortfolioModel portfolio)
