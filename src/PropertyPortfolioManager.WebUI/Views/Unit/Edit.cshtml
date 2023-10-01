@@ -1,16 +1,16 @@
-﻿@model PropertyPortfolioManager.Models.Model.Property.UnitResponseModel
+﻿@model PropertyPortfolioManager.WebUI.Models.UnitEditViewModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-@if (Model.Id == 0)
+@if (Model.Unit.Id == 0)
 {
     <h1>Create property</h1>
 }
 else
 {
-    <h1>Edit @Model.Code - @Model.Address.StreetAddress</h1>
+    <h1>Edit @Model.Unit.Code - @Model.Unit.Address.StreetAddress</h1>
 }
 
 <hr />
@@ -19,59 +19,67 @@ else
         <form asp-action="CreateUpdate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <input asp-for="Id" class="form-control" type="hidden" />
-                <label asp-for="Code" class="control-label"></label>
-                <input asp-for="Code" class="form-control" />
-                <span asp-validation-for="Code" class="text-danger"></span>
+                <input asp-for="Unit.Id" class="form-control" type="hidden" />
+                <label asp-for="Unit.Code" class="control-label"></label>
+                <input asp-for="Unit.Code" class="form-control" />
+                <span asp-validation-for="Unit.Code" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.StreetAddress" class="control-label"></label>
-                <input asp-for="Address.StreetAddress" class="form-control" />
-                <span asp-validation-for="Address.StreetAddress" class="text-danger"></span>
+                <label asp-for="Unit.Address.StreetAddress" class="control-label"></label>
+                <input asp-for="Unit.Address.StreetAddress" class="form-control" />
+                <span asp-validation-for="Unit.Address.StreetAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.TownCity" class="control-label"></label>
-                <input asp-for="Address.TownCity" class="form-control" />
-                <span asp-validation-for="Address.TownCity" class="text-danger"></span>
+                <label asp-for="Unit.Address.TownCity" class="control-label"></label>
+                <input asp-for="Unit.Address.TownCity" class="form-control" />
+                <span asp-validation-for="Unit.Address.TownCity" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.CountyRegion" class="control-label"></label>
-                <input asp-for="Address.CountyRegion" class="form-control" />
-                <span asp-validation-for="Address.CountyRegion" class="text-danger"></span>
+                <label asp-for="Unit.Address.CountyRegion" class="control-label"></label>
+                <input asp-for="Unit.Address.CountyRegion" class="form-control" />
+                <span asp-validation-for="Unit.Address.CountyRegion" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Address.PostCode" class="control-label"></label>
-                <input asp-for="Address.PostCode" class="form-control" />
-                <span asp-validation-for="Address.PostCode" class="text-danger"></span>
+                <label asp-for="Unit.Address.PostCode" class="control-label"></label>
+                <input asp-for="Unit.Address.PostCode" class="form-control" />
+                <span asp-validation-for="Unit.Address.PostCode" class="text-danger"></span>
+            </div>
+@*            <div class="form-group">
+                <label asp-for="Unit.UnitTypeId" class="control-label"></label>
+                <input asp-for="Unit.UnitTypeId" class="form-control" />
+                <span asp-validation-for="Unit.UnitTypeId" class="text-danger"></span>
+            </div>*@
+            <div class="form-group">
+                <label asp-for="Unit.UnitTypeId" class="control-label"></label>
+                <select asp-for="Unit.UnitTypeId" class="form-control" asp-items="@Model.UnitTypeList">
+                    <option disabled selected>Please select one</option>
+                </select>
+                <span asp-validation-for="Unit.UnitTypeId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Unit.PurchaseDate" class="control-label"></label>
+                <input asp-for="Unit.PurchaseDate" class="form-control" />
+                <span asp-validation-for="Unit.PurchaseDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="UnitTypeId" class="control-label"></label>
-                <input asp-for="UnitTypeId" class="form-control" />
-                <span asp-validation-for="UnitTypeId" class="text-danger"></span>
+                <label asp-for="Unit.SaleDate" class="control-label"></label>
+                <input asp-for="Unit.SaleDate" class="form-control" />
+                <span asp-validation-for="Unit.SaleDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PurchaseDate" class="control-label"></label>
-                <input asp-for="PurchaseDate" class="form-control" />
-                <span asp-validation-for="PurchaseDate" class="text-danger"></span>
+                <label asp-for="Unit.PurchasePrice" class="control-label"></label>
+                <input asp-for="Unit.PurchasePrice" class="form-control" />
+                <span asp-validation-for="Unit.PurchasePrice" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="SaleDate" class="control-label"></label>
-                <input asp-for="SaleDate" class="form-control" />
-                <span asp-validation-for="SaleDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PurchasePrice" class="control-label"></label>
-                <input asp-for="PurchasePrice" class="form-control" />
-                <span asp-validation-for="PurchasePrice" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SalePrice" class="control-label"></label>
-                <input asp-for="SalePrice" class="form-control" />
-                <span asp-validation-for="SalePrice" class="text-danger"></span>
+                <label asp-for="Unit.SalePrice" class="control-label"></label>
+                <input asp-for="Unit.SalePrice" class="form-control" />
+                <span asp-validation-for="Unit.SalePrice" class="text-danger"></span>
             </div>
             <div class="form-group form-check">
                 <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Deleted" /> @Html.DisplayNameFor(model => model.Deleted)
+                    <input class="form-check-input" asp-for="Unit.Deleted" /> @Html.DisplayNameFor(model => model.Unit.Deleted)
                 </label>
             </div>
             <div class="form-group">

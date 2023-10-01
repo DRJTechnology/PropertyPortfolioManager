@@ -20,8 +20,6 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-	-- TODO Create a transaction?
-
     INSERT INTO [general].[Address] (StreetAddress, TownCity, CountyRegion, PostCode, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
 	VALUES (@StreetAddress, @TownCity, @CountyRegion, @PostCode, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
@@ -31,7 +29,6 @@ BEGIN
     INSERT INTO [property].[Unit] (Code, UnitTypeId, AddressId, PurchasePrice, PurchaseDate, SalePrice, SaleDate, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
 	VALUES (@Code, @UnitTypeId, @AddressId, @PurchasePrice, @PurchaseDate, @SalePrice, @SaleDate, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
-	DECLARE @Unit INT
 	SET @Id = SCOPE_IDENTITY()
 
 END

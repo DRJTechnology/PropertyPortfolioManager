@@ -8,13 +8,14 @@ namespace PropertyPortfolioManager.Models.Dto.Property
         public UnitDto()
         {
             this.Address = new AddressDto();
-            this.UnitType = new UnitTypeDto();
         }
         public string Code { get; set; } = string.Empty;
 
         public int AddressId { get; set; }
 
         public Int16 UnitTypeId { get; set; }
+
+        public String UnitType { get; set; } = string.Empty;
 
         public SqlMoney? PurchasePrice { get; set; }
 
@@ -25,7 +26,5 @@ namespace PropertyPortfolioManager.Models.Dto.Property
         public DateTime? SaleDate { get; set; }
 
         public AddressDto Address { get; set; }
-
-        public UnitTypeDto UnitType { get; set; }
     }
 }

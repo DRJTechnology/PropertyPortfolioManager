@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebUI.Interfaces;
+using PropertyPortfolioManager.WebUI.Models;
 using System.Reflection;
 
 namespace PropertyPortfolioManager.WebUI.Controllers
@@ -8,10 +10,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
     public class UnitController : BaseController
     {
         private readonly IUnitService unitService;
-        public UnitController(IUserService userService, IUnitService unitService)
+        private readonly IUnitTypeService unitTypeService;
+
+        public UnitController(IUserService userService, IUnitTypeService unitTypeService, IUnitService unitService)
             : base(userService)
         {
             this.unitService = unitService;
+            this.unitTypeService = unitTypeService;
         }
 
         public async Task<IActionResult> Index()
@@ -27,9 +32,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            var model = new UnitResponseModel();
+            var model = new UnitEditViewModel()
+            {
+                UnitTypeList = await UserTypeSelectList()
+            };
+
             return View("Edit", model);
         }
 
@@ -53,8 +62,21 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var unit = await unitService.GetById(id);
-            return View(unit);
+
+            var model = new UnitEditViewModel()
+            {
+                Unit = await unitService.GetById(id),
+                UnitTypeList = await UserTypeSelectList()
+            };
+
+            return View(model);
+        }
+
+        private async Task<SelectList> UserTypeSelectList()
+        {
+            var unitTypeList = await unitTypeService.GetAll();
+
+            return new SelectList(unitTypeList, "Id", "Type");
         }
     }
 }

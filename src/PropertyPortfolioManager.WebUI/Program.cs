@@ -39,6 +39,7 @@ builder.Services.AddRazorPages()
 // TODO load mappings in separate class
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
 builder.Services.AddScoped<IPpmApiFacade, PpmApiFacade>();
 
 // Set up caching.

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
@@ -7,41 +8,41 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitController : BaseController
+    public class UnitTypeController : BaseController
     {
-        private readonly IUnitService unitService;
+        private readonly IUnitTypeService unitTypeService;
 
-        public UnitController(IUserService userService, IUnitService unitService)
+        public UnitTypeController(IUserService userService, IUnitTypeService unitTypeService)
             : base(userService)
         {
-            this.unitService = unitService;
+            this.unitTypeService = unitTypeService;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<UnitBasicResponseModel>> GetAll()
+        public async Task<List<UnitTypeModel>> GetAll()
         {
-            return await this.unitService.GetAll();
+            return await this.unitTypeService.GetAll();
         }
 
         [HttpGet]
-        [Route("GetById/{unitId}")]
-        public async Task<UnitResponseModel> GetById(int unitId)
+        [Route("GetById/{unitTypeId}")]
+        public async Task<UnitTypeModel> GetById(int unitTypeId)
         {
-            return await this.unitService.GetById(unitId);
+            return await this.unitTypeService.GetById(unitTypeId);
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ApiCreateResponse> Create(UnitEditModel unit)
+        public async Task<ApiCreateResponse> Create(UnitTypeModel unitType)
         {
             try
             {
                 var currentUser = await this.UserService.GetCurrent(User);
-                var newUnitId = await this.unitService.Create(currentUser.Id, unit);
+                var newUnitTypeId = await this.unitTypeService.Create(currentUser.Id, unitType);
                 return new ApiCreateResponse()
                 {
-                    CreatedId = newUnitId,
+                    CreatedId = newUnitTypeId,
                     Success = true,
                 };
             }
@@ -57,16 +58,16 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<ApiCreateResponse> Update(UnitEditModel unit)
+        public async Task<ApiCreateResponse> Update(UnitTypeModel unitType)
         {
             try
             {
                 var currentUser = await this.UserService.GetCurrent(User);
-                if (await this.unitService.Update(currentUser.Id, unit))
+                if (await this.unitTypeService.Update(currentUser.Id, unitType))
                 {
                     return new ApiCreateResponse()
                     {
-                        CreatedId = unit.Id,
+                        CreatedId = unitType.Id,
                         Success = true,
                     };
                 }
@@ -75,7 +76,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
                     return new ApiCreateResponse()
                     {
                         Success = false,
-                        ErrorMessage = $"UnitController: Failed to update unitId {unit.Id}"
+                        ErrorMessage = $"UnitTypeController: Failed to update unitTypeId {unitType.Id}"
                     };
                 }
             }

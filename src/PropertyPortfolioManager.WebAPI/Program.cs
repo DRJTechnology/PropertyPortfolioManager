@@ -26,8 +26,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
+builder.Services.AddScoped<IUnitTypeRepository, UnitTypeRepository>();
 
 builder.Services.AddSingleton<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));
 

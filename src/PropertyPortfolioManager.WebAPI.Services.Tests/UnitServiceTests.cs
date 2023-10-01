@@ -30,7 +30,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
             var units = await unitService.GetAll();
 
-            Assert.IsType<List<UnitResponseModel>>(units);
+            Assert.IsType<List<UnitBasicResponseModel>>(units);
             Assert.Equal(10, units.Count());
             Assert.Equal(1, units.FirstOrDefault().Id);
         }
@@ -49,7 +49,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
 
             Assert.IsType<UnitResponseModel>(unit);
             Assert.Equal(unitId, unit.Id);
-            Assert.Equal($"PR7", unit.Code);
+            Assert.Equal($"PR{unitId}", unit.Code);
         }
 
 
@@ -208,15 +208,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                         Id = i,
                         Code = $"PR{i}",
                         UnitTypeId = 1,
-                        UnitType = new UnitTypeDto()
-                        {
-                            Id = 1,
-                            Type = "Detached",
-                            CreateDate = DateTime.Now.AddMonths(-1),
-                            CreateUserId = 1,
-                            AmendDate = DateTime.Now.AddMonths(-1),
-                            AmendUserId = 1,
-                        },
+                        UnitType = "Detached House",
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
                         AmendDate = DateTime.Now.AddMonths(-1),

@@ -8,9 +8,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	u.Id, Code, StreetAddress, ut.[Type]
+    SELECT	u.Id, Code, StreetAddress, ut.[Type] AS UnitType
 	FROM	[property].[Unit] u
 	INNER JOIN	[general].[Address] a ON u.AddressId = a.Id
-	INNER Join	[property].[UnitType] ut ON u.UnitTypeId = ut.Id 
+	INNER Join	[property].[UnitType] ut ON u.UnitTypeId = ut.Id
+	Where	u.Deleted = 0
 
 END
