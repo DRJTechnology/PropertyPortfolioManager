@@ -20,28 +20,28 @@ namespace PropertyPortfolioManager.WebAPI.Services
             this.mapper = mapper;
         }
 
-        public async Task<int> Create(int currentUserId, UnitTypeModel unit)
+        public async Task<int> Create(int currentUserId, int portfolioId, UnitTypeModel unit)
         {
             var unitTypeDto = this.mapper.Map<UnitTypeDto>(unit);
-            return await this.unitTypeRepository.Create(currentUserId, unitTypeDto);
+            return await this.unitTypeRepository.Create(currentUserId, portfolioId, unitTypeDto);
         }
 
-        public async Task<List<UnitTypeModel>> GetAll()
+        public async Task<List<UnitTypeModel>> GetAll(int portfolioId)
         {
-            var unitTypeList = await this.unitTypeRepository.GetAll();
+            var unitTypeList = await this.unitTypeRepository.GetAll(portfolioId);
             return this.mapper.Map<List<UnitTypeModel>>(unitTypeList);
         }
 
-        public async Task<UnitTypeModel> GetById(int unitId)
+        public async Task<UnitTypeModel> GetById(int unitId, int portfolioId)
         {
-            var unit = await this.unitTypeRepository.GetById(unitId);
+            var unit = await this.unitTypeRepository.GetById(unitId, portfolioId);
             return this.mapper.Map<UnitTypeModel>(unit);
         }
 
-        public async Task<bool> Update(int currentUserId, UnitTypeModel unit)
+        public async Task<bool> Update(int currentUserId, int portfolioId, UnitTypeModel unit)
         {
             var unitTypeDto = this.mapper.Map<UnitTypeDto>(unit);
-            return await this.unitTypeRepository.Update(currentUserId, unitTypeDto);
+            return await this.unitTypeRepository.Update(currentUserId, portfolioId, unitTypeDto);
         }
     }
 }

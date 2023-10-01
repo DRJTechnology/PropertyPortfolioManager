@@ -4,13 +4,15 @@
 -- Description:	Get all property unit type records
 -- =============================================
 CREATE PROCEDURE [property].[UnitType_GetAll]
+	@PortfolioId	INT
 AS
 BEGIN
 	SET NOCOUNT ON;
 
     SELECT	Id, [Type]
 	FROM	[property].[UnitType]
-	Where	Deleted = 0
+	Where	PortfolioId = @PortfolioId
+		AND Deleted = 0
 	ORDER BY [Type]
 
 END

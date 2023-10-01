@@ -9,6 +9,8 @@ namespace PropertyPortfolioManager.Models.Dto.Property
         {
             this.Address = new AddressDto();
         }
+        public int PortfolioId { get; set; }
+
         public string Code { get; set; } = string.Empty;
 
         public int AddressId { get; set; }

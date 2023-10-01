@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
@@ -7,42 +8,40 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitController : BaseController
+    public class PortfolioController : BaseController
     {
-        private readonly IUnitService unitService;
+        private readonly IPortfolioService portfolioService;
 
-        public UnitController(IUserService userService, IUnitService unitService)
+        public PortfolioController(IUserService userService, IPortfolioService portfolioService)
             : base(userService)
         {
-            this.unitService = unitService;
+            this.portfolioService = portfolioService;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId)
+        public async Task<List<PortfolioModel>> GetAll()
         {
-            return await this.unitService.GetAll(portfolioId);
+            return await this.portfolioService.GetAll((await this.GetCurrentUser()).Id);
         }
 
         [HttpGet]
-        [Route("GetById/{unitId}")]
-        public async Task<UnitResponseModel> GetById(int unitId, int portfolioId)
+        [Route("GetById/{portfolioId}")]
+        public async Task<PortfolioModel> GetById(int portfolioId)
         {
-            return await this.unitService.GetById(unitId, portfolioId);
+            return await this.portfolioService.GetById(portfolioId, (await this.GetCurrentUser()).Id);
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ApiCreateResponse> Create(UnitEditModel unit, int portfolioId)
+        public async Task<ApiCreateResponse> Create(PortfolioModel portfolio)
         {
             try
             {
-                //var currentUser = await this.UserService.GetCurrent(User);
-                //var newUnitId = await this.unitService.Create(currentUser.Id, portfolioId, unit);
-                var newUnitId = await this.unitService.Create((await this.GetCurrentUser()).Id, portfolioId, unit);
+                var portfolioId = await this.portfolioService.Create((await this.GetCurrentUser()).Id, portfolio);
                 return new ApiCreateResponse()
                 {
-                    CreatedId = newUnitId,
+                    CreatedId = portfolioId,
                     Success = true,
                 };
             }
@@ -58,16 +57,15 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<ApiCreateResponse> Update(UnitEditModel unit, int portfolioId)
+        public async Task<ApiCreateResponse> Update(PortfolioModel portfolio, int portfolioId)
         {
             try
             {
-                //var currentUser = await this.UserService.GetCurrent(User);
-                if (await this.unitService.Update((await this.GetCurrentUser()).Id, portfolioId, unit))
+                if (await this.portfolioService.Update((await this.GetCurrentUser()).Id, portfolio))
                 {
                     return new ApiCreateResponse()
                     {
-                        CreatedId = unit.Id,
+                        CreatedId = portfolio.Id,
                         Success = true,
                     };
                 }
@@ -76,7 +74,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
                     return new ApiCreateResponse()
                     {
                         Success = false,
-                        ErrorMessage = $"UnitController: Failed to update unitId {unit.Id}"
+                        ErrorMessage = $"PortfolioController: Failed to update portfolioId {portfolio.Id}"
                     };
                 }
             }

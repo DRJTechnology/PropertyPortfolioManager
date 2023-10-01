@@ -4,6 +4,7 @@
 -- Description:	Get all property unit records (Basic)
 -- =============================================
 CREATE PROCEDURE [property].[Unit_GetAll]
+	@PortfolioId		INT
 AS
 BEGIN
 	SET NOCOUNT ON;
@@ -12,6 +13,7 @@ BEGIN
 	FROM	[property].[Unit] u
 	INNER JOIN	[general].[Address] a ON u.AddressId = a.Id
 	INNER Join	[property].[UnitType] ut ON u.UnitTypeId = ut.Id
-	Where	u.Deleted = 0
+	Where	u.PortfolioId = @PortfolioId
+		AND u.Deleted = 0
 
 END

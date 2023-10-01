@@ -15,7 +15,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             this.dbConnection = dbConnection;
         }
 
-        public async Task<int> Create(int userId, UnitDto newUnit)
+        public async Task<int> Create(int userId, int portfolioId, UnitDto newUnit)
         {
             if (newUnit == null)
             {
@@ -26,6 +26,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parameters.Add("@PortfolioId", portfolioId);
                 parameters.Add("@Code", newUnit.Code);
                 parameters.Add("@UnitTypeId", newUnit.UnitTypeId);
                 parameters.Add("@StreetAddress", newUnit.Address.StreetAddress);
@@ -48,19 +49,23 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<List<UnitBasicDto>> GetAll()
+        public async Task<List<UnitBasicDto>> GetAll(int portfolioId)
         {
-            var units = await this.dbConnection.QueryAsync<UnitBasicDto>("property.Unit_GetAll", commandType: CommandType.StoredProcedure);
+            var parameters = new DynamicParameters();
+            parameters.Add("@PortfolioId", portfolioId);
+
+            var units = await this.dbConnection.QueryAsync<UnitBasicDto>("property.Unit_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
             return units.ToList(); ;
         }
 
-        public async Task<UnitDto> GetById(int id)
+        public async Task<UnitDto> GetById(int id, int portfolioId)
         {
             try
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", id);
+                parameters.Add("@PortfolioId", portfolioId);
 
                 using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
                 {
@@ -80,7 +85,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<bool> Update(int userId, UnitDto existingUnit)
+        public async Task<bool> Update(int userId, int portfolioId, UnitDto existingUnit)
         {
             if (existingUnit == null)
             {
@@ -89,6 +94,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
             var parameters = new DynamicParameters();
             parameters.Add("@Id", existingUnit.Id);
+            parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@Code", existingUnit.Code);
             parameters.Add("@UnitTypeId", existingUnit.UnitTypeId);
             parameters.Add("@StreetAddress", existingUnit.Address.StreetAddress);

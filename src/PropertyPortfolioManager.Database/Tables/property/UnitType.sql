@@ -1,6 +1,7 @@
 ﻿CREATE TABLE [property].[UnitType]
 (
 	[Id]	            SMALLINT		IDENTITY NOT NULL,
+    [PortfolioId]       INT             NOT NULL,
 	[Type]	            NVARCHAR(255)	NOT NULL,
 	[Deleted]           BIT             DEFAULT (0) NOT NULL,
     [CreateUserId]      INT             NOT NULL,
@@ -8,4 +9,5 @@
     [AmendUserId]       INT             NOT NULL,
     [AmendDate]         DATETIME        CONSTRAINT [DF_UnitType_AmendDate] DEFAULT (getutcdate()) NOT NULL,
     CONSTRAINT [PK_UnitType] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    CONSTRAINT [FK_UnitType_Portfolio] FOREIGN KEY ([PortfolioId]) REFERENCES [property].[Portfolio]([Id]), 
 )

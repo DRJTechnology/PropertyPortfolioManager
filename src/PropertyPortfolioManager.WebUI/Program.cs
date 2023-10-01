@@ -40,6 +40,7 @@ builder.Services.AddRazorPages()
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
 builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IPpmApiFacade, PpmApiFacade>();
 
 // Set up caching.

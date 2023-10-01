@@ -5,6 +5,7 @@
 -- ================================================
 CREATE PROCEDURE [property].[UnitType_Update]
 	@Id					INT, 
+	@PortfolioId		INT,
 	@Type				NVARCHAR(255),
 	@CurrentUserId		INT
 AS
@@ -15,6 +16,6 @@ BEGIN
 	SET		[Type] = @Type,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
-	WHERE	Id = @Id
+	WHERE	PortfolioId = @PortfolioId AND Id = @Id
 
 END

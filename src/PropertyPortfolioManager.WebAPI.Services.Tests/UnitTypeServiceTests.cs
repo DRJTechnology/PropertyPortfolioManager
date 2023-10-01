@@ -23,12 +23,13 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_All_UnitTypes()
         {
+            var portfolioId = 2;
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.GetAll())
+            unitTypeRepositoryMock.Setup(r => r.GetAll(portfolioId))
                                         .Returns(Task.FromResult(this.unitTypeList));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var units = await unitTypeService.GetAll();
+            var units = await unitTypeService.GetAll(portfolioId);
 
             Assert.IsType<List<UnitTypeModel>>(units);
             Assert.Equal(7, units.Count());
@@ -38,13 +39,14 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_UnitType_By_Id()
         {
+            var portfolioId = 2;
             var unitTypeId = 4;
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.GetById(unitTypeId))
+            unitTypeRepositoryMock.Setup(r => r.GetById(unitTypeId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitTypeId)));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unit = await unitTypeService.GetById(unitTypeId);
+            var unit = await unitTypeService.GetById(unitTypeId, portfolioId);
 
             Assert.IsType<UnitTypeModel>(unit);
             Assert.Equal(unitTypeId, unit.Id);
@@ -55,13 +57,14 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_UnitType_By_Id_NotFound()
         {
+            var portfolioId = 2;
             var unitTypeId = 33;
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.GetById(unitTypeId))
+            unitTypeRepositoryMock.Setup(r => r.GetById(unitTypeId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitTypeId)));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unit = await unitTypeService.GetById(unitTypeId);
+            var unit = await unitTypeService.GetById(unitTypeId, portfolioId);
 
             Assert.Null(unit);
         }
@@ -69,6 +72,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Create_UnitType()
         {
+            var portfolioId = 2;
             var currentUserId = 2;
             var newUnit = new UnitTypeModel()
             {
@@ -76,11 +80,11 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             };
 
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), It.IsAny<UnitTypeDto>()))
+            unitTypeRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitTypeDto>()))
                                         .Returns(Task.FromResult(11));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unitTypeId = await unitTypeService.Create(currentUserId, newUnit);
+            var unitTypeId = await unitTypeService.Create(currentUserId, portfolioId, newUnit);
 
             Assert.Equal(11, unitTypeId);
         }
@@ -100,6 +104,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                     new UnitTypeDto()
                     {
                         Id = (short)i,
+                        PortfolioId = 2,
                         Type = $"Unit Type {i}",
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,

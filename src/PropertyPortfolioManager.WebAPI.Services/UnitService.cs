@@ -20,33 +20,28 @@ namespace PropertyPortfolioManager.WebAPI.Services
             this.mapper = mapper;
         }
 
-        public async Task<int> Create(int currentUserId, UnitEditModel unit)
+        public async Task<int> Create(int currentUserId, int portfolioId, UnitEditModel unit)
         {
             var unitDto = this.mapper.Map<UnitDto>(unit);
-            return await this.unitRepository.Create(currentUserId, unitDto);
+            return await this.unitRepository.Create(currentUserId, portfolioId, unitDto);
         }
 
-        public Task<bool> Delete(int currentUserId, int unitId)
+        public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<UnitBasicResponseModel>> GetAll()
-        {
-            var unitList = await this.unitRepository.GetAll();
+            var unitList = await this.unitRepository.GetAll(portfolioId);
             return this.mapper.Map<List<UnitBasicResponseModel>>(unitList);
         }
 
-        public async Task<UnitResponseModel> GetById(int unitId)
+        public async Task<UnitResponseModel> GetById(int unitId, int portfolioId)
         {
-            var unit = await this.unitRepository.GetById(unitId);
+            var unit = await this.unitRepository.GetById(unitId, portfolioId);
             return this.mapper.Map<UnitResponseModel>(unit);
         }
 
-        public async Task<bool> Update(int currentUserId, UnitEditModel unit)
+        public async Task<bool> Update(int currentUserId, int portfolioId, UnitEditModel unit)
         {
             var unitDto = this.mapper.Map<UnitDto>(unit);
-            return await this.unitRepository.Update(currentUserId, unitDto);
+            return await this.unitRepository.Update(currentUserId, portfolioId, unitDto);
         }
     }
 }

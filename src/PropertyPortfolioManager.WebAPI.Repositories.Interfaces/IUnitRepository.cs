@@ -5,9 +5,9 @@ namespace PropertyPortfolioManager.WebAPI.Repositories.Interfaces
 {
     public interface IUnitRepository
     {
-        Task<List<UnitBasicDto>> GetAll();
-        Task<UnitDto> GetById(int id);
-        Task<int> Create(int userId, UnitDto newUnit);
-        Task<bool> Update(int userId, UnitDto existingUnit);
+        Task<List<UnitBasicDto>> GetAll(int portfolioId);
+        Task<UnitDto> GetById(int id, int portfolioId);
+        Task<int> Create(int userId, int portfolioId, UnitDto newUnit);
+        Task<bool> Update(int userId, int portfolioId, UnitDto existingUnit);
     }
 }

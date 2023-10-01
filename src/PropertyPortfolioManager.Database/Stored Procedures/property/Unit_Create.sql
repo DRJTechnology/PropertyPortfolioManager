@@ -5,6 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [property].[Unit_Create]
 	@Id					INT OUTPUT, 
+	@PortfolioId		INT,
 	@Code				NVARCHAR(50),
 	@UnitTypeId			INT,
 	@StreetAddress		NVARCHAR(255) = NULL,
@@ -26,8 +27,8 @@ BEGIN
 	DECLARE @AddressId INT
 	SET @AddressId = SCOPE_IDENTITY()
 
-    INSERT INTO [property].[Unit] (Code, UnitTypeId, AddressId, PurchasePrice, PurchaseDate, SalePrice, SaleDate, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
-	VALUES (@Code, @UnitTypeId, @AddressId, @PurchasePrice, @PurchaseDate, @SalePrice, @SaleDate, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
+    INSERT INTO [property].[Unit] (PortfolioId, Code, UnitTypeId, AddressId, PurchasePrice, PurchaseDate, SalePrice, SaleDate, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	VALUES (@PortfolioId, @Code, @UnitTypeId, @AddressId, @PurchasePrice, @PurchaseDate, @SalePrice, @SaleDate, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 	SET @Id = SCOPE_IDENTITY()
 

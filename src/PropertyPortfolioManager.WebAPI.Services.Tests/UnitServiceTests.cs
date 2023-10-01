@@ -23,12 +23,13 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_All_Units()
         {
+            int portfolioId = 2;
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.GetAll())
+            unitRepositoryMock.Setup(r => r.GetAll(portfolioId))
                                         .Returns(Task.FromResult(this.basicUnitList));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var units = await unitService.GetAll();
+            var units = await unitService.GetAll(portfolioId);
 
             Assert.IsType<List<UnitBasicResponseModel>>(units);
             Assert.Equal(10, units.Count());
@@ -39,13 +40,14 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_Unit_By_Id()
         {
+            int portfolioId = 2;
             var unitId = 7;
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.GetById(unitId))
+            unitRepositoryMock.Setup(r => r.GetById(unitId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitId)));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unit = await unitService.GetById(unitId);
+            var unit = await unitService.GetById(unitId, portfolioId);
 
             Assert.IsType<UnitResponseModel>(unit);
             Assert.Equal(unitId, unit.Id);
@@ -56,13 +58,14 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Get_Unit_By_Id_NotFound()
         {
+            int portfolioId = 2;
             var unitId = 33;
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.GetById(unitId))
+            unitRepositoryMock.Setup(r => r.GetById(unitId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitId)));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unit = await unitService.GetById(unitId);
+            var unit = await unitService.GetById(unitId, portfolioId);
 
             Assert.Null(unit);
         }
@@ -70,6 +73,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Create_Unit_No_Address()
         {
+            int portfolioId = 2;
             var currentUserId = 2;
             var newUnit = new UnitEditModel()
             {
@@ -78,11 +82,11 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             };
 
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), It.IsAny<UnitDto>()))
+            unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(57));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unitId = await unitService.Create(currentUserId, newUnit);
+            var unitId = await unitService.Create(currentUserId, portfolioId, newUnit);
 
             Assert.Equal(57, unitId);
         }
@@ -90,6 +94,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Create_Unit_With_Address()
         {
+            int portfolioId = 2;
             var currentUserId = 2;
             var newUnit = new UnitEditModel()
             {
@@ -105,11 +110,11 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             };
 
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), It.IsAny<UnitDto>()))
+            unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(57));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var unitId = await unitService.Create(currentUserId, newUnit);
+            var unitId = await unitService.Create(currentUserId, portfolioId, newUnit);
 
             Assert.Equal(57, unitId);
         }
@@ -117,6 +122,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Update_Unit_Success()
         {
+            int portfolioId = 2;
             var currentUserId = 2;
             var existingUnit = new UnitEditModel()
             {
@@ -133,11 +139,11 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             };
 
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), It.IsAny<UnitDto>()))
+            unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(true));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var response = await unitService.Update(currentUserId, existingUnit);
+            var response = await unitService.Update(currentUserId, portfolioId, existingUnit);
 
             Assert.True(response);
         }
@@ -145,6 +151,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         [Fact]
         public async void Update_Unit_Failure()
         {
+            int portfolioId = 2;
             var currentUserId = 2;
             var existingUnit = new UnitEditModel()
             {
@@ -161,11 +168,11 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             };
 
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), It.IsAny<UnitDto>()))
+            unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(false));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var response = await unitService.Update(currentUserId, existingUnit);
+            var response = await unitService.Update(currentUserId, portfolioId, existingUnit);
 
             Assert.False(response);
         }
@@ -206,6 +213,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                     new UnitDto()
                     {
                         Id = i,
+                        PortfolioId = 2,
                         Code = $"PR{i}",
                         UnitTypeId = 1,
                         UnitType = "Detached House",

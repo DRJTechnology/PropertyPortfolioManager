@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
@@ -20,26 +19,26 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<UnitTypeModel>> GetAll()
+        public async Task<List<UnitTypeModel>> GetAll(int portfolioId)
         {
-            return await this.unitTypeService.GetAll();
+            return await this.unitTypeService.GetAll(portfolioId);
         }
 
         [HttpGet]
         [Route("GetById/{unitTypeId}")]
-        public async Task<UnitTypeModel> GetById(int unitTypeId)
+        public async Task<UnitTypeModel> GetById(int unitTypeId, int portfolioId)
         {
-            return await this.unitTypeService.GetById(unitTypeId);
+            return await this.unitTypeService.GetById(unitTypeId, portfolioId);
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ApiCreateResponse> Create(UnitTypeModel unitType)
+        public async Task<ApiCreateResponse> Create(UnitTypeModel unitType, int portfolioId)
         {
             try
             {
-                var currentUser = await this.UserService.GetCurrent(User);
-                var newUnitTypeId = await this.unitTypeService.Create(currentUser.Id, unitType);
+                //var currentUser = await this.UserService.GetCurrent(User);
+                var newUnitTypeId = await this.unitTypeService.Create((await this.GetCurrentUser()).Id, portfolioId, unitType);
                 return new ApiCreateResponse()
                 {
                     CreatedId = newUnitTypeId,
@@ -58,12 +57,12 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<ApiCreateResponse> Update(UnitTypeModel unitType)
+        public async Task<ApiCreateResponse> Update(UnitTypeModel unitType, int portfolioId)
         {
             try
             {
-                var currentUser = await this.UserService.GetCurrent(User);
-                if (await this.unitTypeService.Update(currentUser.Id, unitType))
+                //var currentUser = await this.UserService.GetCurrent(User);
+                if (await this.unitTypeService.Update((await this.GetCurrentUser()).Id, portfolioId, unitType))
                 {
                     return new ApiCreateResponse()
                     {

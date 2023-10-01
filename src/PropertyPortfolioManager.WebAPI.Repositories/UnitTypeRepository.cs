@@ -1,6 +1,4 @@
 ﻿using Dapper;
-using Microsoft.Identity.Client;
-using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using System.Data;
@@ -16,7 +14,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             this.dbConnection = dbConnection;
         }
 
-        public async Task<int> Create(int userId, UnitTypeDto newUnitType)
+        public async Task<int> Create(int userId, int portfolioId, UnitTypeDto newUnitType)
         {
             if (newUnitType == null)
             {
@@ -27,6 +25,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parameters.Add("@PortfolioId", portfolioId);
                 parameters.Add("@Type", newUnitType.Type);
                 parameters.Add("@CurrentUserId", userId);
 
@@ -40,20 +39,24 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<List<UnitTypeDto>> GetAll()
+        public async Task<List<UnitTypeDto>> GetAll(int portfolioId)
         {
-            var unitTypes = await this.dbConnection.QueryAsync<UnitTypeDto>("property.UnitType_GetAll", commandType: CommandType.StoredProcedure);
+            var parameters = new DynamicParameters();
+            parameters.Add("@PortfolioId", portfolioId);
+
+            var unitTypes = await this.dbConnection.QueryAsync<UnitTypeDto>("property.UnitType_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
             return unitTypes.ToList(); ;
         }
 
-        public async Task<UnitTypeDto> GetById(int id)
+        public async Task<UnitTypeDto> GetById(int id, int portfolioId)
         {
             {
                 try
                 {
                     var parameters = new DynamicParameters();
                     parameters.Add("@Id", id);
+                    parameters.Add("@PortfolioId", portfolioId);
 
                     var unitType = await this.dbConnection.QuerySingleAsync<UnitTypeDto>("property.UnitType_GetById", parameters, commandType: CommandType.StoredProcedure);
 
@@ -73,15 +76,16 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<bool> Update(int userId, UnitTypeDto existingUnitType)
+        public async Task<bool> Update(int userId, int portfolioId, UnitTypeDto existingUnitType)
         {
             if (existingUnitType == null)
             {
-                throw new ArgumentNullException("existingUnit");
+                throw new ArgumentNullException("existingUnitType");
             }
 
             var parameters = new DynamicParameters();
             parameters.Add("@Id", existingUnitType.Id);
+            parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@Type", existingUnitType.Type);
             parameters.Add("@CurrentUserId", userId);
 

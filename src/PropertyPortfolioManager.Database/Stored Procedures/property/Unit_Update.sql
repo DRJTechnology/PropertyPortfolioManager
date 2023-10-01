@@ -5,6 +5,7 @@
 -- =============================================
 CREATE PROCEDURE [property].[Unit_Update]
 	@Id					INT, 
+	@PortfolioId		INT,
 	@Code				NVARCHAR(50),
 	@UnitTypeId			INT,
 	@StreetAddress		NVARCHAR(255) = NULL,
@@ -21,10 +22,18 @@ BEGIN
 	SET NOCOUNT ON;
 
 	DECLARE @AddressID INT
+	DECLARE @CurrentPortflioId INT
 
-	SELECT	@AddressID = AddressId
+	SELECT	@AddressID = AddressId,
+			@CurrentPortflioId = PortfolioId
 	FROM	property.Unit
 	Where	Id = @Id
+
+	IF	@CurrentPortflioId != @PortfolioId
+	BEGIN
+	   RAISERROR ('Invalid Portfolio for user.' , 16, 1) WITH NOWAIT  
+	   RETURN
+	END
 
     UPDATE [general].[Address]
 	SET		StreetAddress = @StreetAddress,
@@ -44,6 +53,6 @@ BEGIN
 			SaleDate = @SaleDate,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
-	WHERE	Id =@Id
+	WHERE	Id = @Id
 
 END
