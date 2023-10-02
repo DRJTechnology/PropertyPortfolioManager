@@ -1,4 +1,5 @@
-﻿using PropertyPortfolioManager.Models.Model.Property;
+﻿using PropertyPortfolioManager.Models.InternalObjects;
+using PropertyPortfolioManager.Models.Model.Property;
 using System.Security.Claims;
 
 namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
@@ -10,5 +11,6 @@ namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
         Task<int> Create(int currentUserId, PortfolioModel portfolio);
         Task<bool> Update(int currentUserId, PortfolioModel portfolio);
         Task<PortfolioModel> GetCurrent(ClaimsPrincipal user);
+        Task<bool> SelectForUser(int portfolioId, int userId, ClaimsPrincipal user);
     }
 }

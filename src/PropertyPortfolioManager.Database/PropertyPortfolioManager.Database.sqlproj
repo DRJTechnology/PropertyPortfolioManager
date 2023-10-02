@@ -96,5 +96,6 @@
     <Build Include="Stored Procedures\property\Portfolio_GetById.sql" />
     <Build Include="Stored Procedures\property\Portfolio_Update.sql" />
     <Build Include="Stored Procedures\property\Portfolio_GetByUserObjectIdentifier.sql" />
+    <Build Include="Stored Procedures\property\Portfolio_SelectForUser.sql" />
   </ItemGroup>
 </Project>

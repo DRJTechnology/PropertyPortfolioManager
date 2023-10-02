@@ -58,7 +58,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                     parameters.Add("@Id", id);
                     parameters.Add("@PortfolioId", portfolioId);
 
-                    var unitType = await this.dbConnection.QuerySingleAsync<UnitTypeDto>("property.UnitType_GetById", parameters, commandType: CommandType.StoredProcedure);
+                    var unitType = await this.dbConnection.QueryFirstOrDefaultAsync<UnitTypeDto>("property.UnitType_GetById", parameters, commandType: CommandType.StoredProcedure);
 
                     if (unitType != null)
                     {

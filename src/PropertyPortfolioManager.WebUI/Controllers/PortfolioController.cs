@@ -49,5 +49,12 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> SelectPortfolio(int id)
+        {
+            await PortfolioService.SelectForCurrentUser(id);
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

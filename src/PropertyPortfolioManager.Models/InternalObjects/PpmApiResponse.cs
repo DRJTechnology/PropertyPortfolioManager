@@ -1,6 +1,6 @@
 ﻿namespace PropertyPortfolioManager.Models.InternalObjects
 {
-    public class ApiCreateResponse
+    public class PpmApiResponse
     {
         public bool Success { get; set; }
         public int CreatedId { get; set; }

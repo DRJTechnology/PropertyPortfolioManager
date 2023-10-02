@@ -27,7 +27,7 @@ namespace PropertyPortfolioManager.WebUI.Helpers
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingDefault
             };
 
-            var response = await _downstreamApi.PostForUserAsync<TInput, ApiCreateResponse>(
+            var response = await _downstreamApi.PostForUserAsync<TInput, PpmApiResponse>(
                          apiServiceName,
                          obj,
                          (opt) =>

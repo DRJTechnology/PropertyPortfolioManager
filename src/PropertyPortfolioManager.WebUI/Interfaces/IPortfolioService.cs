@@ -9,5 +9,6 @@ namespace PropertyPortfolioManager.WebUI.Interfaces
         Task<int> Create(PortfolioModel portfolio);
         Task<bool> Update(PortfolioModel portfolio);
         Task<PortfolioModel> GetCurrent();
+        Task<bool> SelectForCurrentUser(int id);
     }
 }

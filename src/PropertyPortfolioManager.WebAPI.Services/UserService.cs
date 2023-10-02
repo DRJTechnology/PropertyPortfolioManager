@@ -1,5 +1,6 @@
 ﻿using DRJTechnology.Cache;
 using Microsoft.Identity.Web;
+using PropertyPortfolioManager.Models.CacheKeys;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
 using PropertyPortfolioManager.WebAPI.Services.Interfaces;
@@ -27,7 +28,8 @@ namespace PropertyPortfolioManager.WebAPI.Services
 
         public async Task<UserDto> GetCurrent(ClaimsPrincipal user)
         {
-            var currentUser = await this.cacheService.GetAsync<UserDto>(user.GetObjectId());
+            var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
+            var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
 
             if (currentUser != null)
             {
@@ -47,7 +49,7 @@ namespace PropertyPortfolioManager.WebAPI.Services
                 userDto.Id = await this.userRepository.Create(userDto);
             }
 
-            await this.cacheService.SetAsync(user.GetObjectId(), userDto);
+            await this.cacheService.SetAsync(cacheKey, userDto);
 
             return userDto;
         }

@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using DRJTechnology.Cache;
+using Microsoft.Graph;
 using Microsoft.Identity.Web;
+using PropertyPortfolioManager.Models.CacheKeys;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Property;
@@ -43,7 +45,7 @@ namespace PropertyPortfolioManager.WebAPI.Services
 
         public async Task<PortfolioModel> GetCurrent(ClaimsPrincipal user)
         {
-            var cacheKey = $"CurrentPortfolio_{user.GetObjectId()}";
+            var cacheKey = $"{CacheKeys.KeyPortfolioPrefix}{user.GetObjectId()}";
             var currentPortfolio = await this.cacheService.GetAsync<PortfolioModel>(cacheKey);
 
             if (currentPortfolio != null)
@@ -65,6 +67,14 @@ namespace PropertyPortfolioManager.WebAPI.Services
             }
 
             return portfolio;
+        }
+
+        public async Task<bool> SelectForUser(int portfolioId, int userId, ClaimsPrincipal user)
+        {
+            await this.cacheService.RemoveAsync($"{CacheKeys.KeyPortfolioPrefix}{user.GetObjectId()}");
+            await this.cacheService.RemoveAsync($"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}");
+
+            return await this.portfolioRepository.SelectForUser(portfolioId, userId);
         }
 
         public async Task<bool> Update(int currentUserId, PortfolioModel portfolio)

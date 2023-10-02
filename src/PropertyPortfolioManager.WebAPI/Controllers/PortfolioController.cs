@@ -41,12 +41,12 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ApiCreateResponse> Create(PortfolioModel portfolio)
+        public async Task<PpmApiResponse> Create(PortfolioModel portfolio)
         {
             try
             {
                 var portfolioId = await this.portfolioService.Create((await this.GetCurrentUser()).Id, portfolio);
-                return new ApiCreateResponse()
+                return new PpmApiResponse()
                 {
                     CreatedId = portfolioId,
                     Success = true,
@@ -54,7 +54,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return new ApiCreateResponse()
+                return new PpmApiResponse()
                 {
                     Success = false,
                     ErrorMessage = ex.Message,
@@ -64,13 +64,13 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<ApiCreateResponse> Update(PortfolioModel portfolio, int portfolioId)
+        public async Task<PpmApiResponse> Update(PortfolioModel portfolio, int portfolioId)
         {
             try
             {
                 if (await this.portfolioService.Update((await this.GetCurrentUser()).Id, portfolio))
                 {
-                    return new ApiCreateResponse()
+                    return new PpmApiResponse()
                     {
                         CreatedId = portfolio.Id,
                         Success = true,
@@ -78,7 +78,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
                 }
                 else
                 {
-                    return new ApiCreateResponse()
+                    return new PpmApiResponse()
                     {
                         Success = false,
                         ErrorMessage = $"PortfolioController: Failed to update portfolioId {portfolio.Id}"
@@ -87,7 +87,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return new ApiCreateResponse()
+                return new PpmApiResponse()
                 {
                     Success = false,
                     ErrorMessage = ex.Message,
@@ -95,5 +95,26 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("SelectForCurrentUser/{portfolioId}")]
+        public async Task<PpmApiResponse> SelectForCurrentUser(int portfolioId)
+        {
+            if(await this.portfolioService.SelectForUser(portfolioId, (await this.GetCurrentUser()).Id, User))
+            {
+                return new PpmApiResponse()
+                {
+                    Success = true
+                };
+            }
+            else
+            {
+                return new PpmApiResponse()
+                {
+                    Success = false,
+                    ErrorMessage = "Failed to set current portfolio for user",
+                };
+            }
+
+        }
     }
 }

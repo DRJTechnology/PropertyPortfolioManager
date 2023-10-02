@@ -56,7 +56,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 parameters.Add("@Id", id);
                 parameters.Add("@UserId", userId);
 
-                var portfolio = await this.dbConnection.QuerySingleAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
+                var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
 
                 if (portfolio != null)
                 {
@@ -88,6 +88,17 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             {
                 throw;
             }
+        }
+
+        public async Task<bool> SelectForUser(int portfolioId, int userId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@UserId", userId);
+
+            await this.dbConnection.ExecuteAsync("property.Portfolio_SelectForUser", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
         }
 
         public async Task<bool> Update(int userId, PortfolioDto existingPortfolio)

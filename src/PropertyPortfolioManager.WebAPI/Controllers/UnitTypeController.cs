@@ -19,27 +19,56 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<UnitTypeModel>> GetAll(int portfolioId)
+        public async Task<List<UnitTypeModel>> GetAll()
         {
-            return await this.unitTypeService.GetAll(portfolioId);
+            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+            if(portfolioId == null)
+            {
+                return new List<UnitTypeModel>();
+            }
+            else
+            {
+                return await this.unitTypeService.GetAll((int)portfolioId);
+            }
         }
 
         [HttpGet]
         [Route("GetById/{unitTypeId}")]
-        public async Task<UnitTypeModel> GetById(int unitTypeId, int portfolioId)
+        public async Task<UnitTypeModel> GetById(int unitTypeId)
         {
-            return await this.unitTypeService.GetById(unitTypeId, portfolioId);
+            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+            if (portfolioId == null)
+            {
+                return new UnitTypeModel();
+            }
+            else
+            {
+                return await this.unitTypeService.GetById(unitTypeId, (int)portfolioId);
+            }         
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<ApiCreateResponse> Create(UnitTypeModel unitType, int portfolioId)
+        public async Task<PpmApiResponse> Create(UnitTypeModel unitType)
         {
             try
             {
-                //var currentUser = await this.UserService.GetCurrent(User);
-                var newUnitTypeId = await this.unitTypeService.Create((await this.GetCurrentUser()).Id, portfolioId, unitType);
-                return new ApiCreateResponse()
+                var newUnitTypeId = 0;
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return new PpmApiResponse()
+                    {
+                        Success = false,
+                        ErrorMessage = "UnitType_Create: User has no Selected Portfolio Id set."
+                    };
+                }
+                else
+                {
+                    newUnitTypeId = await this.unitTypeService.Create((await this.GetCurrentUser()).Id, (int)portfolioId, unitType);
+                }
+
+                return new PpmApiResponse()
                 {
                     CreatedId = newUnitTypeId,
                     Success = true,
@@ -47,7 +76,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             }
             catch (Exception ex)
             {
-                return new ApiCreateResponse()
+                return new PpmApiResponse()
                 {
                     Success = false,
                     ErrorMessage = ex.Message,
@@ -57,31 +86,42 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<ApiCreateResponse> Update(UnitTypeModel unitType, int portfolioId)
+        public async Task<PpmApiResponse> Update(UnitTypeModel unitType)
         {
             try
             {
-                //var currentUser = await this.UserService.GetCurrent(User);
-                if (await this.unitTypeService.Update((await this.GetCurrentUser()).Id, portfolioId, unitType))
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
                 {
-                    return new ApiCreateResponse()
+                    return new PpmApiResponse()
                     {
-                        CreatedId = unitType.Id,
-                        Success = true,
+                        Success = false,
+                        ErrorMessage = "UnitType_Update: User has no Selected Portfolio Id set."
                     };
                 }
                 else
                 {
-                    return new ApiCreateResponse()
+                    if (await this.unitTypeService.Update((await this.GetCurrentUser()).Id, (int)portfolioId, unitType))
                     {
-                        Success = false,
-                        ErrorMessage = $"UnitTypeController: Failed to update unitTypeId {unitType.Id}"
-                    };
+                        return new PpmApiResponse()
+                        {
+                            CreatedId = unitType.Id,
+                            Success = true,
+                        };
+                    }
+                    else
+                    {
+                        return new PpmApiResponse()
+                        {
+                            Success = false,
+                            ErrorMessage = $"UnitTypeController: Failed to update unitTypeId {unitType.Id}"
+                        };
+                    }
                 }
             }
             catch (Exception ex)
             {
-                return new ApiCreateResponse()
+                return new PpmApiResponse()
                 {
                     Success = false,
                     ErrorMessage = ex.Message,
