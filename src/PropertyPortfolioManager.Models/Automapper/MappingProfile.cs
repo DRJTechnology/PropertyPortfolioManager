@@ -22,6 +22,9 @@ namespace PropertyPortfolioManager.Models.Automapper
 
             this.CreateMap<UnitTypeDto, UnitTypeModel>();
             this.CreateMap<UnitTypeModel, UnitTypeDto>();
+
+            this.CreateMap<ContactTypeDto, ContactTypeModel>();
+            this.CreateMap<ContactTypeModel, ContactTypeDto>();
         }
     }
 }

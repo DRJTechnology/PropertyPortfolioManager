@@ -6,7 +6,7 @@ namespace PropertyPortfolioManager.WebUI.Interfaces
     {
         Task<List<UnitTypeModel>> GetAll();
         Task<UnitTypeModel> GetById(int unitTypeId);
-        Task<int> Create(UnitTypeModel unit);
-        Task<bool> Update(UnitTypeModel unit);
+        Task<int> Create(UnitTypeModel unitType);
+        Task<bool> Update(UnitTypeModel unitType);
     }
 }

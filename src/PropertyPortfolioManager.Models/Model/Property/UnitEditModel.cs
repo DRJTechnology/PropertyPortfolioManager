@@ -19,7 +19,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public int AddressId { get; set; }
 
         [DisplayName("Unit Type")]
-        public Int16  UnitTypeId { get; set; }
+        public int  UnitTypeId { get; set; }
 
         [DisplayName("Purchase Date")]
         [DataType(DataType.Date)] 

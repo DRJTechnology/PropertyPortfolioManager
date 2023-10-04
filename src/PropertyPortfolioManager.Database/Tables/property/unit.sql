@@ -4,7 +4,7 @@
     [PortfolioId]       INT              NOT NULL,
     [Code]              NVARCHAR(50)     NOT NULL,
     [AddressId]         INT              NULL,
-    [UnitTypeId]        SMALLINT         NOT NULL,
+    [UnitTypeId]        INT         NOT NULL,
     [PurchaseDate]      DATE             NULL,
     [PurchasePrice]     MONEY            NULL,
     [SaleDate]          DATE             NULL,

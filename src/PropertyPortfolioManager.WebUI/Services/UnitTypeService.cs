@@ -6,20 +6,20 @@ namespace PropertyPortfolioManager.WebUI.Services
 {
     public class UnitTypeService : IUnitTypeService
     {
-        private readonly ILogger<UnitService> logger;
+        private readonly ILogger<UnitTypeService> logger;
         private readonly IPpmApiFacade ppmApiFacade;
 
-        public UnitTypeService(ILogger<UnitService> logger, IPpmApiFacade ppmApiFacade)
+        public UnitTypeService(ILogger<UnitTypeService> logger, IPpmApiFacade ppmApiFacade)
         {
             this.logger = logger;
             this.ppmApiFacade = ppmApiFacade;
         }
 
-        public async Task<int> Create(UnitTypeModel unit)
+        public async Task<int> Create(UnitTypeModel unitType)
         {
             try
             {
-                return await this.ppmApiFacade.PostAsync<UnitTypeModel>(unit, "UnitType/Create");
+                return await this.ppmApiFacade.PostAsync<UnitTypeModel>(unitType, "UnitType/Create");
             }
             catch (Exception ex)
             {
@@ -51,11 +51,11 @@ namespace PropertyPortfolioManager.WebUI.Services
             }
         }
 
-        public async Task<bool> Update( UnitTypeModel unit)
+        public async Task<bool> Update( UnitTypeModel unitType)
         {
             try
             {
-                var unitTypeId = await this.ppmApiFacade.PostAsync<UnitTypeModel>(unit, "UnitType/Update");
+                var unitTypeId = await this.ppmApiFacade.PostAsync<UnitTypeModel>(unitType, "UnitType/Update");
                 return unitTypeId > 0;
             }
             catch (Exception ex)

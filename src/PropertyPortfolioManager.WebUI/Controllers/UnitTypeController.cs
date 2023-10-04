@@ -31,11 +31,11 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUpdate(UnitTypeModel unitType)
         {
-            int unitId = unitType.Id;
+            int unitTypeId = unitType.Id;
 
             if (unitType.Id == 0)
             {
-                unitId = await unitTypeService.Create(unitType);
+                unitTypeId = await unitTypeService.Create(unitType);
             }
             else
             {

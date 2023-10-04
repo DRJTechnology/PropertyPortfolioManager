@@ -1,6 +1,6 @@
 ﻿CREATE TABLE [property].[UnitType]
 (
-	[Id]	            SMALLINT		IDENTITY NOT NULL,
+	[Id]	            INT		IDENTITY NOT NULL,
     [PortfolioId]       INT             NOT NULL,
 	[Type]	            NVARCHAR(255)	NOT NULL,
 	[Deleted]           BIT             DEFAULT (0) NOT NULL,

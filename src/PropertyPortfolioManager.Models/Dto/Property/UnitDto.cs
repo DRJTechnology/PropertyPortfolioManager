@@ -15,7 +15,7 @@ namespace PropertyPortfolioManager.Models.Dto.Property
 
         public int AddressId { get; set; }
 
-        public Int16 UnitTypeId { get; set; }
+        public int UnitTypeId { get; set; }
 
         public String UnitType { get; set; } = string.Empty;
 
