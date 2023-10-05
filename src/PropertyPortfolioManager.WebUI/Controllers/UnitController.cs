@@ -19,9 +19,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             this.unitTypeService = unitTypeService;
         }
 
-        public async Task<IActionResult> Index()
+
+        [HttpGet]
+        [Route("[controller]/{activeOnly?}")]
+        public async Task<IActionResult> Index(bool activeOnly = true)
         {
-            var units = await unitService.GetAll();
+            ViewBag.ActiveOnly = activeOnly;
+            var units = await unitService.GetAll(activeOnly);
             return View(units);
         }
 
@@ -72,9 +76,9 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             return View(model);
         }
 
-        private async Task<SelectList> UserTypeSelectList()
+        private async Task<SelectList> UserTypeSelectList(bool activeOnly = true)
         {
-            var unitTypeList = await unitTypeService.GetAll();
+            var unitTypeList = await unitTypeService.GetAll(activeOnly);
 
             return new SelectList(unitTypeList, "Id", "Type");
         }

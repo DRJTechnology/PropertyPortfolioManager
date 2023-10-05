@@ -37,6 +37,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 parameters.Add("@PurchaseDate", newUnit.PurchaseDate);
                 parameters.Add("@SalePrice", newUnit.SalePrice);
                 parameters.Add("@SaleDate", newUnit.SaleDate);
+                parameters.Add("@Active", newUnit.Active);
                 parameters.Add("@CurrentUserId", userId);
 
                 await this.dbConnection.ExecuteAsync("property.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
@@ -49,10 +50,11 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<List<UnitBasicDto>> GetAll(int portfolioId)
+        public async Task<List<UnitBasicDto>> GetAll(int portfolioId, bool activeOnly)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@ActiveOnly", activeOnly);
 
             var units = await this.dbConnection.QueryAsync<UnitBasicDto>("property.Unit_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
@@ -105,6 +107,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             parameters.Add("@PurchaseDate", existingUnit.PurchaseDate);
             parameters.Add("@SalePrice", existingUnit.SalePrice);
             parameters.Add("@SaleDate", existingUnit.SaleDate);
+            parameters.Add("@Active", existingUnit.Active);
             parameters.Add("@CurrentUserId", userId);
 
             await this.dbConnection.ExecuteAsync("property.Unit_Update", parameters, commandType: CommandType.StoredProcedure);

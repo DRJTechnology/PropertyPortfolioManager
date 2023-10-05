@@ -26,9 +26,9 @@ namespace PropertyPortfolioManager.WebAPI.Services
             return await this.ContactTypeRepository.Create(currentUserId, portfolioId, contactTypeDto);
         }
 
-        public async Task<List<ContactTypeModel>> GetAll(int portfolioId)
+        public async Task<List<ContactTypeModel>> GetAll(int portfolioId, bool activeOnly)
         {
-            var contactTypeList = await this.ContactTypeRepository.GetAll(portfolioId);
+            var contactTypeList = await this.ContactTypeRepository.GetAll(portfolioId, activeOnly);
             return this.mapper.Map<List<ContactTypeModel>>(contactTypeList);
         }
 

@@ -10,9 +10,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             : base(userService, portfolioService)
         {
         }
-        public async Task<IActionResult> Index()
+
+        [HttpGet]
+        [Route("[controller]/{activeOnly?}")]
+        public async Task<IActionResult> Index(bool activeOnly = true)
         {
-            var portfolios = await PortfolioService.GetAll();
+            ViewBag.ActiveOnly = activeOnly;
+            var portfolios = await PortfolioService.GetAll(activeOnly);
             return View(portfolios);
         }
 

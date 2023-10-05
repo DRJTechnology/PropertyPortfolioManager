@@ -28,11 +28,11 @@ namespace PropertyPortfolioManager.WebUI.Services
             }
         }
 
-        public async Task<List<PortfolioModel>> GetAll()
+        public async Task<List<PortfolioModel>> GetAll(bool activeOnly)
         {
             try
             {
-                return await this.ppmApiFacade.GetAsync<List<PortfolioModel>>("Portfolio/GetAll");
+                return await this.ppmApiFacade.GetAsync<List<PortfolioModel>>($"Portfolio/GetAll/{activeOnly}");
             }
             catch (Exception ex)
             {

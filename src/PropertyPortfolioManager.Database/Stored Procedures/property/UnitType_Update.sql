@@ -7,6 +7,7 @@ CREATE PROCEDURE [property].[UnitType_Update]
 	@Id					INT, 
 	@PortfolioId		INT,
 	@Type				NVARCHAR(255),
+	@Active				BIT,
 	@CurrentUserId		INT
 AS
 BEGIN
@@ -14,6 +15,7 @@ BEGIN
 
 	UPDATE	[property].[UnitType]
 	SET		[Type] = @Type,
+			Active = @Active,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
 	WHERE	PortfolioId = @PortfolioId AND Id = @Id

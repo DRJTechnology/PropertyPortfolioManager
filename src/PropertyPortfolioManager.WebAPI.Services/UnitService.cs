@@ -26,9 +26,9 @@ namespace PropertyPortfolioManager.WebAPI.Services
             return await this.unitRepository.Create(currentUserId, portfolioId, unitDto);
         }
 
-        public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId)
+        public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId, bool activeOnly)
         {
-            var unitList = await this.unitRepository.GetAll(portfolioId);
+            var unitList = await this.unitRepository.GetAll(portfolioId, activeOnly);
             return this.mapper.Map<List<UnitBasicResponseModel>>(unitList);
         }
 

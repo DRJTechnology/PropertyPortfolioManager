@@ -27,6 +27,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parameters.Add("@PortfolioId", portfolioId);
                 parameters.Add("@Type", newContactType.Type);
+                parameters.Add("@Active", newContactType.Active);
                 parameters.Add("@CurrentUserId", userId);
 
                 await this.dbConnection.ExecuteAsync("general.ContactType_Create", parameters, commandType: CommandType.StoredProcedure);
@@ -39,10 +40,11 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<List<ContactTypeDto>> GetAll(int portfolioId)
+        public async Task<List<ContactTypeDto>> GetAll(int portfolioId, bool activeOnly)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@ActiveOnly", activeOnly);
 
             var contactTypes = await this.dbConnection.QueryAsync<ContactTypeDto>("general.ContactType_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
@@ -87,6 +89,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             parameters.Add("@Id", existingContactType.Id);
             parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@Type", existingContactType.Type);
+            parameters.Add("@Active", existingContactType.Active);
             parameters.Add("@CurrentUserId", userId);
 
             await this.dbConnection.ExecuteAsync("general.ContactType_Update", parameters, commandType: CommandType.StoredProcedure);

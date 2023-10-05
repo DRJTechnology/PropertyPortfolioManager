@@ -27,11 +27,11 @@ namespace PropertyPortfolioManager.WebUI.Services
             }
         }
 
-        public async Task<List<UnitBasicResponseModel>> GetAll()
+        public async Task<List<UnitBasicResponseModel>> GetAll(bool activeOnly)
         {
             try
             {
-                return await this.ppmApiFacade.GetAsync<List<UnitBasicResponseModel>>("Unit/GetAll");
+                return await this.ppmApiFacade.GetAsync<List<UnitBasicResponseModel>>($"Unit/GetAll/{activeOnly}");
             }
             catch (Exception ex)
             {

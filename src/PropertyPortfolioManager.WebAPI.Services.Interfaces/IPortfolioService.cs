@@ -6,7 +6,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
 {
     public interface IPortfolioService
     {
-        Task<List<PortfolioModel>> GetAll(int portfolioId);
+        Task<List<PortfolioModel>> GetAll(int portfolioId, bool activeOnly);
         Task<PortfolioModel> GetById(int portfolioId, int userId);
         Task<int> Create(int currentUserId, PortfolioModel portfolio);
         Task<bool> Update(int currentUserId, PortfolioModel portfolio);

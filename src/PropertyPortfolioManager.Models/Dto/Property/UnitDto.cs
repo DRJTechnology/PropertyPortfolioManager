@@ -28,5 +28,7 @@ namespace PropertyPortfolioManager.Models.Dto.Property
         public DateTime? SaleDate { get; set; }
 
         public AddressDto Address { get; set; }
+
+        public bool Active { get; set; }
     }
 }

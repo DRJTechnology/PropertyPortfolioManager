@@ -18,8 +18,8 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
-        public async Task<List<UnitBasicResponseModel>> GetAll()
+        [Route("GetAll/{activeOnly}")]
+        public async Task<List<UnitBasicResponseModel>> GetAll(bool activeOnly)
         {
             var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
             if (portfolioId == null)
@@ -28,7 +28,7 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
             }
             else
             {
-                return await this.unitService.GetAll((int)portfolioId);
+                return await this.unitService.GetAll((int)portfolioId, activeOnly);
             }
         }
 

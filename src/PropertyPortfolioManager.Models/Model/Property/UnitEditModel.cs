@@ -35,6 +35,8 @@ namespace PropertyPortfolioManager.Models.Model.Property
         [DisplayName("Sale Price")]
         public SqlMoney? SalePrice { get; set; }
 
+        public bool Active { get; set; }
+
         public bool Deleted { get; set; }
 
         public AddressEditModel Address { get; set; }

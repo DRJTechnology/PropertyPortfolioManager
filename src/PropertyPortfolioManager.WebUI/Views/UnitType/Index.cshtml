@@ -1,20 +1,39 @@
 ﻿@model IEnumerable<PropertyPortfolioManager.Models.Model.Property.UnitTypeModel>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Unit Types";
 }
 
-<h1>Index</h1>
+<h1>Unit Types</h1>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
+<div class="row">
+    <div class="col">
+        <a asp-action="Create">Create New</a>
+    </div>
+    <div class="col">
+        @if (ViewBag.ActiveOnly)
+        {
+                <a class="float-end" asp-action="Index" asp-route-activeOnly="false">Include Inactive</a>
+        }
+        else
+        {
+                <a class="float-end" asp-action="Index" asp-route-activeOnly="true">Hide Inactive</a>
+        }
+            </div>
+</div>
+
 <table class="table">
     <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
             </th>
+            @if (!ViewBag.ActiveOnly)
+            {
+            <th>
+                @Html.DisplayNameFor(model => model.Active)
+            </th>              
+            }
             <th></th>
         </tr>
     </thead>
@@ -24,6 +43,12 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Type)
             </td>
+            @if (!ViewBag.ActiveOnly)
+            {
+            <td>
+                @(item.Active ? "Active" : "Inactive")
+            </td>
+            }
             <td>
                 @Html.ActionLink("Edit", "Edit", new { id = item.Id })
             </td>

@@ -14,5 +14,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
 
         [DisplayName("Street Address")]
         public string StreetAddress { get; set; } = string.Empty;
+
+        public bool Active { get; set; }
     }
 }

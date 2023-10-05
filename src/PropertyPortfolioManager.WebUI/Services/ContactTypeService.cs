@@ -27,11 +27,11 @@ namespace PropertyPortfolioManager.WebUI.Services
             }
         }
 
-        public async Task<List<ContactTypeModel>> GetAll()
+        public async Task<List<ContactTypeModel>> GetAll(bool activeOnly)
         {
             try
             {
-                return await this.ppmApiFacade.GetAsync<List<ContactTypeModel>>("ContactType/GetAll");
+                return await this.ppmApiFacade.GetAsync<List<ContactTypeModel>>($"ContactType/GetAll/{activeOnly}");
             }
             catch (Exception ex)
             {

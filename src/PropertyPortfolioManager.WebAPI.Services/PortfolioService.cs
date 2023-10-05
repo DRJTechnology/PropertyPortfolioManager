@@ -31,9 +31,9 @@ namespace PropertyPortfolioManager.WebAPI.Services
             return await this.portfolioRepository.Create(currentUserId, portfolioDto);
         }
 
-        public async Task<List<PortfolioModel>> GetAll(int userId)
+        public async Task<List<PortfolioModel>> GetAll(int userId, bool activeOnly)
         {
-            var portfolioList = await this.portfolioRepository.GetAll(userId);
+            var portfolioList = await this.portfolioRepository.GetAll(userId, activeOnly);
             return this.mapper.Map<List<PortfolioModel>>(portfolioList);
         }
 

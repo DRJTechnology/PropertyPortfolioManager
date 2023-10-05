@@ -9,7 +9,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	p.Id, p.[Name], p.Deleted, p.CreateUserId, p.CreateDate, p.AmendUserId, p.AmendDate
+    SELECT	p.Id, p.[Name], p.Active, p.Deleted, p.CreateUserId, p.CreateDate, p.AmendUserId, p.AmendDate
 	FROM	property.Portfolio p
 	INNER JOIN	[profile].[User] u ON p.Id = u.SelectedPortfolioId
 	WHERE	u.ObjectIdentifier = @ObjectIdentifier

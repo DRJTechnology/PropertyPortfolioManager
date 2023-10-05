@@ -25,14 +25,30 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         {
             int portfolioId = 2;
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
-            unitRepositoryMock.Setup(r => r.GetAll(portfolioId))
+            unitRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
                                         .Returns(Task.FromResult(this.basicUnitList));
 
             var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var units = await unitService.GetAll(portfolioId);
+            var units = await unitService.GetAll(portfolioId, false);
 
             Assert.IsType<List<UnitBasicResponseModel>>(units);
             Assert.Equal(10, units.Count());
+            Assert.Equal(1, units.FirstOrDefault().Id);
+        }
+
+        [Fact]
+        public async void Get_All_Active_Units()
+        {
+            int portfolioId = 2;
+            var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
+            unitRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
+                                        .Returns(Task.FromResult(this.basicUnitList.Where(ct => ct.Active).ToList()));
+
+            var unitService = new UnitService(unitRepositoryMock.Object, null, TestExtensions.MapperInstance());
+            var units = await unitService.GetAll(portfolioId, false);
+
+            Assert.IsType<List<UnitBasicResponseModel>>(units);
+            Assert.Equal(8, units.Count());
             Assert.Equal(1, units.FirstOrDefault().Id);
         }
 
@@ -197,7 +213,8 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                         Id = i,
                         Code = $"PR{i}",
                         UnitType = "Detached House",
-                        StreetAddress = $"{1} Long Road"
+                        StreetAddress = $"{1} Long Road",
+                        Active = i != 2 && i != 4,
                     }
                 );
             }
@@ -217,6 +234,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                         Code = $"PR{i}",
                         UnitTypeId = 1,
                         UnitType = "Detached House",
+                        Active = i != 2 && i != 4,
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
                         AmendDate = DateTime.Now.AddMonths(-1),

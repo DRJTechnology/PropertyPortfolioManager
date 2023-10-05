@@ -20,14 +20,30 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         {
             var userId = 99;
             var portfolioRepositoryMock = new Mock<IPortfolioRepository>(MockBehavior.Strict);
-            portfolioRepositoryMock.Setup(r => r.GetAll(userId))
+            portfolioRepositoryMock.Setup(r => r.GetAll(userId, false))
                                         .Returns(Task.FromResult(this.portfolioList));
 
             var portfolioService = new PortfolioService(portfolioRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var portfolios = await portfolioService.GetAll(userId);
+            var portfolios = await portfolioService.GetAll(userId, false);
 
             Assert.IsType<List<PortfolioModel>>(portfolios);
             Assert.Equal(7, portfolios.Count());
+            Assert.Equal(1, portfolios.FirstOrDefault().Id);
+        }
+
+        [Fact]
+        public async void Get_All_Active_Portfolios()
+        {
+            var userId = 99;
+            var portfolioRepositoryMock = new Mock<IPortfolioRepository>(MockBehavior.Strict);
+            portfolioRepositoryMock.Setup(r => r.GetAll(userId, false))
+                                        .Returns(Task.FromResult(this.portfolioList.Where(ct => ct.Active).ToList()));
+
+            var portfolioService = new PortfolioService(portfolioRepositoryMock.Object, null, TestExtensions.MapperInstance());
+            var portfolios = await portfolioService.GetAll(userId, false);
+
+            Assert.IsType<List<PortfolioModel>>(portfolios);
+            Assert.Equal(5, portfolios.Count());
             Assert.Equal(1, portfolios.FirstOrDefault().Id);
         }
 
@@ -98,6 +114,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                     {
                         Id = (short)i,
                         Name = $"Portfolio name {i}",
+                        Active = i != 2 && i != 4,
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
                         AmendDate = DateTime.Now.AddMonths(-1),

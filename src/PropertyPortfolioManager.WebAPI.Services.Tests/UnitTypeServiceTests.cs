@@ -25,14 +25,30 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         {
             var portfolioId = 2;
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.GetAll(portfolioId))
+            unitTypeRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
                                         .Returns(Task.FromResult(this.unitTypeList));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var units = await unitTypeService.GetAll(portfolioId);
+            var units = await unitTypeService.GetAll(portfolioId, false);
 
             Assert.IsType<List<UnitTypeModel>>(units);
             Assert.Equal(7, units.Count());
+            Assert.Equal(1, units.FirstOrDefault().Id);
+        }
+
+        [Fact]
+        public async void Get_All_Active_UnitTypes()
+        {
+            var portfolioId = 2;
+            var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
+            unitTypeRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
+                                        .Returns(Task.FromResult(this.unitTypeList.Where(ct => ct.Active).ToList()));
+
+            var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
+            var units = await unitTypeService.GetAll(portfolioId, false);
+
+            Assert.IsType<List<UnitTypeModel>>(units);
+            Assert.Equal(5, units.Count());
             Assert.Equal(1, units.FirstOrDefault().Id);
         }
 
@@ -106,6 +122,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                         Id = (short)i,
                         PortfolioId = 2,
                         Type = $"Unit Type {i}",
+                        Active = i != 2 && i != 4,
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
                         AmendDate = DateTime.Now.AddMonths(-1),

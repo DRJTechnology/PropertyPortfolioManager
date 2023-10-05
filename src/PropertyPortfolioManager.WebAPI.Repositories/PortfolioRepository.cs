@@ -26,6 +26,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parameters.Add("@Name", newPortfolio.Name);
+                parameters.Add("@Active", newPortfolio.Active);
                 parameters.Add("@CurrentUserId", userId);
 
                 await this.dbConnection.ExecuteAsync("property.Portfolio_Create", parameters, commandType: CommandType.StoredProcedure);
@@ -38,10 +39,11 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
-        public async Task<List<PortfolioDto>> GetAll(int userId)
+        public async Task<List<PortfolioDto>> GetAll(int userId, bool activeOnly)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@UserId", userId);
+            parameters.Add("@ActiveOnly", activeOnly);
 
             var portfolios = await this.dbConnection.QueryAsync<PortfolioDto>("property.Portfolio_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
@@ -111,6 +113,7 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             var parameters = new DynamicParameters();
             parameters.Add("@Id", existingPortfolio.Id);
             parameters.Add("@Name", existingPortfolio.Name);
+            parameters.Add("@Active", existingPortfolio.Active);
             parameters.Add("@CurrentUserId", userId);
 
             await this.dbConnection.ExecuteAsync("property.Portfolio_Update", parameters, commandType: CommandType.StoredProcedure);

@@ -19,10 +19,10 @@ namespace PropertyPortfolioManager.WebAPI.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
-        public async Task<List<PortfolioModel>> GetAll()
+        [Route("GetAll/{activeOnly}")]
+        public async Task<List<PortfolioModel>> GetAll(bool activeOnly)
         {
-            return await this.portfolioService.GetAll((await this.GetCurrentUser()).Id);
+            return await this.portfolioService.GetAll((await this.GetCurrentUser()).Id, activeOnly);
         }
 
         [HttpGet]

@@ -16,6 +16,7 @@ CREATE PROCEDURE [property].[Unit_Update]
 	@PurchaseDate		DATE = NULL,
 	@SalePrice			MONEY = NULL,
 	@SaleDate			DATE = NULL,
+	@Active				BIT,
 	@CurrentUserId		INT
 AS
 BEGIN
@@ -51,6 +52,7 @@ BEGIN
 			PurchaseDate = @PurchaseDate,
 			SalePrice = @SalePrice,
 			SaleDate = @SaleDate,
+			Active = @Active,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
 	WHERE	Id = @Id

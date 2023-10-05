@@ -10,7 +10,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	p.Id, p.[Name], p.Deleted, p.CreateUserId, p.CreateDate, p.AmendUserId, p.AmendDate
+    SELECT	p.Id, p.[Name], p.Active, p.Deleted, p.CreateUserId, p.CreateDate, p.AmendUserId, p.AmendDate
 	FROM	property.Portfolio p
 	INNER JOIN	property.PortfolioUser pu ON p.id = pu.PortFolioId AND pu.Deleted = 0
 	WHERE	p.Id = @Id

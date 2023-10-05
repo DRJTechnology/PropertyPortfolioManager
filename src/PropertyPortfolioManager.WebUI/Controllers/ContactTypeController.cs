@@ -14,9 +14,12 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             this.contactTypeService = contactTypeService;
         }
 
-        public async Task<IActionResult> Index()
+        [HttpGet]
+        [Route("[controller]/{activeOnly?}")]
+        public async Task<IActionResult> Index(bool activeOnly = true)
         {
-            var contactTypes = await contactTypeService.GetAll();
+            ViewBag.ActiveOnly = activeOnly;
+            var contactTypes = await contactTypeService.GetAll(activeOnly);
             return View(contactTypes);
         }
 

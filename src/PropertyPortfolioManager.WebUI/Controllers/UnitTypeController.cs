@@ -14,9 +14,13 @@ namespace PropertyPortfolioManager.WebUI.Controllers
             this.unitTypeService = unitTypeService;
         }
 
-        public async Task<IActionResult> Index()
+
+        [HttpGet]
+        [Route("[controller]/{activeOnly?}")]
+        public async Task<IActionResult> Index(bool activeOnly = true)
         {
-            var unitTypes = await unitTypeService.GetAll();
+            ViewBag.ActiveOnly = activeOnly;
+            var unitTypes = await unitTypeService.GetAll(activeOnly);
             return View(unitTypes);
         }
 

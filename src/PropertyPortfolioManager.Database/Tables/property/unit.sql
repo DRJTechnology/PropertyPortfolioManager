@@ -9,6 +9,7 @@
     [PurchasePrice]     MONEY            NULL,
     [SaleDate]          DATE             NULL,
     [SalePrice]         MONEY            NULL,
+	[Active]            BIT              DEFAULT (1) NOT NULL,
 	[Deleted]           BIT              DEFAULT (0) NOT NULL,
     [CreateUserId]      INT              NOT NULL,
     [CreateDate]        DATETIME         CONSTRAINT [DF_Unit_CreateDate] DEFAULT (getutcdate()) NOT NULL,

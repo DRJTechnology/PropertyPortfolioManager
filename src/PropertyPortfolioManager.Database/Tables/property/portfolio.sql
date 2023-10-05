@@ -2,6 +2,7 @@
 (
 	[Id]                INT              IDENTITY NOT NULL, 
     [Name]              NVARCHAR(128)    NOT NULL,
+	[Active]            BIT              DEFAULT (1) NOT NULL,
 	[Deleted]           BIT              DEFAULT (0) NOT NULL,
     [CreateUserId]      INT              NOT NULL,
     [CreateDate]        DATETIME         CONSTRAINT [DF_Portfolio_CreateDate] DEFAULT (getutcdate()) NOT NULL,

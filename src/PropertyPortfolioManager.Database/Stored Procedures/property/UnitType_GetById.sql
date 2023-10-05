@@ -10,7 +10,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	Id, [Type], Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate
+    SELECT	Id, [Type], Active, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate
 	FROM	[property].[UnitType]
 	WHERE	PortfolioId = @PortfolioId AND Id = @Id
 

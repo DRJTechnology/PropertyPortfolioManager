@@ -20,14 +20,31 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
         {
             var portfolioId = 2;
             var contactTypeRepositoryMock = new Mock<IContactTypeRepository>(MockBehavior.Strict);
-            contactTypeRepositoryMock.Setup(r => r.GetAll(portfolioId))
+            contactTypeRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
                                         .Returns(Task.FromResult(this.contactTypeList));
 
             var contactTypeService = new ContactTypeService(contactTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
-            var contacts = await contactTypeService.GetAll(portfolioId);
+            var contacts = await contactTypeService.GetAll(portfolioId, false);
 
             Assert.IsType<List<ContactTypeModel>>(contacts);
             Assert.Equal(11, contacts.Count());
+            Assert.Equal(1, contacts.FirstOrDefault().Id);
+        }
+
+        [Fact]
+        public async void Get_All_Active_ContactTypes()
+        {
+            var portfolioId = 2;
+            var contactTypeRepositoryMock = new Mock<IContactTypeRepository>(MockBehavior.Strict);
+
+            contactTypeRepositoryMock.Setup(r => r.GetAll(portfolioId, true))
+                                        .Returns(Task.FromResult(this.contactTypeList.Where(ct => ct.Active).ToList()));
+
+            var contactTypeService = new ContactTypeService(contactTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
+            var contacts = await contactTypeService.GetAll(portfolioId, true);
+
+            Assert.IsType<List<ContactTypeModel>>(contacts);
+            Assert.Equal(9, contacts.Count());
             Assert.Equal(1, contacts.FirstOrDefault().Id);
         }
 
@@ -101,6 +118,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                         Id = (short)i,
                         PortfolioId = 1 < 5 ? -1 : 2,
                         Type = $"Unit Type {i}",
+                        Active = i != 2 && i != 4,
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
                         AmendDate = DateTime.Now.AddMonths(-1),

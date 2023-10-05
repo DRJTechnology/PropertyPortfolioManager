@@ -6,6 +6,7 @@
 CREATE PROCEDURE [property].[Portfolio_Update]
 	@Id					INT, 
 	@Name				NVARCHAR(255),
+	@Active				BIT,
 	@CurrentUserId		INT
 AS
 BEGIN
@@ -13,6 +14,7 @@ BEGIN
 
 	UPDATE	p
 	SET		[Name] = @Name,
+			Active = @Active,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
 	FROM	[property].[Portfolio] p
