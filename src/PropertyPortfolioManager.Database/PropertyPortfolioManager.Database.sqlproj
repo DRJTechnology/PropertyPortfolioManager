@@ -105,6 +105,10 @@
     <Build Include="Stored Procedures\general\ContactType_GetById.sql" />
     <Build Include="Stored Procedures\general\ContactType_Update.sql" />
     <Build Include="Tables\general\ContactContactType.sql" />
+    <Build Include="Stored Procedures\general\Contact_Create.sql" />
+    <Build Include="Stored Procedures\general\Contact_GetAll.sql" />
+    <Build Include="Stored Procedures\general\Contact_GetById.sql" />
+    <Build Include="Stored Procedures\general\Contact_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

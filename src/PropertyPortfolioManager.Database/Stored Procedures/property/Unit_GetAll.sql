@@ -10,7 +10,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	u.Id, Code, StreetAddress, ut.[Type] AS UnitType, u.Active
+    SELECT	u.Id, u.PortfolioId, Code, StreetAddress, ut.[Type] AS UnitType, u.Active
 	FROM	[property].[Unit] u
 	INNER JOIN	[general].[Address] a ON u.AddressId = a.Id
 	INNER Join	[property].[UnitType] ut ON u.UnitTypeId = ut.Id

@@ -28,11 +28,13 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
 builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
 builder.Services.AddScoped<IContactTypeService, ContactTypeService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 builder.Services.AddScoped<IUnitTypeRepository, UnitTypeRepository>();
 builder.Services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 
 builder.Services.AddSingleton<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));

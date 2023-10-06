@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Moq;
 using PropertyPortfolioManager.Models.Automapper;
+using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;

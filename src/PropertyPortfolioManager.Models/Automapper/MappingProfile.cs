@@ -25,6 +25,10 @@ namespace PropertyPortfolioManager.Models.Automapper
 
             this.CreateMap<ContactTypeDto, ContactTypeModel>();
             this.CreateMap<ContactTypeModel, ContactTypeDto>();
+
+            this.CreateMap<ContactDto, ContactResponseModel>();
+            this.CreateMap<ContactBasicDto, ContactBasicResponseModel>();
+            this.CreateMap<ContactEditModel, ContactDto>();
         }
     }
 }

@@ -1,0 +1,77 @@
+﻿@model PropertyPortfolioManager.WebUI.Models.ContactEditViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+@if (Model.Contact.Id == 0)
+{
+    <h1>Create contact</h1>
+}
+else
+{
+    <h1>Edit @Model.Contact.Name</h1>
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreateUpdate">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <input asp-for="Contact.Id" class="form-control" type="hidden" />
+                <label asp-for="Contact.Name" class="control-label"></label>
+                <input asp-for="Contact.Name" class="form-control" />
+                <span asp-validation-for="Contact.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.Address.StreetAddress" class="control-label"></label>
+                <input asp-for="Contact.Address.StreetAddress" class="form-control" />
+                <span asp-validation-for="Contact.Address.StreetAddress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.Address.TownCity" class="control-label"></label>
+                <input asp-for="Contact.Address.TownCity" class="form-control" />
+                <span asp-validation-for="Contact.Address.TownCity" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.Address.CountyRegion" class="control-label"></label>
+                <input asp-for="Contact.Address.CountyRegion" class="form-control" />
+                <span asp-validation-for="Contact.Address.CountyRegion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.Address.PostCode" class="control-label"></label>
+                <input asp-for="Contact.Address.PostCode" class="form-control" />
+                <span asp-validation-for="Contact.Address.PostCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.ContactTypeId" class="control-label"></label>
+                <select asp-for="Contact.ContactTypeId" class="form-control" asp-items="@Model.ContactTypeList">
+                    <option disabled selected>Please select one</option>
+                </select>
+                <span asp-validation-for="Contact.ContactTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Contact.Notes" class="control-label"></label>
+                <input asp-for="Contact.Notes" class="form-control" />
+                <span asp-validation-for="Contact.Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Contact.Active" /> @Html.DisplayNameFor(model => model.Contact.Active)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

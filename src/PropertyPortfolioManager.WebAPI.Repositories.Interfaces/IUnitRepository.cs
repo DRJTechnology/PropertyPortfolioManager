@@ -1,4 +1,5 @@
-﻿using PropertyPortfolioManager.Models.Dto.Property;
+﻿using PropertyPortfolioManager.Models.Dto.General;
+using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Property;
 
 namespace PropertyPortfolioManager.WebAPI.Repositories.Interfaces
