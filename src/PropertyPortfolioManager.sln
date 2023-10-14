@@ -21,6 +21,12 @@ Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PropertyPortfolioManager.Da
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.WebAPI.Services.Tests", "PropertyPortfolioManager.WebAPI.Services.Tests\PropertyPortfolioManager.WebAPI.Services.Tests.csproj", "{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Client", "PropertyPortfolioManager.Client\PropertyPortfolioManager.Client.csproj", "{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Shared", "Shared\PropertyPortfolioManager.Shared.csproj", "{9DC9CC1B-56BB-40F6-A3CB-A4516CE135A8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Server", "PropertyPortfolioManager.Server\PropertyPortfolioManager.Server.csproj", "{ED948B7E-C530-4E0E-B710-3E06BBA151F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +71,18 @@ Global
 		{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1A533D5A-35C7-4384-9DE1-E8CD620D6EC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DC9CC1B-56BB-40F6-A3CB-A4516CE135A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DC9CC1B-56BB-40F6-A3CB-A4516CE135A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DC9CC1B-56BB-40F6-A3CB-A4516CE135A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DC9CC1B-56BB-40F6-A3CB-A4516CE135A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED948B7E-C530-4E0E-B710-3E06BBA151F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED948B7E-C530-4E0E-B710-3E06BBA151F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED948B7E-C530-4E0E-B710-3E06BBA151F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED948B7E-C530-4E0E-B710-3E06BBA151F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

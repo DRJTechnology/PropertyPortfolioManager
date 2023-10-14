@@ -12,7 +12,7 @@ namespace PropertyPortfolioManager.WebUI.Controllers
         }
 
         [HttpGet]
-        [Route("[controller]/{activeOnly?}")]
+        [Route("[controller]/List/{activeOnly?}")]
         public async Task<IActionResult> Index(bool activeOnly = true)
         {
             ViewBag.ActiveOnly = activeOnly;
