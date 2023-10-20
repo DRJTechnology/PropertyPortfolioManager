@@ -1,4 +1,64 @@
 ﻿@page "/portfolio"
 
-<h3>PortfolioList</h3>
+<h3>Portfolios</h3>
 
+@if (portfolios == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <a href="portfolioedit">Create New Portfolio</a>
+        </div>
+        <div class="col">
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                @if (!ActiveOnly)
+                {
+                    <th>
+                        Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var portfolio in portfolios)
+            {
+                <tr>
+                    <td>
+                        @portfolio.Name
+                    </td>
+                    @if (!ActiveOnly)
+                    {
+                        <td>
+                            @(portfolio.Active ? "Active" : "Inactive")
+                        </td>
+                    }
+                    <td>
+                        <a href="@($"portfolioedit/{portfolio.Id}")" class="btn btn-outline-primary btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

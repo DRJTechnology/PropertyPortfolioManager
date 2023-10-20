@@ -1,7 +1,16 @@
+using AutoMapper;
+using DRJTechnology.Cache;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Web;
+using PropertyPortfolioManager.Models.Automapper;
+using PropertyPortfolioManager.WebAPI.Repositories;
+using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
+using PropertyPortfolioManager.WebAPI.Services;
+using PropertyPortfolioManager.WebAPI.Services.Interfaces;
+using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +20,31 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IPortfolioService, PortfolioService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+
+builder.Services.AddSingleton<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));
+
+// Set up caching.
+var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");
+builder.Services.AddDistributedCache(opt =>
+{
+	opt.Enabled = builder.Configuration.GetValue<bool>("DRJCache:Enabled");
+	opt.ConnectionString = builder.Configuration.GetValue<string>("DRJCache:ConnectionString") ?? string.Empty;
+	opt.KeyPrefix = $"{keyPrefix}_API_";
+	opt.DefaultExpiryInMinutes = builder.Configuration.GetValue<int>("DRJCache:DefaultExpiryInMinutes");
+});
+
+// Auto Mapper Configurations
+var mappingConfig = new MapperConfiguration(mc =>
+{
+	mc.AddProfile(new MappingProfile());
+});
+IMapper mapper = mappingConfig.CreateMapper();
+builder.Services.AddSingleton(mapper);
 
 var app = builder.Build();
 

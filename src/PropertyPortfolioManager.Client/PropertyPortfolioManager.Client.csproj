@@ -19,7 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\PropertyPortfolioManager.Models\PropertyPortfolioManager.Models.csproj" />
     <ProjectReference Include="..\Shared\PropertyPortfolioManager.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Components\" />
   </ItemGroup>
 
 </Project>

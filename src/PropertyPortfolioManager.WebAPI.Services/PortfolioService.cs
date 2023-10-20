@@ -31,6 +31,14 @@ namespace PropertyPortfolioManager.WebAPI.Services
             return await this.portfolioRepository.Create(currentUserId, portfolioDto);
         }
 
+        public async Task<bool> DeleteById(int portfolioId, int currentUserId)
+        {
+            var portfolio = await this.portfolioRepository.GetById(portfolioId, currentUserId);
+            portfolio.Deleted = true;
+            var portfolioDto = this.mapper.Map<PortfolioDto>(portfolio);
+            return await this.portfolioRepository.Update(currentUserId, portfolioDto);
+        }
+
         public async Task<List<PortfolioModel>> GetAll(int userId, bool activeOnly)
         {
             var portfolioList = await this.portfolioRepository.GetAll(userId, activeOnly);
@@ -82,5 +90,11 @@ namespace PropertyPortfolioManager.WebAPI.Services
             var portfolioDto = this.mapper.Map<PortfolioDto>(portfolio);
             return await this.portfolioRepository.Update(currentUserId, portfolioDto);
         }
+
+        public async Task<bool> Delete(int currentUserId, int portfolioId)
+        {
+            return await this.portfolioRepository.Delete(currentUserId, portfolioId);
+        }
+
     }
 }

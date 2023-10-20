@@ -120,5 +120,16 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
             return true;
         }
+
+        public async Task<bool> Delete(int userId, int portfolioId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", portfolioId);
+            parameters.Add("@CurrentUserId", userId);
+
+            await this.dbConnection.ExecuteAsync("property.Portfolio_Delete", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
+        }
     }
 }

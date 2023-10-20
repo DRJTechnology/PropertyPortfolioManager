@@ -109,6 +109,7 @@
     <Build Include="Stored Procedures\general\Contact_GetAll.sql" />
     <Build Include="Stored Procedures\general\Contact_GetById.sql" />
     <Build Include="Stored Procedures\general\Contact_Update.sql" />
+    <Build Include="Stored Procedures\property\Portfolio_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

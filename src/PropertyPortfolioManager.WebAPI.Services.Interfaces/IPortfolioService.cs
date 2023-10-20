@@ -12,5 +12,6 @@ namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
         Task<bool> Update(int currentUserId, PortfolioModel portfolio);
         Task<PortfolioModel> GetCurrent(ClaimsPrincipal user);
         Task<bool> SelectForUser(int portfolioId, int userId, ClaimsPrincipal user);
+        Task<bool> Delete(int currentUserId, int portfolioId);
     }
 }

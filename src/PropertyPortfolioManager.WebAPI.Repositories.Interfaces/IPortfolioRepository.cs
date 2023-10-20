@@ -10,5 +10,6 @@ namespace PropertyPortfolioManager.WebAPI.Repositories.Interfaces
         Task<bool> Update(int userId, PortfolioDto existingUnitType);
         Task<PortfolioDto> GetByUserObjectIdentifier(Guid userObjectIdentifier);
         Task<bool> SelectForUser(int portfolioId, int userId);
+        Task<bool> Delete(int userId, int portfolioId);
     }
 }
