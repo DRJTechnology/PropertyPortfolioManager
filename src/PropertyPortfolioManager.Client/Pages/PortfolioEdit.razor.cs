@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.State;
 using PropertyPortfolioManager.Models.Model.Property;
 using System.Net.Http.Json;
 
@@ -7,6 +8,9 @@ namespace PropertyPortfolioManager.Client.Pages
 {
     public partial class PortfolioEdit
     {
+        [Inject]
+        public ProfileState ProfileState { get; set; }
+
         [Inject]
         public HttpClient Http { get; set; }
 
@@ -36,6 +40,8 @@ namespace PropertyPortfolioManager.Client.Pages
             {
                 Portfolio = await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetById/{PortfolioId}");
             }
+
+            ProfileState.OnChange += StateHasChanged;
         }
 
         protected async Task HandleValidSubmit()
@@ -64,6 +70,11 @@ namespace PropertyPortfolioManager.Client.Pages
                 StatusClass = "alert-success";
                 Message = "Portfolio updated successfully.";
                 Saved = true;
+
+                if (ProfileState.CurrentPortfolio != null && ProfileState.CurrentPortfolio.Id == Portfolio.Id)
+                {
+                    ProfileState.CurrentPortfolio = Portfolio;
+                }
             }
         }
 

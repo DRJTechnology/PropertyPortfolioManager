@@ -1,12 +1,12 @@
 ﻿<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
-        @if (string.IsNullOrEmpty(ApplicationState.CurrentPortfolioName))
+        @if (ProfileState.CurrentPortfolio == null)
         {
         <a class="navbar-brand" href="/">Property Portfolio Manager</a>
         }
         else
         {
-            <a class="navbar-brand" href="/">@ApplicationState.CurrentPortfolioName</a>
+            <a class="navbar-brand" href="/">@ProfileState.CurrentPortfolio.Name</a>
         }
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
             <span class="navbar-toggler-icon"></span>

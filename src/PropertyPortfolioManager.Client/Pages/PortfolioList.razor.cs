@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
+using PropertyPortfolioManager.Client.State;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Shared;
 using System.Diagnostics;
@@ -18,7 +19,7 @@ namespace PropertyPortfolioManager.Client.Pages
         public HttpClient Http { get; set; }
 
         [Inject]
-        public ApplicationState ApplicationState { get; set; }
+        public ProfileState ProfileState { get; set; }
 
         public bool ActiveOnly { get; set; } = true;
 
@@ -38,7 +39,7 @@ namespace PropertyPortfolioManager.Client.Pages
             try
             {
                 await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/SelectForCurrentUser/{portfolioId}");
-                ApplicationState.CurrentPortfolioName = (portfolios.Where(p => p.Id == portfolioId).FirstOrDefault()).Name;
+                ProfileState.CurrentPortfolio = portfolios.Where(p => p.Id == portfolioId).FirstOrDefault();
             }
             catch (Exception ex)
             {
