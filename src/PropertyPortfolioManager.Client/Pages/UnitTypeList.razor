@@ -1,0 +1,64 @@
+﻿@page "/unittype"
+
+<h3>Unit Types</h3>
+
+@if (unittypes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <a href="unittypeedit">Create New Unit Type</a>
+        </div>
+        <div class="col">
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                @if (!ActiveOnly)
+                {
+                    <th>
+                        Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unittype in unittypes)
+            {
+                <tr>
+                    <td>
+                        @unittype.Type
+                    </td>
+                    @if (!ActiveOnly)
+                    {
+                        <td>
+                            @(unittype.Active ? "Active" : "Inactive")
+                        </td>
+                    }
+                    <td>
+                        <a href="@($"unittypeedit/{unittype.Id}")" class="btn btn-outline-primary btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

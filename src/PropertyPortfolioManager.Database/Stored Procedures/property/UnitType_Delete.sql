@@ -1,9 +1,9 @@
 ﻿-- ===========================================================
 -- Author:		Dave Brown
--- Create date: 20 Oct 2023
--- Description:	Updates a contact type record to deleted
+-- Create date: 30 Sep 2023
+-- Description:	Updates a property unit type record to deleted
 -- ===========================================================
-CREATE PROCEDURE [general].[ContactType_Delete]
+CREATE PROCEDURE [property].[UnitType_Delete]
 	@Id					INT, 
 	@PortfolioId		INT,
 	@CurrentUserId		INT
@@ -23,7 +23,7 @@ BEGIN
 	   RETURN
 	END
 
-	UPDATE	[general].[ContactType]
+	UPDATE	[property].[UnitType]
 	SET		Deleted = 1,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()

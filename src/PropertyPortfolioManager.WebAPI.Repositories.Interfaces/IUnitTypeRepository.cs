@@ -8,5 +8,6 @@ namespace PropertyPortfolioManager.WebAPI.Repositories.Interfaces
         Task<UnitTypeDto> GetById(int id, int portfolioId);
         Task<int> Create(int userId, int portfolioId, UnitTypeDto newUnitType);
         Task<bool> Update(int userId, int portfolioId, UnitTypeDto existingUnitType);
+        Task<bool> Delete(int userId, int portfolioId, int unitTypeId);
     }
 }

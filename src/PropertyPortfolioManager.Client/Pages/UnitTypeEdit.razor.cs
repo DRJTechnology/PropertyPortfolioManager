@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components;
-using PropertyPortfolioManager.Models.Model.General;
+using PropertyPortfolioManager.Models.Model.Property;
 using System.Net.Http.Json;
 
 
 namespace PropertyPortfolioManager.Client.Pages
 {
-    public partial class ContactTypeEdit
+    public partial class UnitTypeEdit
     {
         [Inject]
         public HttpClient Http { get; set; }
@@ -14,9 +14,9 @@ namespace PropertyPortfolioManager.Client.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
-        public string? ContactTypeId { get; set; }
+        public string? UnitTypeId { get; set; }
 
-        private ContactTypeModel ContactType { get; set; } = new ContactTypeModel();
+        private UnitTypeModel UnitType { get; set; } = new UnitTypeModel();
 
         private bool Saved;
         private string Message = string.Empty;
@@ -26,15 +26,15 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             Saved = false;
 
-            int.TryParse(ContactTypeId, out var contactTypeId);
+            int.TryParse(UnitTypeId, out var unitTypeId);
 
-            if (contactTypeId == 0) //new contact type is being created
+            if (unitTypeId == 0) //new unit type is being created
             {
-                ContactType = new ContactTypeModel() { Active = true };
+                UnitType = new UnitTypeModel() { Active = true };
             }
             else
             {
-                ContactType = await Http.GetFromJsonAsync<ContactTypeModel>($"api/ContactType/GetById/{ContactTypeId}");
+                UnitType = await Http.GetFromJsonAsync<UnitTypeModel>($"api/UnitType/GetById/{UnitTypeId}");
             }
         }
 
@@ -42,27 +42,27 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             Saved = false;
 
-            if (ContactType.Id == 0) //new
+            if (UnitType.Id == 0) //new
             {
-                var addedContactType = await Http.PostAsJsonAsync<ContactTypeModel>("api/ContactType/Create", ContactType);
-                if (addedContactType != null)
+                var addedUnitType = await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Create", UnitType);
+                if (addedUnitType != null)
                 {
                     StatusClass = "alert-success";
-                    Message = "New contact type added successfully.";
+                    Message = "New unit type added successfully.";
                     Saved = true;
                 }
                 else
                 {
                     StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new contact type. Please try again.";
+                    Message = "Something went wrong adding the new unit type. Please try again.";
                     Saved = false;
                 }
             }
             else
             {
-                await Http.PostAsJsonAsync<ContactTypeModel>("api/ContactType/Update", ContactType);
+                await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Update", UnitType);
                 StatusClass = "alert-success";
-                Message = "Contact type updated successfully.";
+                Message = "Unit type updated successfully.";
                 Saved = true;
             }
         }
@@ -73,11 +73,11 @@ namespace PropertyPortfolioManager.Client.Pages
             Message = "There are some validation errors. Please try again.";
         }
 
-        protected async Task DeleteContactType()
+        protected async Task DeleteUnitType()
         {
             try
             {
-                await Http.DeleteAsync($"api/ContactType/Delete/{ContactTypeId}");
+                await Http.DeleteAsync($"api/UnitType/Delete/{UnitTypeId}");
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
         protected void NavigateToList()
         {
-            NavigationManager.NavigateTo("/contacttype");
+            NavigationManager.NavigateTo("/unittype");
         }
 
     }

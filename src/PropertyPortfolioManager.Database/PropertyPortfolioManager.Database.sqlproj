@@ -111,6 +111,7 @@
     <Build Include="Stored Procedures\general\Contact_Update.sql" />
     <Build Include="Stored Procedures\property\Portfolio_Delete.sql" />
     <Build Include="Stored Procedures\general\ContactType_Delete.sql" />
+    <Build Include="Stored Procedures\property\UnitType_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />
