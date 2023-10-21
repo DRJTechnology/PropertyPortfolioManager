@@ -22,7 +22,15 @@ namespace PropertyPortfolioManager.Server.Controllers
 		[Route("GetAll/{activeOnly}")]
 		public async Task<List<PortfolioModel>> GetAll(bool activeOnly)
 		{
-			return await this.portfolioService.GetAll((await this.GetCurrentUser()).Id, activeOnly);
+			try
+			{
+				var returnVal = await this.portfolioService.GetAll((await this.GetCurrentUser()).Id, activeOnly);
+				return returnVal;
+			}
+			catch (Exception ex)
+			{
+				throw;
+			}
 		}
 
 		[HttpGet]

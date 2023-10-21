@@ -28,30 +28,37 @@ namespace PropertyPortfolioManager.WebAPI.Services
 
         public async Task<UserDto> GetCurrent(ClaimsPrincipal user)
         {
-            var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
-            var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
-
-            if (currentUser != null)
+            try
             {
-                return currentUser;
-            }
+                var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
+                var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
 
-            var userObjectIdentifier = new Guid(user.GetObjectId()!);
-            var userDto = await this.userRepository.GetByObjectIdentifier(userObjectIdentifier);
-
-            if (userDto == null)
-            {
-                userDto = new UserDto()
+                if (currentUser != null)
                 {
-                    ObjectIdentifier = userObjectIdentifier,
-                    Name = user.FindFirstValue("name") ?? "No name",
-                };
-                userDto.Id = await this.userRepository.Create(userDto);
+                    return currentUser;
+                }
+
+                var userObjectIdentifier = new Guid(user.GetObjectId()!);
+                var userDto = await this.userRepository.GetByObjectIdentifier(userObjectIdentifier);
+
+                if (userDto == null)
+                {
+                    userDto = new UserDto()
+                    {
+                        ObjectIdentifier = userObjectIdentifier,
+                        Name = user.FindFirstValue("name") ?? "No name",
+                    };
+                    userDto.Id = await this.userRepository.Create(userDto);
+                }
+
+                await this.cacheService.SetAsync(cacheKey, userDto);
+
+                return userDto;
             }
-
-            await this.cacheService.SetAsync(cacheKey, userDto);
-
-            return userDto;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

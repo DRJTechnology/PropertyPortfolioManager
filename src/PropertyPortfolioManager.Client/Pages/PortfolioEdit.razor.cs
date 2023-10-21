@@ -41,7 +41,7 @@ namespace PropertyPortfolioManager.Client.Pages
                 Portfolio = await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetById/{PortfolioId}");
             }
 
-            ProfileState.OnChange += StateHasChanged;
+            //ProfileState.OnChange += StateHasChanged;
         }
 
         protected async Task HandleValidSubmit()

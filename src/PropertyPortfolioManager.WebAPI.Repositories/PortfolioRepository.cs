@@ -41,13 +41,20 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
         public async Task<List<PortfolioDto>> GetAll(int userId, bool activeOnly)
         {
-            var parameters = new DynamicParameters();
-            parameters.Add("@UserId", userId);
-            parameters.Add("@ActiveOnly", activeOnly);
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@UserId", userId);
+                parameters.Add("@ActiveOnly", activeOnly);
 
-            var portfolios = await this.dbConnection.QueryAsync<PortfolioDto>("property.Portfolio_GetAll", parameters, commandType: CommandType.StoredProcedure);
+                var portfolios = await this.dbConnection.QueryAsync<PortfolioDto>("property.Portfolio_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
-            return portfolios.ToList(); ;
+                return portfolios.ToList(); ;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<PortfolioDto> GetById(int id, int userId)
