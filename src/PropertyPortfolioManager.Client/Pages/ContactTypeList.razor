@@ -1,8 +1,8 @@
-﻿@page "/portfolio"
+﻿@page "/contacttype"
 
-<h3>Portfolios</h3>
+<h3>Contact Types</h3>
 
-@if (portfolios == null)
+@if (contactypes == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -10,7 +10,7 @@ else
 {
     <div class="row">
         <div class="col">
-            <a href="portfolioedit">Create New Portfolio</a>
+            <a href="contacttypeedit">Create New Contact Type</a>
         </div>
         <div class="col">
             @if (ActiveOnly)
@@ -28,7 +28,7 @@ else
         <thead>
             <tr>
                 <th>
-                    Name
+                    Type
                 </th>
                 @if (!ActiveOnly)
                 {
@@ -40,23 +40,25 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var portfolio in portfolios)
+            @foreach (var contacttype in contactypes)
             {
                 <tr>
                     <td>
-                        @portfolio.Name
+                        @contacttype.Type
                     </td>
                     @if (!ActiveOnly)
                     {
                         <td>
-                            @(portfolio.Active ? "Active" : "Inactive")
+                            @(contacttype.Active ? "Active" : "Inactive")
                         </td>
                     }
                     <td>
-                        <a href="@($"portfolioedit/{portfolio.Id}")" class="btn btn-outline-primary btn-sm">
-                            Edit
-                        </a>
-                        <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(() => SelectPortfolio(portfolio.Id))">Select Portfolio</button>
+                        @if (contacttype.PortfolioId > -1)
+                        {
+                            <a href="@($"contacttypeedit/{contacttype.Id}")" class="btn btn-outline-primary btn-sm">
+                                Edit
+                            </a>
+                        }
                     </td>
                 </tr>
             }

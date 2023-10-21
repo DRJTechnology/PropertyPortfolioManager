@@ -96,5 +96,17 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
 
             return true;
         }
+
+        public async Task<bool> Delete(int userId, int portfolioId, int contactTypeId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", contactTypeId);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@CurrentUserId", userId);
+
+            await this.dbConnection.ExecuteAsync("general.ContactType_Delete", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
+        }
     }
 }

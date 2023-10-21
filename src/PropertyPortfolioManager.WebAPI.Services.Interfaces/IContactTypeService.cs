@@ -8,5 +8,6 @@ namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
         Task<ContactTypeModel> GetById(int contactId, int portfolioId);
         Task<int> Create(int currentUserId, int portfolioId, ContactTypeModel contact);
         Task<bool> Update(int currentUserId, int portfolioId, ContactTypeModel contact);
+        Task<bool> Delete(int currentUserId, int portfolioId, int contactTypeId);
     }
 }

@@ -12,6 +12,7 @@ builder.Services.AddHttpClient("PropertyPortfolioManager.ServerAPI", client => c
 
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PropertyPortfolioManager.ServerAPI"));
+builder.Services.AddScoped<ApplicationState>();
 
 builder.Services.AddMsalAuthentication(options =>
 {

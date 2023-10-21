@@ -5,6 +5,7 @@ using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Shared;
 using System.Diagnostics;
 using System.Net.Http.Json;
+using System.Runtime.CompilerServices;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
@@ -16,7 +17,10 @@ namespace PropertyPortfolioManager.Client.Pages
 		[Inject]
         public HttpClient Http { get; set; }
 
-		public bool ActiveOnly { get; set; } = true;
+        [Inject]
+        public ApplicationState ApplicationState { get; set; }
+
+        public bool ActiveOnly { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
 		{
@@ -29,7 +33,20 @@ namespace PropertyPortfolioManager.Client.Pages
             await PopulatePortfolioListAsync();
         }
 
-		private async Task PopulatePortfolioListAsync()
+		public async Task SelectPortfolio(int portfolioId)
+		{
+            try
+            {
+                await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/SelectForCurrentUser/{portfolioId}");
+                ApplicationState.CurrentPortfolioName = (portfolios.Where(p => p.Id == portfolioId).FirstOrDefault()).Name;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
+
+        private async Task PopulatePortfolioListAsync()
 		{
 			try
 			{

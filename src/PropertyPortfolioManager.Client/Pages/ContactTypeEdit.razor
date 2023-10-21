@@ -1,0 +1,57 @@
+﻿@page "/contacttypeedit"
+@page "/contacttypeedit/{ContactTypeId}"
+
+@if (!Saved)
+{
+    <section class="">
+        @if (ContactType.Id == 0)
+        {
+            <h1 class="page-title">New Contact Type</h1>
+        }
+        else
+        {
+            <h1 class="page-title">Details for @ContactType.Type</h1>
+           
+        }
+        <EditForm Model="@ContactType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row mb-3">
+                <label for="type" class="col-form-label col-md-3">Type: </label>
+                <div class="col-md-8">
+                    <InputText id="type" @bind-Value="@ContactType.Type" class="form-control col-md-8" placeholder="Enter type"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactType.Type)" />
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-3">
+                    <div class="form-check">
+                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@ContactType.Active"></InputCheckbox>
+                        <label class="form-check-label" for="active">
+                            Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1">Save contact type</button>
+
+            @if (ContactType.Id > 0)
+            {
+                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteContactType">
+                    Delete
+                </button>
+            }
+            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+
+        </EditForm>
+    </section>
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+    <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
+}
