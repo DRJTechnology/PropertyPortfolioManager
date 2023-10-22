@@ -1,16 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using PropertyPortfolioManager.Client.State;
 using PropertyPortfolioManager.Models.Model.Property;
-using PropertyPortfolioManager.Shared;
-using System.Diagnostics;
 using System.Net.Http.Json;
-using System.Runtime.CompilerServices;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
-	[Authorize]
+    [Authorize]
 	public partial class PortfolioList
     {
 		private PortfolioModel[]? portfolios;

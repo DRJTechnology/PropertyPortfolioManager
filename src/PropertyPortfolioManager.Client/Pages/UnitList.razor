@@ -1,0 +1,64 @@
+﻿@page "/unit"
+
+<h3>Properties</h3>
+
+@if (units == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <a href="unitedit">Create New Unit Type</a>
+        </div>
+        <div class="col">
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Street Address
+                </th>
+                @if (!ActiveOnly)
+                {
+                    <th>
+                        Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var unit in units)
+            {
+                <tr>
+                    <td>
+                        @unit.StreetAddress
+                    </td>
+                    @if (!ActiveOnly)
+                    {
+                        <td>
+                            @(unit.Active ? "Active" : "Inactive")
+                        </td>
+                    }
+                    <td>
+                        <a href="@($"unitedit/{unit.Id}")" class="btn btn-outline-primary btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
