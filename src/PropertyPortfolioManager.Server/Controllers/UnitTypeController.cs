@@ -17,6 +17,14 @@ namespace PropertyPortfolioManager.Server.Controllers
             this.unitTypeService = unitTypeService;
         }
 
+
+        [HttpGet]
+        [Route("GetAll")]
+        public async Task<List<UnitTypeModel>> GetAll()
+        {
+            return await this.GetAll(true);
+        }
+
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
         public async Task<List<UnitTypeModel>> GetAll(bool activeOnly)
