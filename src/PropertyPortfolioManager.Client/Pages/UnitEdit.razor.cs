@@ -16,7 +16,7 @@ namespace PropertyPortfolioManager.Client.Pages
         public string? UnitId { get; set; }
 
         private UnitEditModel UnitModel { get; set; } = new UnitEditModel();
-        private UnitTypeModel[]? unittypes;
+        private UnitTypeModel[] unittypes = new UnitTypeModel[0];
 
         private bool Saved;
         private string Message = string.Empty;
@@ -24,19 +24,26 @@ namespace PropertyPortfolioManager.Client.Pages
 
         protected async override Task OnInitializedAsync()
         {
-            Saved = false;
-
-            int.TryParse(UnitId, out var unitId);
-            unittypes = await Http.GetFromJsonAsync<UnitTypeModel[]>($"api/UnitType/GetAll");
-
-            if (unitId == 0) //new unit is being created
+            try
             {
-                UnitModel = new UnitEditModel() {  Active = true };
+                Saved = false;
+
+                int.TryParse(UnitId, out var unitId);
+                //unittypes = await Http.GetFromJsonAsync<UnitTypeModel[]>($"api/UnitType/GetAll");
+
+                if (unitId == 0) //new unit is being created
+                {
+                    UnitModel = new UnitEditModel() {  Active = true };
+                }
+                else
+                {
+                    var unit = await Http.GetFromJsonAsync<UnitResponseModel>($"api/Unit/GetById/{UnitId}");
+                    UnitModel = unit;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var unit = await Http.GetFromJsonAsync<UnitResponseModel>($"api/Unit/GetById/{UnitId}");
-                UnitModel = unit;
+                throw;
             }
         }
 

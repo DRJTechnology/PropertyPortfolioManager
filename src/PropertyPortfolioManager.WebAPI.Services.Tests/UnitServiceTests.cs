@@ -117,7 +117,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
             {
                 Code = "Test1",
                 UnitTypeId = 1,
-                Address = new AddressEditModel()
+                Address = new AddressModel()
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",
@@ -146,7 +146,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                 Id = 2,
                 Code = "Test1",
                 UnitTypeId = 1,
-                Address = new AddressEditModel()
+                Address = new AddressModel()
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",
@@ -175,7 +175,7 @@ namespace PropertyPortfolioManager.WebAPI.Services.Tests
                 Id = 2,
                 Code = "Test1",
                 UnitTypeId = 1,
-                Address = new AddressEditModel()
+                Address = new AddressModel()
                 {
                     Id = 5,
                     StreetAddress = "7 Short Road",

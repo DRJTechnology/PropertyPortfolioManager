@@ -1,18 +1,18 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Client.State;
 using PropertyPortfolioManager.Models.Model.Property;
-using System.Net.Http.Json;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
     [Authorize]
 	public partial class PortfolioList
     {
-		private PortfolioModel[]? portfolios;
+		private IEnumerable<PortfolioModel>? portfolios;
 
-		[Inject]
-        public HttpClient Http { get; set; }
+        [Inject]
+        public IPortfolioDataService portfolioDataService { get; set; }
 
         [Inject]
         public ProfileState ProfileState { get; set; }
@@ -34,7 +34,7 @@ namespace PropertyPortfolioManager.Client.Pages
 		{
             try
             {
-                await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/SelectForCurrentUser/{portfolioId}");
+                await this.portfolioDataService.SelectForCurrentUserAsync(portfolioId);
                 ProfileState.CurrentPortfolio = portfolios.Where(p => p.Id == portfolioId).FirstOrDefault();
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace PropertyPortfolioManager.Client.Pages
 		{
 			try
 			{
-                portfolios = await Http.GetFromJsonAsync<PortfolioModel[]>($"api/Portfolio/GetAll/{ActiveOnly}");
+                portfolios = await this.portfolioDataService.GetAllAsync(ActiveOnly);
             }
             catch (Exception ex)
 			{

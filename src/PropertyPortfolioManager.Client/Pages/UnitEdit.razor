@@ -27,6 +27,51 @@
             </div>
 
             <div class="row mb-3">
+                <label for="address_streetaddress" class="col-form-label col-md-3">Street address: </label>
+                <div class="col-md-8">
+                    <InputText id="address_streetaddress" @bind-Value="@UnitModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.StreetAddress)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_towncity" class="col-form-label col-md-3">Town/City: </label>
+                <div class="col-md-8">
+                    <InputText id="address_towncity" @bind-Value="@UnitModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.TownCity)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_countyregion" class="col-form-label col-md-3">Town/City: </label>
+                <div class="col-md-8">
+                    <InputText id="address_countyregion" @bind-Value="@UnitModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.CountyRegion)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_postcode" class="col-form-label col-md-3">Postcode: </label>
+                <div class="col-md-8">
+                    <InputText id="address_postcode" @bind-Value="@UnitModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.PostCode)" />
+            </div>
+            
+            <div class="row mb-3">
+            <label for="unittype" class="col-form-label col-md-3">Unit type: </label>
+                <div class="col-md-8">
+                    <InputSelect id="unittype" class="form-select col-md-8" @bind-Value="@UnitModel.UnitTypeId">
+                        @foreach (var unittype in unittypes)
+                        {
+                        <option value="@unittype.Id">@unittype.Type</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
                 <div class="col-md-8 offset-md-3">
                     <div class="form-check">
                         <InputCheckbox id="active" class="form-check-input" @bind-Value="@UnitModel.Active"></InputCheckbox>

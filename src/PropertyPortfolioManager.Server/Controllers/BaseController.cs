@@ -31,11 +31,18 @@ namespace PropertyPortfolioManager.Server.Controllers
 
 		protected async Task<UserDto> GetCurrentUser()
 		{
-			if (this.currentUser == null || this.currentUser.Id == 0)
+			try
 			{
-				this.currentUser = await userService.GetCurrent(User);
+				if (this.currentUser == null || this.currentUser.Id == 0)
+				{
+					this.currentUser = await userService.GetCurrent(User);
+				}
+				return this.currentUser;
 			}
-			return this.currentUser;
+			catch (Exception ex)
+			{
+				throw;
+			}
 		}
 	}
 }

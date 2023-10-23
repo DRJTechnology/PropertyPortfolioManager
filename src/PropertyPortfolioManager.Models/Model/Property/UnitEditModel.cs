@@ -9,7 +9,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
     {
         public UnitEditModel()
         {
-            this.Address = new AddressEditModel();
+            this.Address = new AddressModel();
         }
 
         public int Id { get; set; }
@@ -39,6 +39,6 @@ namespace PropertyPortfolioManager.Models.Model.Property
 
         public bool Deleted { get; set; }
 
-        public AddressEditModel Address { get; set; }
+        public AddressModel Address { get; set; }
     }
 }

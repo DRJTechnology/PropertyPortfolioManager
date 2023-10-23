@@ -4,10 +4,10 @@
     {
         public ContactResponseModel()
         {
-            this.Address = new AddressResponseModel();
+            this.Address = new AddressModel();
         }
         public string ContactType { get; set; } = string.Empty;
 
-        public new AddressResponseModel Address { get; set; }
+        public new AddressModel Address { get; set; }
     }
 }

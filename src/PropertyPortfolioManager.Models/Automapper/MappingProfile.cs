@@ -14,8 +14,8 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<UnitBasicDto, UnitBasicResponseModel>();
             this.CreateMap<UnitEditModel, UnitDto>();
 
-            this.CreateMap<AddressDto, AddressResponseModel>();
-            this.CreateMap<AddressEditModel, AddressDto>();
+            this.CreateMap<AddressDto, AddressModel>();
+            this.CreateMap<AddressModel, AddressDto>();
 
             this.CreateMap<PortfolioDto, PortfolioModel>();
             this.CreateMap<PortfolioModel, PortfolioDto>();

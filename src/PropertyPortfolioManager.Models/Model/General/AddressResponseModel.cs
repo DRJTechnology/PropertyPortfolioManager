@@ -1,6 +1,6 @@
-﻿namespace PropertyPortfolioManager.Models.Model.General
-{
-    public class AddressResponseModel : AddressEditModel
-    {
-    }
-}
+﻿//namespace PropertyPortfolioManager.Models.Model.General
+//{
+//    public class AddressResponseModel : AddressEditModel
+//    {
+//    }
+//}

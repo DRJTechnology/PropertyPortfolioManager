@@ -2,7 +2,7 @@
 
 namespace PropertyPortfolioManager.Models.Model.General
 {
-    public class AddressEditModel
+    public class AddressModel
     {
         public int Id { get; set; }
 

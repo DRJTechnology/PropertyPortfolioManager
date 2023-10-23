@@ -34,8 +34,15 @@ namespace PropertyPortfolioManager.WebAPI.Services
 
         public async Task<UnitResponseModel> GetById(int unitId, int portfolioId)
         {
-            var unit = await this.unitRepository.GetById(unitId, portfolioId);
-            return this.mapper.Map<UnitResponseModel>(unit);
+            try
+            {
+                var unit = await this.unitRepository.GetById(unitId, portfolioId);
+                return this.mapper.Map<UnitResponseModel>(unit);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> Update(int currentUserId, int portfolioId, UnitEditModel unit)
