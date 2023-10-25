@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.Model.Property;
 using System.Net.Http.Json;
 
@@ -8,7 +9,7 @@ namespace PropertyPortfolioManager.Client.Pages
     public partial class UnitTypeEdit
     {
         [Inject]
-        public HttpClient Http { get; set; }
+        public IUnitTypeDataService unitTypeDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -34,7 +35,8 @@ namespace PropertyPortfolioManager.Client.Pages
             }
             else
             {
-                UnitType = await Http.GetFromJsonAsync<UnitTypeModel>($"api/UnitType/GetById/{UnitTypeId}");
+                //UnitType = await Http.GetFromJsonAsync<UnitTypeModel>($"api/UnitType/GetById/{UnitTypeId}");
+                UnitType = await this.unitTypeDataService.GetByIdAsync<UnitTypeModel>(unitTypeId);
             }
         }
 
@@ -44,7 +46,8 @@ namespace PropertyPortfolioManager.Client.Pages
 
             if (UnitType.Id == 0) //new
             {
-                var addedUnitType = await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Create", UnitType);
+                //var addedUnitType = await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Create", UnitType);
+                var addedUnitType = await this.unitTypeDataService.Create<UnitTypeModel>(UnitType);
                 if (addedUnitType != null)
                 {
                     StatusClass = "alert-success";
@@ -60,7 +63,8 @@ namespace PropertyPortfolioManager.Client.Pages
             }
             else
             {
-                await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Update", UnitType);
+                //await Http.PostAsJsonAsync<UnitTypeModel>("api/UnitType/Update", UnitType);
+                await this.unitTypeDataService.Update<UnitTypeModel>(UnitType);
                 StatusClass = "alert-success";
                 Message = "Unit type updated successfully.";
                 Saved = true;
@@ -77,7 +81,8 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             try
             {
-                await Http.DeleteAsync($"api/UnitType/Delete/{UnitTypeId}");
+                //await Http.DeleteAsync($"api/UnitType/Delete/{UnitTypeId}");
+                await this.unitTypeDataService.DeleteAsync(UnitType.Id);
             }
             catch (Exception ex)
             {

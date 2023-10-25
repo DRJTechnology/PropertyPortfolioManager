@@ -21,7 +21,7 @@
             <div class="row mb-3">
                 <label for="name" class="col-form-label col-md-3">Name: </label>
                 <div class="col-md-8">
-                    <InputText id="name" @bind-Value="@Portfolio.Name" class="form-control col-md-8" placeholder="Enter name"></InputText>
+                    <InputText id="name" @bind-Value="@Portfolio.Name" class="form-control col-md-8" placeholder="Enter name" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => Portfolio.Name)" />
             </div>

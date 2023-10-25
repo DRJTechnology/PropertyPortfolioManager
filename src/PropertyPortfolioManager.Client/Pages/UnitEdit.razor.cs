@@ -1,13 +1,20 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.Model.Property;
-using System.Net.Http.Json;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
+    [Authorize]
     public partial class UnitEdit
     {
+        private IEnumerable<UnitTypeModel> unittypes;
+
         [Inject]
-        public HttpClient Http { get; set; }
+        public IUnitTypeDataService unitTypeDataService { get; set; }
+
+        [Inject]
+        public IUnitDataService unitDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -16,20 +23,34 @@ namespace PropertyPortfolioManager.Client.Pages
         public string? UnitId { get; set; }
 
         private UnitEditModel UnitModel { get; set; } = new UnitEditModel();
-        private UnitTypeModel[] unittypes = new UnitTypeModel[0];
+
 
         private bool Saved;
+        private bool DataLoading = true;
         private string Message = string.Empty;
         private string StatusClass = string.Empty;
 
-        protected async override Task OnInitializedAsync()
+        protected override async Task OnInitializedAsync()
         {
             try
             {
                 Saved = false;
 
                 int.TryParse(UnitId, out var unitId);
-                //unittypes = await Http.GetFromJsonAsync<UnitTypeModel[]>($"api/UnitType/GetAll");
+
+                //UnitModel.UnitTypeId = 1;
+
+                unittypes = await this.unitTypeDataService.GetAllAsync<UnitTypeModel>();
+                //unittypes = new List<UnitTypeModel>()
+                //{
+                //    new UnitTypeModel() { Id = 1, Type = "One", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 2, Type = "Two", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 3, Type = "Three", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 4, Type = "Four", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 5, Type = "Five", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 6, Type = "Six", Active = true, PortfolioId = 2 },
+                //    new UnitTypeModel() { Id = 7, Type = "Seven", Active = true, PortfolioId = 2 },
+                //};
 
                 if (unitId == 0) //new unit is being created
                 {
@@ -37,9 +58,11 @@ namespace PropertyPortfolioManager.Client.Pages
                 }
                 else
                 {
-                    var unit = await Http.GetFromJsonAsync<UnitResponseModel>($"api/Unit/GetById/{UnitId}");
+                    var unit = await this.unitDataService.GetByIdAsync<UnitEditModel>(unitId);
+                    //var unit = new UnitEditModel();
                     UnitModel = unit;
                 }
+                DataLoading = false;
             }
             catch (Exception ex)
             {
@@ -53,8 +76,8 @@ namespace PropertyPortfolioManager.Client.Pages
 
             if (UnitModel.Id == 0) //new
             {
-                var addedUnit = await Http.PostAsJsonAsync<UnitEditModel>("api/Unit/Create", UnitModel);
-                if (addedUnit != null)
+                var addedUnit = await this.unitDataService.Create<UnitEditModel>(UnitModel);
+                if (addedUnit != 0)
                 {
                     StatusClass = "alert-success";
                     Message = "New unit type added successfully.";
@@ -69,7 +92,7 @@ namespace PropertyPortfolioManager.Client.Pages
             }
             else
             {
-                await Http.PostAsJsonAsync<UnitEditModel>("api/Unit/Update", UnitModel);
+                await this.unitDataService.Update<UnitEditModel>(UnitModel);
                 StatusClass = "alert-success";
                 Message = "Unit type updated successfully.";
                 Saved = true;
@@ -86,7 +109,7 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             try
             {
-                await Http.DeleteAsync($"api/Unit/Delete/{UnitId}");
+                await this.unitDataService.DeleteAsync(UnitModel.Id);
             }
             catch (Exception ex)
             {

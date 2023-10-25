@@ -47,7 +47,7 @@ namespace PropertyPortfolioManager.Client.Pages
 		{
 			try
 			{
-                portfolios = await this.portfolioDataService.GetAllAsync(ActiveOnly);
+                portfolios = await this.portfolioDataService.GetAllAsync<PortfolioModel>(ActiveOnly);
             }
             catch (Exception ex)
 			{

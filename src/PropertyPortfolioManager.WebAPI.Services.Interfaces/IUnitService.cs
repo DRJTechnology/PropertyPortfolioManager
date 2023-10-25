@@ -1,4 +1,5 @@
 ﻿using PropertyPortfolioManager.Models.Model.Property;
+using System.Security.Claims;
 
 namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
 {
@@ -8,5 +9,6 @@ namespace PropertyPortfolioManager.WebAPI.Services.Interfaces
         Task<UnitResponseModel> GetById(int unitId, int portfolioId);
         Task<int> Create(int currentUserId, int portfolioId, UnitEditModel unit);
         Task<bool> Update(int currentUserId, int portfolioId, UnitEditModel unit);
+        Task<bool> Delete(int currentUserId, int portfolioId, int unitId);
     }
 }

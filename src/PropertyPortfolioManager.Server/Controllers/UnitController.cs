@@ -128,5 +128,49 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
         }
 
+
+        [HttpDelete]
+        [Route("Delete/{unitId}")]
+        public async Task<PpmApiResponse> Delete(int unitId)
+        {
+            try
+            {
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return new PpmApiResponse()
+                    {
+                        Success = false,
+                        ErrorMessage = "UnitType_Delete: User has no Selected Portfolio Id set."
+                    };
+                }
+                else
+                {
+                    if (await this.unitService.Delete((await this.GetCurrentUser()).Id, (int)portfolioId, unitId))
+                    {
+                        return new PpmApiResponse()
+                        {
+                            Success = true,
+                        };
+                    }
+                    else
+                    {
+                        return new PpmApiResponse()
+                        {
+                            Success = false,
+                            ErrorMessage = $"UnitTypeController: Failed to delete unitTypeId {unitId}"
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new PpmApiResponse()
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                };
+            }
+        }
     }
 }

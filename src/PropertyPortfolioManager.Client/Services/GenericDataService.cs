@@ -1,25 +1,25 @@
 ﻿using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.InternalObjects;
 using System.Net.Http.Json;
-using System.Text.RegularExpressions;
 
 namespace PropertyPortfolioManager.Client.Services
 {
-    public class GenericDataService<TEntity> : IGenericDataService<TEntity> where TEntity : class
+    public abstract class GenericDataService : IGenericDataService
     {
         protected HttpClient httpClient { get; }
+        protected string ApiControllerName { get; set; }
 
         public GenericDataService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
 
-        public async Task<int> Create(TEntity portfolio)
+        public async Task<int> Create<TEntity>(TEntity portfolio)
         {
-            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{GetEntityName()}/Create", portfolio);
+            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Create", portfolio);
             if (response == null || !response.IsSuccessStatusCode)
             {
-                throw new Exception($"Failed to create {GetEntityName()}.");
+                throw new Exception($"Failed to create {ApiControllerName}.");
             }
 
             var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
@@ -29,10 +29,10 @@ namespace PropertyPortfolioManager.Client.Services
 
         public async Task<bool> DeleteAsync(int portfolioId)
         {
-            var response = await httpClient.DeleteAsync($"api/{GetEntityName()}/Delete/{portfolioId}");
+            var response = await httpClient.DeleteAsync($"api/{ApiControllerName}/Delete/{portfolioId}");
             if (response == null || !response.IsSuccessStatusCode)
             {
-                throw new Exception($"Failed to delete {GetEntityName()}.");
+                throw new Exception($"Failed to delete {ApiControllerName}.");
             }
 
             var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
@@ -40,37 +40,35 @@ namespace PropertyPortfolioManager.Client.Services
             return returnValue.Success;
         }
 
-        public async Task<IEnumerable<TEntity>> GetAllAsync(bool ActiveOnly = true)
+        public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(bool ActiveOnly = true)
         {
-            var returnVal = await httpClient.GetFromJsonAsync<IEnumerable<TEntity>>($"api/{GetEntityName()}/GetAll/{ActiveOnly}");
-            return returnVal;
+            try
+            {
+                var returnVal = await httpClient.GetFromJsonAsync<IEnumerable<TEntity>>($"api/{ApiControllerName}/GetAll/{ActiveOnly}");
+                return returnVal;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<TEntity> GetByIdAsync(int portfolioId)
+        public async Task<TEntity> GetByIdAsync<TEntity>(int portfolioId)
         {
-            return await httpClient.GetFromJsonAsync<TEntity>($"api/{GetEntityName()}/GetById/{portfolioId}");
+            return await httpClient.GetFromJsonAsync<TEntity>($"api/{ApiControllerName}/GetById/{portfolioId}");
         }
 
-        public async Task<bool> Update(TEntity portfolio)
+        public async Task<bool> Update<TEntity>(TEntity portfolio)
         {
-            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{GetEntityName()}/Update", portfolio);
+            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Update", portfolio);
             if (response == null || !response.IsSuccessStatusCode)
             {
-                throw new Exception($"Failed to create {GetEntityName()}.");
+                throw new Exception($"Failed to create {ApiControllerName}.");
             }
 
             var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
 
             return returnValue.CreatedId > 0;
-        }
-
-        private string GetEntityName()
-        {
-            var fullName = typeof(TEntity).FullName;
-            var name = fullName.Substring(fullName.LastIndexOf('.') + 1);
-            string[] split = Regex.Split(name, @"(?<!^)(?=[A-Z])");
-            var entityName = split[0];
-            return entityName;
         }
     }
 }

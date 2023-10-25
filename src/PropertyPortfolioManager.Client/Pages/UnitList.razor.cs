@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.Model.Property;
-using System.Net.Http.Json;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
     [Authorize]
 	public partial class UnitList
     {
-		private UnitBasicResponseModel[]? units;
+		private IEnumerable<UnitBasicResponseModel>? units;
 
-		[Inject]
-        public HttpClient Http { get; set; }
+        [Inject]
+        public IUnitDataService unitDataService { get; set; }
 
-		public bool ActiveOnly { get; set; } = true;
+        public bool ActiveOnly { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
 		{
@@ -30,7 +30,7 @@ namespace PropertyPortfolioManager.Client.Pages
 		{
 			try
 			{
-                units = await Http.GetFromJsonAsync<UnitBasicResponseModel[]>($"api/Unit/GetAll/{ActiveOnly}");
+                units = await this.unitDataService.GetAllAsync<UnitBasicResponseModel>(ActiveOnly);
             }
             catch (Exception ex)
 			{

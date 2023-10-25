@@ -50,6 +50,18 @@ namespace PropertyPortfolioManager.WebAPI.Repositories
             }
         }
 
+        public async Task<bool> Delete(int currentUserId, int portfolioId, int unitId)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", unitId);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@CurrentUserId", currentUserId);
+
+            await this.dbConnection.ExecuteAsync("property.Unit_Delete", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
+        }
+
         public async Task<List<UnitBasicDto>> GetAll(int portfolioId, bool activeOnly)
         {
             var parameters = new DynamicParameters();

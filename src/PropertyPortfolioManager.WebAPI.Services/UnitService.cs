@@ -26,6 +26,11 @@ namespace PropertyPortfolioManager.WebAPI.Services
             return await this.unitRepository.Create(currentUserId, portfolioId, unitDto);
         }
 
+        public async Task<bool> Delete(int currentUserId, int portfolioId, int unitId)
+        {
+            return await this.unitRepository.Delete(currentUserId, portfolioId, unitId);
+        }
+
         public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId, bool activeOnly)
         {
             var unitList = await this.unitRepository.GetAll(portfolioId, activeOnly);

@@ -2,8 +2,7 @@
 
 namespace PropertyPortfolioManager.Client.Interfaces
 {
-    public interface IPortfolioDataService : IGenericDataService
+    public interface IUnitTypeDataService : IGenericDataService
     {
-        Task SelectForCurrentUserAsync(int portfolioId);
     }
 }

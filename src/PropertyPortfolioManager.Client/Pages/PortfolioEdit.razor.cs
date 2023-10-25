@@ -44,7 +44,7 @@ namespace PropertyPortfolioManager.Client.Pages
             else
             {
                 //Portfolio = await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetById/{PortfolioId}");
-                Portfolio = await this.portfolioDataService.GetByIdAsync(portfolioId);
+                Portfolio = await this.portfolioDataService.GetByIdAsync<PortfolioModel>(portfolioId);
             }
         }
 
@@ -55,7 +55,7 @@ namespace PropertyPortfolioManager.Client.Pages
             if (Portfolio.Id == 0) //new
             {
                 //var addedPortfolio = await Http.PostAsJsonAsync<PortfolioModel>("api/Portfolio/Create", Portfolio);
-                var addedPortfolioId = await this.portfolioDataService.Create(Portfolio);
+                var addedPortfolioId = await this.portfolioDataService.Create<PortfolioModel>(Portfolio);
                 if (addedPortfolioId != 0)
                 {
                     StatusClass = "alert-success";
@@ -72,7 +72,7 @@ namespace PropertyPortfolioManager.Client.Pages
             else
             {
                 //await Http.PostAsJsonAsync<PortfolioModel>("api/Portfolio/Update", Portfolio);
-                await this.portfolioDataService.Update(Portfolio);
+                await this.portfolioDataService.Update<PortfolioModel>(Portfolio);
                 StatusClass = "alert-success";
                 Message = "Portfolio updated successfully.";
                 Saved = true;

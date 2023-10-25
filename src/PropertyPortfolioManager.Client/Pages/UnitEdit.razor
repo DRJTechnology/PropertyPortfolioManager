@@ -1,10 +1,10 @@
 ﻿@page "/unitedit"
 @page "/unitedit/{UnitId}"
 
-@if (!Saved)
+@if (!Saved & !DataLoading)
 {
     <section class="">
-        @if (UnitModel.Id == 0)
+         @if (UnitModel.Id == 0)
         {
             <h1 class="page-title">New Unit</h1>
         }
@@ -21,7 +21,7 @@
             <div class="row mb-3">
                 <label for="code" class="col-form-label col-md-3">Code: </label>
                 <div class="col-md-8">
-                    <InputText id="code" @bind-Value="@UnitModel.Code" class="form-control col-md-8" placeholder="Enter code"></InputText>
+                    <InputText id="code" @bind-Value="@UnitModel.Code" class="form-control col-md-8" placeholder="Enter code" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Code)" />
             </div>
@@ -29,7 +29,7 @@
             <div class="row mb-3">
                 <label for="address_streetaddress" class="col-form-label col-md-3">Street address: </label>
                 <div class="col-md-8">
-                    <InputText id="address_streetaddress" @bind-Value="@UnitModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address"></InputText>
+                    <InputText id="address_streetaddress" @bind-Value="@UnitModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.StreetAddress)" />
             </div>
@@ -37,7 +37,7 @@
             <div class="row mb-3">
                 <label for="address_towncity" class="col-form-label col-md-3">Town/City: </label>
                 <div class="col-md-8">
-                    <InputText id="address_towncity" @bind-Value="@UnitModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city"></InputText>
+                    <InputText id="address_towncity" @bind-Value="@UnitModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.TownCity)" />
             </div>
@@ -45,7 +45,7 @@
             <div class="row mb-3">
                 <label for="address_countyregion" class="col-form-label col-md-3">Town/City: </label>
                 <div class="col-md-8">
-                    <InputText id="address_countyregion" @bind-Value="@UnitModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region"></InputText>
+                    <InputText id="address_countyregion" @bind-Value="@UnitModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.CountyRegion)" />
             </div>
@@ -53,7 +53,7 @@
             <div class="row mb-3">
                 <label for="address_postcode" class="col-form-label col-md-3">Postcode: </label>
                 <div class="col-md-8">
-                    <InputText id="address_postcode" @bind-Value="@UnitModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode"></InputText>
+                    <InputText id="address_postcode" @bind-Value="@UnitModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode" autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.PostCode)" />
             </div>
@@ -95,8 +95,12 @@
         </EditForm>
     </section>
 }
+else if (DataLoading)
+{
+    <p>Loading data...</p>
+}
 else
 {
     <div class="alert @StatusClass">@Message</div>
     <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
-}
+} 

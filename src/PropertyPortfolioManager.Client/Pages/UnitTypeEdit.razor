@@ -21,7 +21,8 @@
             <div class="row mb-3">
                 <label for="type" class="col-form-label col-md-3">Type: </label>
                 <div class="col-md-8">
-                    <InputText id="type" @bind-Value="@UnitType.Type" class="form-control col-md-8" placeholder="Enter type"></InputText>
+                    <InputText id="type" @bind-Value="@UnitType.Type" class="form-control col-md-8" placeholder="Enter type"
+                               autocomplete="off"></InputText>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitType.Type)" />
             </div>
