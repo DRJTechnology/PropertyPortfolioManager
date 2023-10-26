@@ -14,14 +14,14 @@ builder.Services.AddHttpClient("PropertyPortfolioManager.ServerAPI", client => c
     .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
 // Supply HttpClient instances that include access tokens when making requests to the server project
-// TODO set back to AddScoped
-builder.Services.AddTransient(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PropertyPortfolioManager.ServerAPI"));
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PropertyPortfolioManager.ServerAPI"));
 
-// TODO set back to AddScoped
-builder.Services.AddTransient<IPortfolioDataService, PortfolioDataService>();
-builder.Services.AddTransient<IUnitDataService, UnitDataService>();
-builder.Services.AddTransient<IUnitTypeDataService, UnitTypeDataService>();
-builder.Services.AddTransient<ProfileState>();
+builder.Services.AddScoped<IPortfolioDataService, PortfolioDataService>();
+builder.Services.AddScoped<IUnitDataService, UnitDataService>();
+builder.Services.AddScoped<IUnitTypeDataService, UnitTypeDataService>();
+builder.Services.AddScoped<IContactDataService, ContactDataService>();
+builder.Services.AddScoped<IContactTypeDataService, ContactTypeDataService>();
+builder.Services.AddScoped<ProfileState>();
 
 builder.Services.AddMsalAuthentication(options =>
 {

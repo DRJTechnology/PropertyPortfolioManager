@@ -23,11 +23,13 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPortfolioService, PortfolioService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IContactTypeService, ContactTypeService>();
 builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
+builder.Services.AddScoped<IContactRepository, ContactRepository>();
 builder.Services.AddScoped<IContactTypeRepository, ContactTypeRepository>();
 builder.Services.AddScoped<IUnitTypeRepository, UnitTypeRepository>();
 builder.Services.AddScoped<IUnitRepository, UnitRepository>();

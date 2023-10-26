@@ -1,0 +1,114 @@
+﻿@page "/contactedit"
+@page "/contactedit/{ContactId}"
+
+@if (!Saved & !DataLoading)
+{
+    <section class="">
+         @if (ContactModel.Id == 0)
+        {
+            <h1 class="page-title">New Contact</h1>
+        }
+        else
+        {
+            <h1 class="page-title">Details for @ContactModel.Name</h1>
+           
+        }
+        <EditForm Model="@ContactModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row mb-3">
+                <label for="name" class="col-form-label col-md-3">Name: </label>
+                <div class="col-md-8">
+                    <InputText id="name" @bind-Value="@ContactModel.Name" class="form-control col-md-8" placeholder="Enter name" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Name)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_streetaddress" class="col-form-label col-md-3">Street address: </label>
+                <div class="col-md-8">
+                    <InputText id="address_streetaddress" @bind-Value="@ContactModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Address.StreetAddress)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_towncity" class="col-form-label col-md-3">Town/City: </label>
+                <div class="col-md-8">
+                    <InputText id="address_towncity" @bind-Value="@ContactModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Address.TownCity)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_countyregion" class="col-form-label col-md-3">Town/City: </label>
+                <div class="col-md-8">
+                    <InputText id="address_countyregion" @bind-Value="@ContactModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Address.CountyRegion)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="address_postcode" class="col-form-label col-md-3">Postcode: </label>
+                <div class="col-md-8">
+                    <InputText id="address_postcode" @bind-Value="@ContactModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Address.PostCode)" />
+            </div>
+            
+            <div class="row mb-3">
+            <label for="contacttype" class="col-form-label col-md-3">Contact type: </label>
+                <div class="col-md-8">
+                    <InputSelect id="contacttype" class="form-select col-md-8" @bind-Value="@ContactModel.ContactTypeId">
+                        @foreach (var contacttype in contacttypes)
+                        {
+                        <option value="@contacttype.Id">@contacttype.Type</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+
+            <div class="row mb-3">
+                <label for="notes" class="col-form-label col-md-3">Notes: </label>
+                <div class="col-md-8">
+                    <InputTextArea id="notes" @bind-Value="@ContactModel.Notes" class="form-control col-md-8" placeholder="Enter notes" autocomplete="off"></InputTextArea>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Notes)" />
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-3">
+                    <div class="form-check">
+                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@ContactModel.Active"></InputCheckbox>
+                        <label class="form-check-label" for="active">
+                            Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1">Save contact</button>
+
+            @if (ContactModel.Id > 0)
+            {
+                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteContact">
+                    Delete
+                </button>
+            }
+            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+
+        </EditForm>
+    </section>
+}
+else if (DataLoading)
+{
+    <p>Loading data...</p>
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+    <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
+} 

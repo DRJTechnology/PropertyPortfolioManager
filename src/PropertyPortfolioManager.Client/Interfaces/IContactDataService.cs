@@ -1,6 +1,6 @@
 ﻿namespace PropertyPortfolioManager.Client.Interfaces
 {
-    public interface IUnitDataService : IGenericDataService
+    public interface IContactDataService : IGenericDataService
     {
     }
 }

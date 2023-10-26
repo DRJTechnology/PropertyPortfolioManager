@@ -1,6 +1,4 @@
-﻿using PropertyPortfolioManager.Models.Model.Property;
-
-namespace PropertyPortfolioManager.Client.Interfaces
+﻿namespace PropertyPortfolioManager.Client.Interfaces
 {
     public interface IUnitTypeDataService : IGenericDataService
     {
