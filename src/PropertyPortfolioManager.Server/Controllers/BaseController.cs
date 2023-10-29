@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Web;
 using PropertyPortfolioManager.Models.Dto.Profile;
-using PropertyPortfolioManager.WebAPI.Services.Interfaces;
+using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
-using PropertyPortfolioManager.WebAPI.Services.Interfaces;
+using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {

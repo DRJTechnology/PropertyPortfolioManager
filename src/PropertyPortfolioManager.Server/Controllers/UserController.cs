@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 //using Microsoft.Graph;
 using Microsoft.Identity.Web.Resource;
 using PropertyPortfolioManager.Models.Dto.Profile;
-using PropertyPortfolioManager.WebAPI.Services.Interfaces;
+using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {

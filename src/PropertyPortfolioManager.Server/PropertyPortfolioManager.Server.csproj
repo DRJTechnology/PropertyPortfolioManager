@@ -15,10 +15,9 @@
   <ItemGroup>
     <ProjectReference Include="..\PropertyPortfolioManager.Client\PropertyPortfolioManager.Client.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.Models\PropertyPortfolioManager.Models.csproj" />
-    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Repositories\PropertyPortfolioManager.WebAPI.Repositories.csproj" />
-    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services.Interfaces\PropertyPortfolioManager.WebAPI.Services.Interfaces.csproj" />
-    <ProjectReference Include="..\PropertyPortfolioManager.WebAPI.Services\PropertyPortfolioManager.WebAPI.Services.csproj" />
-    <ProjectReference Include="..\Shared\PropertyPortfolioManager.Shared.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.Server.Repositories\PropertyPortfolioManager.Server.Repositories.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.Server.Services.Interfaces\PropertyPortfolioManager.Server.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.Server.Services\PropertyPortfolioManager.Server.Services.csproj" />
   </ItemGroup>
 
   <ItemGroup>

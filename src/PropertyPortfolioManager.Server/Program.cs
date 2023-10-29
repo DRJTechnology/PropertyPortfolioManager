@@ -6,10 +6,10 @@ using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Data.SqlClient;
 using Microsoft.Identity.Web;
 using PropertyPortfolioManager.Models.Automapper;
-using PropertyPortfolioManager.WebAPI.Repositories;
-using PropertyPortfolioManager.WebAPI.Repositories.Interfaces;
-using PropertyPortfolioManager.WebAPI.Services;
-using PropertyPortfolioManager.WebAPI.Services.Interfaces;
+using PropertyPortfolioManager.Server.Repositories;
+using PropertyPortfolioManager.Server.Repositories.Interfaces;
+using PropertyPortfolioManager.Server.Services;
+using PropertyPortfolioManager.Server.Services.Interfaces;
 using System.Data;
 
 var builder = WebApplication.CreateBuilder(args);
