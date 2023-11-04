@@ -1,0 +1,10 @@
+﻿@page "/documents"
+
+<h3>Documents</h3>
+
+@foreach (var driveItem in DriveItemList)
+{
+<p>
+        @driveItem.Name
+</p>
+}

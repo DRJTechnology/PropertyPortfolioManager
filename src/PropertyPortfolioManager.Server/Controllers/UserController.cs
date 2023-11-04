@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-//using Microsoft.Graph;
+using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using Microsoft.Identity.Web.Resource;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.Server.Services.Interfaces;
+using System.Diagnostics;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {
@@ -14,13 +16,13 @@ namespace PropertyPortfolioManager.Server.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService userService;
-        //private readonly GraphServiceClient graphServiceClient;
+        private readonly GraphServiceClient graphServiceClient;
 
-        public UserController(IUserService userService) // , GraphServiceClient graphServiceClient)
-        //public UserController(IUserService userService, GraphServiceClient graphServiceClient)
+        //public UserController(IUserService userService)
+        public UserController(IUserService userService, GraphServiceClient graphServiceClient)
         {
             this.userService = userService;
-            //this.graphServiceClient = graphServiceClient;
+            this.graphServiceClient = graphServiceClient;
         }
 
         [HttpGet]
@@ -34,7 +36,14 @@ namespace PropertyPortfolioManager.Server.Controllers
         [Route("GetCurrent")]
         public async Task<UserDto> GetCurrent()
         {
-            return await this.userService.GetCurrent(User);
+            try
+            {
+                return await this.userService.GetCurrent(User);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

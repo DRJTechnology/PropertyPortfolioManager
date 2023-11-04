@@ -16,7 +16,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
+    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"))
+        .EnableTokenAcquisitionToCallDownstreamApi()
+            .AddMicrosoftGraph(builder.Configuration.GetSection("MicrosoftGraph"))
+            .AddInMemoryTokenCaches();
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
@@ -27,6 +30,7 @@ builder.Services.AddScoped<IContactService, ContactService>();
 builder.Services.AddScoped<IContactTypeService, ContactTypeService>();
 builder.Services.AddScoped<IUnitTypeService, UnitTypeService>();
 builder.Services.AddScoped<IUnitService, UnitService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IPortfolioRepository, PortfolioRepository>();
 builder.Services.AddScoped<IContactRepository, ContactRepository>();
@@ -36,6 +40,8 @@ builder.Services.AddScoped<IUnitRepository, UnitRepository>();
 
 //builder.Services.AddSingleton<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));
 builder.Services.AddTransient<IDbConnection>(db => new SqlConnection(builder.Configuration.GetConnectionString("PpmDatabaseConnectionString")));
+
+
 
 // Set up caching.
 var keyPrefix = builder.Configuration.GetValue<string>("DRJCache:KeyPrefix");
