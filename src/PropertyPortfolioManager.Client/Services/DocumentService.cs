@@ -12,6 +12,11 @@ namespace PropertyPortfolioManager.Client.Services
             ApiControllerName = "Document";
         }
 
+        public async Task<List<DriveItemModel>> GetCurrentFolderContentsAsync(string driveId)
+        {
+            return await httpClient.GetFromJsonAsync<List<DriveItemModel>>($"api/Document/GetFolderContents/{driveId}");
+        }
+
         public async Task<List<DriveItemModel>> GetCurrentFolderContentsAsync()
         {
             return await httpClient.GetFromJsonAsync<List<DriveItemModel>>($"api/Document/GetFolderContents");

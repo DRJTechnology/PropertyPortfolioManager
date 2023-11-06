@@ -33,7 +33,8 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<ContactEditModel, ContactDto>();
 
             this.CreateMap<DriveItem, DriveItemModel>()
-                .ForMember(d => d.IsFolder, x => x.MapFrom(s => s.Folder != null));
+                .ForMember(d => d.IsFolder, x => x.MapFrom(s => s.Folder != null))
+                .ForMember(d => d.LastModifiedByName, x => x.MapFrom(s => s.LastModifiedBy.User.DisplayName));
         }
     }
 }

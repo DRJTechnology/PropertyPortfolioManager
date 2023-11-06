@@ -5,5 +5,6 @@ namespace PropertyPortfolioManager.Client.Interfaces
     public interface IDocumentService : IGenericDataService
     {
         Task<List<DriveItemModel>> GetCurrentFolderContentsAsync();
+        Task<List<DriveItemModel>> GetCurrentFolderContentsAsync(string driveId);
     }
 }

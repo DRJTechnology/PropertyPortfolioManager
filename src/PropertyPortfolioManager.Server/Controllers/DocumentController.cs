@@ -32,5 +32,19 @@ namespace PropertyPortfolioManager.Server.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("GetFolderContents/{driveId}")]
+        public async Task<List<DriveItemModel>> GetFolderContents(string driveId)
+        {
+            try
+            {
+                return await this.documentService.GetFolderItemsAsync(driveId);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

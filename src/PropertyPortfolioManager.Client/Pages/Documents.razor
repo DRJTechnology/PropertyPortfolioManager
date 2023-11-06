@@ -1,10 +1,75 @@
 ﻿@page "/documents"
+@using static PropertyPortfolioManager.Client.Helpers.StringHelpers
 
 <h3>Documents</h3>
 
-@foreach (var driveItem in DriveItemList)
+@if (DataLoading)
 {
-<p>
-        @driveItem.Name
-</p>
+    <p>Loading data...</p>
 }
+else
+{
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        Modified
+                    </th>
+                    <th>
+                        Modified By
+                    </th>
+                    <th>
+                        Size
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var driveItem in DriveItemList)
+                {
+                    <tr>
+                        <td>
+                            @if (driveItem.IsFolder)
+                            {
+                                <div>
+                                    <i class="bi bi-folder-fill"></i><a class="btn btn-link link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(driveItem.Id))">@driveItem.Name</a>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <i class="bi @GetFileTypeClass(driveItem.Name) pe-2"></i>@driveItem.Name
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @driveItem.LastModifiedDateTime.Date.ToString("d MMMM yyyy")
+                        </td>
+                        <td>
+                            @driveItem.LastModifiedByName
+                        </td>
+                        <td>
+                            @driveItem.Size.ToFileSizeString()
+                        </td>
+                        <td>
+                            @if (driveItem.IsFolder)
+                            {
+                                <a href="@driveItem.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                            }
+                            else
+                            {
+                                <a href="@driveItem.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
