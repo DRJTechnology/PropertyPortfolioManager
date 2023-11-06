@@ -16,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\PropertyPortfolioManager.Server.Repositories.Interfaces\PropertyPortfolioManager.Server.Repositories.Interfaces.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.Server.Services.Interfaces\PropertyPortfolioManager.Server.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.Server.Shared\PropertyPortfolioManager.Server.Shared.csproj" />
   </ItemGroup>
 
 </Project>

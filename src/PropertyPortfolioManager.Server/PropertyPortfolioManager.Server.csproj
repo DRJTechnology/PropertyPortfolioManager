@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
@@ -19,6 +19,7 @@
     <ProjectReference Include="..\PropertyPortfolioManager.Server.Repositories\PropertyPortfolioManager.Server.Repositories.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.Server.Services.Interfaces\PropertyPortfolioManager.Server.Services.Interfaces.csproj" />
     <ProjectReference Include="..\PropertyPortfolioManager.Server.Services\PropertyPortfolioManager.Server.Services.csproj" />
+    <ProjectReference Include="..\PropertyPortfolioManager.Server.Shared\PropertyPortfolioManager.Server.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>

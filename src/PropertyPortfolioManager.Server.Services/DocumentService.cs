@@ -1,22 +1,23 @@
 ﻿using AutoMapper;
 using DRJTechnology.Cache;
+using Microsoft.Extensions.Options;
 using Microsoft.Graph;
-using Microsoft.Graph.Models;
-using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Document;
 using PropertyPortfolioManager.Server.Services.Interfaces;
-
+using PropertyPortfolioManager.Server.Shared.Configuration;
 
 namespace PropertyPortfolioManager.Server.Services
 {
     public class DocumentService : IDocumentService
     {
+        private Settings settings;
         private readonly ICacheService cacheService;
         private readonly GraphServiceClient graphServiceClient;
         private readonly IMapper mapper;
 
-        public DocumentService(ICacheService cacheService, GraphServiceClient graphServiceClient, IMapper mapper)
+        public DocumentService(IOptions<Settings> settings, ICacheService cacheService, GraphServiceClient graphServiceClient, IMapper mapper)
         {
+            this.settings = settings.Value;
             this.cacheService = cacheService;
             this.graphServiceClient = graphServiceClient;
             this.mapper = mapper;
@@ -26,11 +27,7 @@ namespace PropertyPortfolioManager.Server.Services
         {
             try
             {
-                //var user = await this.graphServiceClient.Me.GetAsync();
-                //string siteId = "Add to appsettings";
-                //string driveId = "Add to appsettings";
-
-                var folderItems = await graphServiceClient.Drives[driveId].Items[driveItemId].Children.GetAsync();
+                var folderItems = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].Children.GetAsync();
 
                 var driveItemList = this.mapper.Map<List<DriveItemModel>>(folderItems.Value.ToList());
 
@@ -40,38 +37,6 @@ namespace PropertyPortfolioManager.Server.Services
             {
                 throw;
             }
-
-            //try
-            //{
-            //    var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
-            //    var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
-
-            //    if (currentUser != null)
-            //    {
-            //        return currentUser;
-            //    }
-
-            //    var userObjectIdentifier = new Guid(user.GetObjectId()!);
-            //    var userDto = await this.userRepository.GetByObjectIdentifier(userObjectIdentifier);
-
-            //    if (userDto == null)
-            //    {
-            //        userDto = new UserDto()
-            //        {
-            //            ObjectIdentifier = userObjectIdentifier,
-            //            Name = user.FindFirstValue("name") ?? "No name",
-            //        };
-            //        userDto.Id = await this.userRepository.Create(userDto);
-            //    }
-
-            //    await this.cacheService.SetAsync(cacheKey, userDto);
-
-            //    return userDto;
-            //}
-            //catch (Exception ex)
-            //{
-            //    throw;
-            //}
         }
     }
 }
