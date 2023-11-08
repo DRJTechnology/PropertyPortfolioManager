@@ -1,6 +1,7 @@
 ﻿using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.Model.Document;
 using System.Net.Http.Json;
+using System.Web;
 
 namespace PropertyPortfolioManager.Client.Services
 {
@@ -12,14 +13,22 @@ namespace PropertyPortfolioManager.Client.Services
             ApiControllerName = "Document";
         }
 
-        public async Task<List<DriveItemModel>> GetCurrentFolderContentsAsync(string driveId)
+        public async Task<DriveItemModel> GetFolderAsync(string driveId)
         {
-            return await httpClient.GetFromJsonAsync<List<DriveItemModel>>($"api/Document/GetFolderContents/{driveId}");
+            try
+            {
+                string path = $"api/Document/GetFolder/{HttpUtility.UrlEncode(driveId)}";
+                return await httpClient.GetFromJsonAsync<DriveItemModel>(path);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<List<DriveItemModel>> GetCurrentFolderContentsAsync()
+        public async Task<DriveItemModel> GetFolderAsync()
         {
-            return await httpClient.GetFromJsonAsync<List<DriveItemModel>>($"api/Document/GetFolderContents");
+            return await httpClient.GetFromJsonAsync<DriveItemModel>($"api/Document/GetFolder");
         }
     }
 }

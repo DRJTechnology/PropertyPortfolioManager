@@ -1,14 +1,17 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Client.Interfaces;
+using PropertyPortfolioManager.Client.Models;
 using PropertyPortfolioManager.Models.Model.Document;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
     public partial class Documents
     {
-        private List<DriveItemModel> DriveItemList = new List<DriveItemModel>();
+        private DriveItemModel CurrentFolder = new DriveItemModel();
         private List<string> knownExtensions = new List<string> { "aac", "ai", "bmp", "cs", "css", "csv", "doc", "docx", "exe", "gif", "heic", "html", "java", "jpg", "js", "json", "jsx", "key", "m4p", "md", "mdx", "mov", "mp3", "mp4", "otf", "pdf", "php", "png", "ppt", "pptx", "psd", "py", "raw", "rb", "sass", "scss", "sh", "sql", "svg", "tiff", "tsx", "ttf", "txt", "wav", "woff", "xls", "xlsx", "xml", "yml" };
         private bool DataLoading = true;
+        private List<BreadcrumbItem> Breadcrumb = new List<BreadcrumbItem>();
 
         [Inject]
         public IDocumentService documentService { get; set; }
@@ -17,7 +20,8 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             try
             {
-                DriveItemList = await this.documentService.GetCurrentFolderContentsAsync();
+                CurrentFolder = await this.documentService.GetFolderAsync();
+                Breadcrumb.Add(new BreadcrumbItem() { Id = CurrentFolder.Id, Name = "Documents", WebUrl = CurrentFolder.WebUrl });
                 DataLoading = false;
             }
             catch (Exception ex)
@@ -28,7 +32,8 @@ namespace PropertyPortfolioManager.Client.Pages
 
         protected async void SelectFolder(string driveId)
         {
-            DriveItemList = await this.documentService.GetCurrentFolderContentsAsync(driveId);
+            CurrentFolder = await this.documentService.GetFolderAsync(driveId);
+            this.UpdateBreadcrunb();
             await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
         }
 
@@ -46,6 +51,22 @@ namespace PropertyPortfolioManager.Client.Pages
             else
             {
                 return "bi-file-earmark";
+            }
+        }
+        private void UpdateBreadcrunb()
+        {
+            if (Breadcrumb.Exists(b => b.Id == CurrentFolder.Id))
+            {
+                var existingItem = Breadcrumb.Where(b => b.Id == CurrentFolder.Id).FirstOrDefault();
+                int index = Breadcrumb.IndexOf(existingItem);
+                if (index != -1)
+                {
+                    Breadcrumb.RemoveRange(index + 1, Breadcrumb.Count - index - 1);
+                }
+            }
+            else
+            {
+                Breadcrumb.Add(new BreadcrumbItem() { Id = CurrentFolder.Id, Name = CurrentFolder.Name, WebUrl = CurrentFolder.WebUrl });
             }
         }
     }

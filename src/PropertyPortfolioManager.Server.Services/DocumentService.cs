@@ -23,15 +23,18 @@ namespace PropertyPortfolioManager.Server.Services
             this.mapper = mapper;
         }
 
-        public async Task<List<DriveItemModel>> GetFolderItemsAsync(string driveItemId = "root")
+        public async Task<DriveItemModel> GetFolderAsync(string driveItemId = "root")
         {
             try
             {
+                var folderDetails = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].GetAsync();
+
+                var driveItem = this.mapper.Map<DriveItemModel>(folderDetails);
+
                 var folderItems = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].Children.GetAsync();
+                driveItem.DriveItemList = this.mapper.Map<List<DriveItemModel>>(folderItems.Value.ToList());
 
-                var driveItemList = this.mapper.Map<List<DriveItemModel>>(folderItems.Value.ToList());
-
-                return driveItemList;
+                return driveItem;
             }
             catch (Exception ex)
             {

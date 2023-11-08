@@ -20,12 +20,12 @@ namespace PropertyPortfolioManager.Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetFolderContents")]
-        public async Task<List<DriveItemModel>> GetFolderContents()
+        [Route("GetFolder")]
+        public async Task<DriveItemModel> GetFolder()
         {
             try
             {
-                return await this.documentService.GetFolderItemsAsync();
+                return await this.documentService.GetFolderAsync();
             }
             catch (Exception ex)
             {
@@ -34,12 +34,12 @@ namespace PropertyPortfolioManager.Server.Controllers
         }
 
         [HttpGet]
-        [Route("GetFolderContents/{driveId}")]
-        public async Task<List<DriveItemModel>> GetFolderContents(string driveId)
+        [Route("GetFolder/{driveId}")]
+        public async Task<DriveItemModel> GetFolder(string driveId)
         {
             try
             {
-                return await this.documentService.GetFolderItemsAsync(driveId);
+                return await this.documentService.GetFolderAsync(driveId);
             }
             catch (Exception ex)
             {

@@ -9,6 +9,28 @@
 }
 else
 {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var item in Breadcrumb)
+            {
+                @if (item.Id == CurrentFolder.Id)
+                {
+                    <li class="breadcrumb-item active" aria-current="page">
+                        @item.Name
+                        <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                    </li>
+                }
+                else
+                {
+                    <li class="breadcrumb-item">
+                        <a class="cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
+                        <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                    </li>
+                }
+            }
+        </ol>
+    </nav>
+
     <div class="table-responsive">
         <table class="table">
             <thead>
@@ -30,40 +52,40 @@ else
                 </tr>
             </thead>
             <tbody>
-                @foreach (var driveItem in DriveItemList)
+                @foreach (var item in CurrentFolder.DriveItemList)
                 {
                     <tr>
                         <td>
-                            @if (driveItem.IsFolder)
+                            @if (item.IsFolder)
                             {
                                 <div>
-                                    <i class="bi bi-folder-fill"></i><a class="btn btn-link link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(driveItem.Id))">@driveItem.Name</a>
+                                    <i class="bi bi-folder-fill"></i><a class="ps-1 cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
                                 </div>
                             }
                             else
                             {
                                 <div>
-                                    <i class="bi @GetFileTypeClass(driveItem.Name) pe-2"></i>@driveItem.Name
+                                    <i class="bi @GetFileTypeClass(item.Name) pe-2"></i>@item.Name
                                 </div>
                             }
                         </td>
                         <td>
-                            @driveItem.LastModifiedDateTime.Date.ToString("d MMMM yyyy")
+                            @item.LastModifiedDateTime.Date.ToString("d MMMM yyyy")
                         </td>
                         <td>
-                            @driveItem.LastModifiedByName
+                            @item.LastModifiedByName
                         </td>
                         <td>
-                            @driveItem.Size.ToFileSizeString()
+                            @item.Size.ToFileSizeString()
                         </td>
                         <td>
-                            @if (driveItem.IsFolder)
+                            @if (item.IsFolder)
                             {
-                                <a href="@driveItem.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                                <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
                             }
                             else
                             {
-                                <a href="@driveItem.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
+                                <a href="@item.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
                             }
                         </td>
                     </tr>

@@ -5,6 +5,6 @@ namespace PropertyPortfolioManager.Server.Services.Interfaces
 {
     public interface IDocumentService
     {
-        Task<List<DriveItemModel>> GetFolderItemsAsync(string driveItemId = "root");
+        Task<DriveItemModel> GetFolderAsync(string driveItemId = "root");
     }
 }
