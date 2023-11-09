@@ -30,7 +30,6 @@ namespace PropertyPortfolioManager.Client.Pages
 		{
 			try
 			{
-                //unittypes = await Http.GetFromJsonAsync<UnitTypeModel[]>($"api/UnitType/GetAll/{ActiveOnly}");
                 unittypes = await this.unitTypeDataService.GetAllAsync<UnitTypeModel>(ActiveOnly);
             }
             catch (Exception ex)

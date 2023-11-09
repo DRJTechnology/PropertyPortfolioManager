@@ -1,5 +1,4 @@
-﻿using PropertyPortfolioManager.Models.Model.General;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 
 namespace PropertyPortfolioManager.Models.Model.Property
 {
@@ -15,6 +14,12 @@ namespace PropertyPortfolioManager.Models.Model.Property
         [DisplayName("Street Address")]
         public string StreetAddress { get; set; } = string.Empty;
 
+        [DisplayName("Town/City")]
+        public string TownCity { get; set; } = string.Empty;
+
+
         public bool Active { get; set; }
+
+        public string MainPictureBase64 { get; set; } = string.Empty;
     }
 }

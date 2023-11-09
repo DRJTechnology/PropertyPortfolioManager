@@ -6,5 +6,6 @@ namespace PropertyPortfolioManager.Client.Interfaces
     {
         Task<DriveItemModel> GetFolderAsync();
         Task<DriveItemModel> GetFolderAsync(string driveId);
+        Task<string> GetImageBase64FromDriveItemId(string driveItemid);
     }
 }

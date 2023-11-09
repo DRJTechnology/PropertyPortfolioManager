@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Se
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Server.Services.Tests", "PropertyPortfolioManager.Server.Services.Tests\PropertyPortfolioManager.Server.Services.Tests.csproj", "{EB7E295B-3531-4F68-B890-7AF82AB44704}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PropertyPortfolioManager.Server.Shared", "PropertyPortfolioManager.Server.Shared\PropertyPortfolioManager.Server.Shared.csproj", "{5967ECE5-4E4D-4796-9A87-7A8052823DEB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Server.Shared", "PropertyPortfolioManager.Server.Shared\PropertyPortfolioManager.Server.Shared.csproj", "{5967ECE5-4E4D-4796-9A87-7A8052823DEB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

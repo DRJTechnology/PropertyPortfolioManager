@@ -113,8 +113,12 @@
     <Build Include="Stored Procedures\general\ContactType_Delete.sql" />
     <Build Include="Stored Procedures\property\UnitType_Delete.sql" />
     <Build Include="Stored Procedures\property\Unit_Delete.sql" />
+    <Build Include="Tables\general\File.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="PropertyPortfolioManager.Database.refactorlog" />
   </ItemGroup>
 </Project>

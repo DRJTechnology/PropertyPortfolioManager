@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.Model.Property;
 
@@ -17,13 +18,16 @@ namespace PropertyPortfolioManager.Client.Pages
         public IUnitDataService unitDataService { get; set; }
 
         [Inject]
+        public IDocumentService documentService { get; set; }
+
+        [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
         public string? UnitId { get; set; }
 
         private UnitEditModel UnitModel { get; set; } = new UnitEditModel();
-
+        private bool DocumentSelectVisible = false;
 
         private bool Saved;
         private bool DataLoading = true;
@@ -38,19 +42,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
                 int.TryParse(UnitId, out var unitId);
 
-                //UnitModel.UnitTypeId = 1;
-
                 unittypes = await this.unitTypeDataService.GetAllAsync<UnitTypeModel>();
-                //unittypes = new List<UnitTypeModel>()
-                //{
-                //    new UnitTypeModel() { Id = 1, Type = "One", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 2, Type = "Two", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 3, Type = "Three", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 4, Type = "Four", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 5, Type = "Five", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 6, Type = "Six", Active = true, PortfolioId = 2 },
-                //    new UnitTypeModel() { Id = 7, Type = "Seven", Active = true, PortfolioId = 2 },
-                //};
 
                 if (unitId == 0) //new unit is being created
                 {
@@ -59,7 +51,6 @@ namespace PropertyPortfolioManager.Client.Pages
                 else
                 {
                     var unit = await this.unitDataService.GetByIdAsync<UnitEditModel>(unitId);
-                    //var unit = new UnitEditModel();
                     UnitModel = unit;
                 }
                 DataLoading = false;
@@ -127,5 +118,21 @@ namespace PropertyPortfolioManager.Client.Pages
             NavigationManager.NavigateTo("/unit");
         }
 
+        protected void ShowImageSelection()
+        {
+            this.DocumentSelectVisible = true;
+        }
+
+        protected void HideImageSelection()
+        {
+            this.DocumentSelectVisible = false;
+        }
+
+        protected async void MainImageSelected(string driveItemid)
+        {
+            UnitModel.MainPictureBase64 = await this.documentService.GetImageBase64FromDriveItemId(driveItemid);
+            this.DocumentSelectVisible = false;
+            await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+        }
     }
 }

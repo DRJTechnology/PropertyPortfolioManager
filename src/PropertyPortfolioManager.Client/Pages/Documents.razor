@@ -85,7 +85,14 @@ else
                             }
                             else
                             {
-                                <a href="@item.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
+                                if (SelectFileMode)
+                                {
+                                    <button type="button" class="btn btn-outline-primary" @onclick="(() => SelectFile(item.Id))">Select file</button>
+                                }
+                                else
+                                {                                    
+                                    <a href="@item.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
+                                }
                             }
                         </td>
                     </tr>

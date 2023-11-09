@@ -3,6 +3,28 @@
 
 @if (!Saved & !DataLoading)
 {
+    if (DocumentSelectVisible)
+    {
+        <div class="modal d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog document-modal" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Modal title</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="@HideImageSelection">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <Documents SelectFileMode="true" FileIdSelected="MainImageSelected"></Documents>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="@HideImageSelection" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <section class="">
          @if (UnitModel.Id == 0)
         {
@@ -17,6 +39,15 @@
 
             <DataAnnotationsValidator />
             <ValidationSummary />
+
+            <div class="row mb-3">
+                <div class="col-md-3">
+                    <img class="image-fill" src="data:image/png;base64, @UnitModel.MainPictureBase64" />
+                </div>
+                <div class="col-md-8">
+                    <button type="button" class="btn btn-outline-primary" @onclick="@ShowImageSelection">Select new image</button>
+                </div>
+            </div>
 
             <div class="row mb-3">
                 <label for="code" class="col-form-label col-md-3">Code: </label>

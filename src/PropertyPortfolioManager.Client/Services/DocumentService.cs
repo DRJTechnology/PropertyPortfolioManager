@@ -5,7 +5,7 @@ using System.Web;
 
 namespace PropertyPortfolioManager.Client.Services
 {
-    public class DocumentService : GenericDataService,  IDocumentService
+    public class DocumentService : GenericDataService, IDocumentService
     {
         public DocumentService(HttpClient httpClient)
             : base(httpClient)
@@ -29,6 +29,20 @@ namespace PropertyPortfolioManager.Client.Services
         public async Task<DriveItemModel> GetFolderAsync()
         {
             return await httpClient.GetFromJsonAsync<DriveItemModel>($"api/Document/GetFolder");
+        }
+
+        public async Task<string> GetImageBase64FromDriveItemId(string driveItemid)
+        {
+            try
+            {
+                string path = $"api/Document/ImageBase64/{HttpUtility.UrlEncode(driveItemid)}";
+                var imageContent = await httpClient.GetFromJsonAsync<ImageContent>(path);
+                return imageContent.ImageBase64;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

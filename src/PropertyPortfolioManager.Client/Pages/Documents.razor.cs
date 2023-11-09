@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Client.Models;
 using PropertyPortfolioManager.Models.Model.Document;
@@ -15,6 +14,12 @@ namespace PropertyPortfolioManager.Client.Pages
 
         [Inject]
         public IDocumentService documentService { get; set; }
+
+        [Parameter]
+        public bool SelectFileMode { get; set; }
+
+        [Parameter]
+        public EventCallback<string> FileIdSelected { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -68,6 +73,11 @@ namespace PropertyPortfolioManager.Client.Pages
             {
                 Breadcrumb.Add(new BreadcrumbItem() { Id = CurrentFolder.Id, Name = CurrentFolder.Name, WebUrl = CurrentFolder.WebUrl });
             }
+        }
+
+        private async Task SelectFile(string driveItemId)
+        {
+            await FileIdSelected.InvokeAsync(driveItemId);
         }
     }
 }

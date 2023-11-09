@@ -12,6 +12,10 @@
 
         public string StreetAddress { get; set; } = string.Empty;
 
+        public string TownCity { get; set; } = string.Empty;
+
         public bool Active { get; set; }
+
+        public string MainPictureId { get; set; } = string.Empty;
     }
 }

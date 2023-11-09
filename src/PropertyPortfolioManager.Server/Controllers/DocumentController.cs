@@ -46,5 +46,21 @@ namespace PropertyPortfolioManager.Server.Controllers
                 throw;
             }
         }
+
+        [HttpGet]
+        [Route("ImageBase64/{driveItemId}")]
+        public async Task<ImageContent> ImageBase64(string driveItemId)
+        {
+            try
+            {
+                var imageContent = new ImageContent() { DriveItemId = driveItemId };
+                imageContent.ImageBase64 = await this.documentService.GetImageBase64Async(driveItemId);
+                return imageContent;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

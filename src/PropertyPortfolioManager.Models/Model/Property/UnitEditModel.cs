@@ -40,5 +40,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public bool Deleted { get; set; }
 
         public AddressModel Address { get; set; }
+
+        public string MainPictureBase64 { get; set; } = string.Empty;
     }
 }

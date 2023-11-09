@@ -18,7 +18,6 @@ namespace PropertyPortfolioManager.Server.Controllers
         private readonly IUserService userService;
         private readonly GraphServiceClient graphServiceClient;
 
-        //public UserController(IUserService userService)
         public UserController(IUserService userService, GraphServiceClient graphServiceClient)
         {
             this.userService = userService;

@@ -2,6 +2,7 @@
 using DRJTechnology.Cache;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
+using Microsoft.IdentityModel.Tokens;
 using PropertyPortfolioManager.Models.Model.Document;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 using PropertyPortfolioManager.Server.Shared.Configuration;
@@ -39,6 +40,30 @@ namespace PropertyPortfolioManager.Server.Services
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        public async Task<string> GetImageBase64Async(string imageId)
+        {
+            if (imageId.IsNullOrEmpty())
+            {
+                return string.Empty;
+            }
+
+            var photoStream = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[imageId].Content.GetAsync();
+            if (photoStream != null)
+            {
+                byte[] photoBytes;
+                using (var ms = new MemoryStream())
+                {
+                    photoStream.CopyTo(ms);
+                    photoBytes = ms.ToArray();
+                }
+                return Convert.ToBase64String(photoBytes);
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }

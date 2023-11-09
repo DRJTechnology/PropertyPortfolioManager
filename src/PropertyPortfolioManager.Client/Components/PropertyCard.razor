@@ -1,0 +1,33 @@
+﻿<div class="col">
+    <div class="card rounded-3 employee-card">
+        <div class="card-header py-3">
+            <h4>@Property.StreetAddress, @Property.TownCity</h4>
+        </div>
+        <div class="card-body property-card text-center">
+            <div class="mb-3">
+                <img class="image-fill" src="data:image/png;base64, @Property.MainPictureBase64" />
+            </div>
+            <div>
+                <div>
+                    Purchase price:
+                </div>
+                <div>
+                    £????
+                </div>
+            </div>
+            <div>
+                <div>
+                    Purchase date:
+                </div>
+                <div>
+                    ????
+                </div>
+            </div>
+            <div>
+                <a href="@($"unitedit/{Property.Id}")" class="btn btn-outline-primary btn-sm">
+                    Edit
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

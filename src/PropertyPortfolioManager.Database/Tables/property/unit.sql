@@ -2,9 +2,10 @@
 (
 	[Id]                INT              IDENTITY NOT NULL,
     [PortfolioId]       INT              NOT NULL,
+    [MainImageFileId]   INT              NULL,
     [Code]              NVARCHAR(50)     NOT NULL,
     [AddressId]         INT              NULL,
-    [UnitTypeId]        INT         NOT NULL,
+    [UnitTypeId]        INT              NOT NULL,
     [PurchaseDate]      DATE             NULL,
     [PurchasePrice]     MONEY            NULL,
     [SaleDate]          DATE             NULL,
@@ -18,5 +19,6 @@
     CONSTRAINT [PK_Unit] PRIMARY KEY CLUSTERED ([Id] ASC), 
     CONSTRAINT [FK_Unit_Portfolio] FOREIGN KEY ([PortfolioId]) REFERENCES [property].[Portfolio]([Id]), 
     CONSTRAINT [FK_Unit_UnitType] FOREIGN KEY ([UnitTypeId]) REFERENCES [property].[UnitType]([Id]), 
-    CONSTRAINT [FK_Unit_Address] FOREIGN KEY ([AddressId]) REFERENCES [general].[Address]([Id])
+    CONSTRAINT [FK_Unit_Address] FOREIGN KEY ([AddressId]) REFERENCES [general].[Address]([Id]),
+    CONSTRAINT [FK_Unit_MainImageFile] FOREIGN KEY ([MainImageFileId]) REFERENCES [general].[File]([Id])
 )

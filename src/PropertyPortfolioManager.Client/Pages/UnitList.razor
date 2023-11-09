@@ -24,6 +24,23 @@ else
         </div>
     </div>
 
+    <div class="row">
+        @foreach (var unit in units)
+        {
+            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                <ErrorBoundary>
+                    <ChildContent>
+                        <PropertyCard Property="unit"></PropertyCard>
+                    </ChildContent>
+                    <ErrorContent>
+                        <p class="errorUI">Invalid property!</p>
+                    </ErrorContent>
+                </ErrorBoundary>
+            </div>
+        }
+    </div>
+
+@* 
     <table class="table">
         <thead>
             <tr>
@@ -60,5 +77,5 @@ else
                 </tr>
             }
         </tbody>
-    </table>
+    </table> *@
 }

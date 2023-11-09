@@ -15,14 +15,10 @@ namespace PropertyPortfolioManager.Client.Pages
         [Inject]
         public IPortfolioDataService portfolioDataService { get; set; }
 
-        //[Inject]
-        //public HttpClient Http { get; set; }
-
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
-        //public int PortfolioId { get; set; }
         public string? PortfolioId { get; set; }
 
         private PortfolioModel Portfolio { get; set; } = new PortfolioModel();
@@ -43,7 +39,6 @@ namespace PropertyPortfolioManager.Client.Pages
             }
             else
             {
-                //Portfolio = await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetById/{PortfolioId}");
                 Portfolio = await this.portfolioDataService.GetByIdAsync<PortfolioModel>(portfolioId);
             }
         }
@@ -54,7 +49,6 @@ namespace PropertyPortfolioManager.Client.Pages
 
             if (Portfolio.Id == 0) //new
             {
-                //var addedPortfolio = await Http.PostAsJsonAsync<PortfolioModel>("api/Portfolio/Create", Portfolio);
                 var addedPortfolioId = await this.portfolioDataService.Create<PortfolioModel>(Portfolio);
                 if (addedPortfolioId != 0)
                 {
@@ -71,7 +65,6 @@ namespace PropertyPortfolioManager.Client.Pages
             }
             else
             {
-                //await Http.PostAsJsonAsync<PortfolioModel>("api/Portfolio/Update", Portfolio);
                 await this.portfolioDataService.Update<PortfolioModel>(Portfolio);
                 StatusClass = "alert-success";
                 Message = "Portfolio updated successfully.";
@@ -94,7 +87,6 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             try
             {
-                //await Http.DeleteAsync($"api/Portfolio/Delete/{PortfolioId}");
                 await this.portfolioDataService.DeleteAsync(Portfolio.Id);
             }
             catch (Exception ex)

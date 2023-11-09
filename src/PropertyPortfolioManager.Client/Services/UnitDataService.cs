@@ -1,5 +1,4 @@
 ﻿using PropertyPortfolioManager.Client.Interfaces;
-using PropertyPortfolioManager.Models.Model.Property;
 
 namespace PropertyPortfolioManager.Client.Services
 {
