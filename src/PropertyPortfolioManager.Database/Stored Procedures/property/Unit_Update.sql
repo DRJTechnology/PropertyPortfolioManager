@@ -43,7 +43,12 @@ BEGIN
 	   RAISERROR ('Invalid Portfolio for user.' , 16, 1) WITH NOWAIT  
 	   RETURN
 	END
-	IF (@MainPictureId IS NOT NULL AND @MainPictureId != '' AND @OriginalMainPictureId != @MainPictureId)
+	IF (@MainPictureId IS NOT NULL 
+		AND @MainPictureId != ''
+		AND (@OriginalMainPictureId IS NULL) 
+			OR 
+			(@OriginalMainPictureId != @MainPictureId)
+		)
 	BEGIN
 		EXEC [general].[GetFileIdFromItemId] @ItemId = @MainPictureId, @FileName = @MainPictureFileName, @Size = @MainPictureSize, @UserId = @CurrentUserId, @FileID = @MainImageFileId OUTPUT
 	END

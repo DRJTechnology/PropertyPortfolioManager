@@ -19,6 +19,9 @@ namespace PropertyPortfolioManager.Client.Pages
         public bool SelectFileMode { get; set; }
 
         [Parameter]
+        public bool SelectImagesOnly { get; set; }
+
+        [Parameter]
         public EventCallback<DriveItemModel> FileSelected { get; set; }
 
         protected async override Task OnInitializedAsync()

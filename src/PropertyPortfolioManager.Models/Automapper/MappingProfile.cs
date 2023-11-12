@@ -34,6 +34,7 @@ namespace PropertyPortfolioManager.Models.Automapper
 
             this.CreateMap<DriveItem, DriveItemModel>()
                 .ForMember(d => d.IsFolder, x => x.MapFrom(s => s.Folder != null))
+                .ForMember(d => d.FileMimeType, x => x.MapFrom(s => s.File != null ? s.File.MimeType : string.Empty))
                 .ForMember(d => d.LastModifiedByName, x => x.MapFrom(s => s.LastModifiedBy.User.DisplayName));
 
             this.CreateMap<FileDto, FileModel>();

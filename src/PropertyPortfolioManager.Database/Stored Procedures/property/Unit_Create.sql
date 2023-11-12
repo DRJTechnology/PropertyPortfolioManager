@@ -16,11 +16,16 @@ CREATE PROCEDURE [property].[Unit_Create]
 	@PurchaseDate		DATE = NULL,
 	@SalePrice			MONEY = NULL,
 	@SaleDate			DATE = NULL,
+	@MainPictureId		VARCHAR(4000) = NULL,
+	@MainPictureFileName	nvarchar(500) = NULL,
+	@MainPictureSize	BIGINT = NULL,
 	@Active				BIT,
 	@CurrentUserId		INT
 AS
 BEGIN
 	SET NOCOUNT ON;
+	
+	DECLARE @MainImageFileId INT
 
     INSERT INTO [general].[Address] (StreetAddress, TownCity, CountyRegion, PostCode, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
 	VALUES (@StreetAddress, @TownCity, @CountyRegion, @PostCode, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
@@ -28,8 +33,14 @@ BEGIN
 	DECLARE @AddressId INT
 	SET @AddressId = SCOPE_IDENTITY()
 
-    INSERT INTO [property].[Unit] (PortfolioId, Code, UnitTypeId, AddressId, PurchasePrice, PurchaseDate, SalePrice, SaleDate, Active, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
-	VALUES (@PortfolioId, @Code, @UnitTypeId, @AddressId, @PurchasePrice, @PurchaseDate, @SalePrice, @SaleDate, @Active, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
+	IF (@MainPictureId IS NOT NULL AND @MainPictureId != '')
+	BEGIN
+		EXEC [general].[GetFileIdFromItemId] @ItemId = @MainPictureId, @FileName = @MainPictureFileName, @Size = @MainPictureSize, @UserId = @CurrentUserId, @FileID = @MainImageFileId OUTPUT
+	END
+
+
+    INSERT INTO [property].[Unit] (PortfolioId, MainImageFileId, Code, UnitTypeId, AddressId, PurchasePrice, PurchaseDate, SalePrice, SaleDate, Active, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	VALUES (@PortfolioId, @MainImageFileId, @Code, @UnitTypeId, @AddressId, @PurchasePrice, @PurchaseDate, @SalePrice, @SaleDate, @Active, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 	SET @Id = SCOPE_IDENTITY()
 

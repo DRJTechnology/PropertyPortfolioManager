@@ -37,6 +37,9 @@ namespace PropertyPortfolioManager.Server.Repositories
                 parameters.Add("@PurchaseDate", newUnit.PurchaseDate);
                 parameters.Add("@SalePrice", newUnit.SalePrice);
                 parameters.Add("@SaleDate", newUnit.SaleDate);
+                parameters.Add("@MainPictureId", newUnit.MainPicture.ItemId);
+                parameters.Add("@MainPictureFileName", newUnit.MainPicture.FileName);
+                parameters.Add("@MainPictureSize", newUnit.MainPicture.Size);
                 parameters.Add("@Active", newUnit.Active);
                 parameters.Add("@CurrentUserId", userId);
 

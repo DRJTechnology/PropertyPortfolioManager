@@ -8,6 +8,7 @@
         }
         public string Name { get; set; } = string.Empty;
         public bool IsFolder { get; set; }
+        public string FileMimeType { get; set; } = string.Empty;
         public string Id { get; set; } = string.Empty;
         public string WebUrl { get; set; } = string.Empty;
         public long Size { get; set; }
