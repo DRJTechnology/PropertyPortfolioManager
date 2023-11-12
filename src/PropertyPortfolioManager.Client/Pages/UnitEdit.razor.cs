@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Client.Interfaces;
+using PropertyPortfolioManager.Models.Model.Document;
+using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 
 namespace PropertyPortfolioManager.Client.Pages
@@ -128,9 +130,10 @@ namespace PropertyPortfolioManager.Client.Pages
             this.DocumentSelectVisible = false;
         }
 
-        protected async void MainImageSelected(string driveItemid)
+        protected async void MainImageSelected(DriveItemModel driveItem)
         {
-            UnitModel.MainPictureBase64 = await this.documentService.GetImageBase64FromDriveItemId(driveItemid);
+            UnitModel.MainPictureBase64 = await this.documentService.GetImageBase64FromDriveItemId(driveItem.Id);
+            UnitModel.MainPicture = new FileModel() { ItemId = driveItem.Id, FileName = driveItem.Name, Size = driveItem.Size };
             this.DocumentSelectVisible = false;
             await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
         }

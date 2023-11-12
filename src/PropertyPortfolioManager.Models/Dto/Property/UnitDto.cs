@@ -28,8 +28,8 @@ namespace PropertyPortfolioManager.Models.Dto.Property
         public DateTime? SaleDate { get; set; }
 
         public AddressDto Address { get; set; }
+        public FileDto MainPicture { get; set; }
 
         public bool Active { get; set; }
-        public string MainPictureId { get; set; } = string.Empty;
     }
 }

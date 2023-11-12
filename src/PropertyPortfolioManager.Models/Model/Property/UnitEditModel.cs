@@ -1,4 +1,5 @@
-﻿using PropertyPortfolioManager.Models.Model.General;
+﻿using PropertyPortfolioManager.Models.Model.Document;
+using PropertyPortfolioManager.Models.Model.General;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
@@ -10,6 +11,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public UnitEditModel()
         {
             this.Address = new AddressModel();
+            this.MainPicture = new FileModel();
         }
 
         public int Id { get; set; }
@@ -40,6 +42,8 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public bool Deleted { get; set; }
 
         public AddressModel Address { get; set; }
+
+        public FileModel MainPicture { get; set; }
 
         public string MainPictureBase64 { get; set; } = string.Empty;
     }

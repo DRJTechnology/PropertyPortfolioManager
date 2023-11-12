@@ -11,3 +11,7 @@
     [AmendDate]         DATETIME        CONSTRAINT [DF_File_AmendDate] DEFAULT (getutcdate()) NOT NULL,
     CONSTRAINT [PK_File] PRIMARY KEY CLUSTERED ([Id] ASC)
 )
+
+GO
+
+CREATE UNIQUE INDEX [IX_File_ItemId] ON [general].[File] ([ItemId])

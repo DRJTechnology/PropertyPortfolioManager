@@ -114,6 +114,7 @@
     <Build Include="Stored Procedures\property\UnitType_Delete.sql" />
     <Build Include="Stored Procedures\property\Unit_Delete.sql" />
     <Build Include="Tables\general\File.sql" />
+    <Build Include="Stored Procedures\general\GetFileIdFromItemId.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

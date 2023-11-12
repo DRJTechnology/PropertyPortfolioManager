@@ -19,7 +19,7 @@ namespace PropertyPortfolioManager.Client.Pages
         public bool SelectFileMode { get; set; }
 
         [Parameter]
-        public EventCallback<string> FileIdSelected { get; set; }
+        public EventCallback<DriveItemModel> FileSelected { get; set; }
 
         protected async override Task OnInitializedAsync()
         {
@@ -75,9 +75,9 @@ namespace PropertyPortfolioManager.Client.Pages
             }
         }
 
-        private async Task SelectFile(string driveItemId)
+        private async Task SelectFile(DriveItemModel driveItem)
         {
-            await FileIdSelected.InvokeAsync(driveItemId);
+            await FileSelected.InvokeAsync(driveItem);
         }
     }
 }

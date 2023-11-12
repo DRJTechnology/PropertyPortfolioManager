@@ -88,6 +88,7 @@ namespace PropertyPortfolioManager.Server.Repositories
                     if (unit != null)
                     {
                         unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
+                        unit.MainPicture = multipleResults.Read<FileDto>().SingleOrDefault();
                     }
 
                     return unit;
@@ -119,6 +120,9 @@ namespace PropertyPortfolioManager.Server.Repositories
             parameters.Add("@PurchaseDate", existingUnit.PurchaseDate);
             parameters.Add("@SalePrice", existingUnit.SalePrice);
             parameters.Add("@SaleDate", existingUnit.SaleDate);
+            parameters.Add("@MainPictureId", existingUnit.MainPicture.ItemId);
+            parameters.Add("@MainPictureFileName", existingUnit.MainPicture.FileName);
+            parameters.Add("@MainPictureSize", existingUnit.MainPicture.Size);
             parameters.Add("@Active", existingUnit.Active);
             parameters.Add("@CurrentUserId", userId);
 

@@ -17,6 +17,9 @@ CREATE PROCEDURE [property].[Unit_Update]
 	@SalePrice			MONEY = NULL,
 	@SaleDate			DATE = NULL,
 	@Active				BIT,
+	@MainPictureId		VARCHAR(4000) = NULL,
+	@MainPictureFileName	nvarchar(500) = NULL,
+	@MainPictureSize	BIGINT = NULL,
 	@CurrentUserId		INT
 AS
 BEGIN
@@ -24,16 +27,25 @@ BEGIN
 
 	DECLARE @AddressID INT
 	DECLARE @CurrentPortflioId INT
+	DECLARE	@OriginalMainPictureId VARCHAR(4000)
+	DECLARE @MainImageFileId INT
 
-	SELECT	@AddressID = AddressId,
-			@CurrentPortflioId = PortfolioId
-	FROM	property.Unit
-	Where	Id = @Id
+	SELECT	@AddressID = u.AddressId,
+			@CurrentPortflioId = u.PortfolioId,
+			@MainImageFileId = u.MainImageFileId,
+			@OriginalMainPictureId = f.ItemId
+	FROM	property.Unit u
+	LEFT OUTER JOIN general.[File] f on u.MainImageFileId = f.Id
+	Where	u.Id = @Id
 
 	IF	@CurrentPortflioId != @PortfolioId
 	BEGIN
 	   RAISERROR ('Invalid Portfolio for user.' , 16, 1) WITH NOWAIT  
 	   RETURN
+	END
+	IF (@MainPictureId IS NOT NULL AND @MainPictureId != '' AND @OriginalMainPictureId != @MainPictureId)
+	BEGIN
+		EXEC [general].[GetFileIdFromItemId] @ItemId = @MainPictureId, @FileName = @MainPictureFileName, @Size = @MainPictureSize, @UserId = @CurrentUserId, @FileID = @MainImageFileId OUTPUT
 	END
 
     UPDATE [general].[Address]
@@ -52,6 +64,7 @@ BEGIN
 			PurchaseDate = @PurchaseDate,
 			SalePrice = @SalePrice,
 			SaleDate = @SaleDate,
+			MainImageFileId = @MainImageFileId,
 			Active = @Active,
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
