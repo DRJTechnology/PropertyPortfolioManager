@@ -26,56 +26,17 @@ else
 
     <div class="row">
         @foreach (var unit in units)
-        {
-            <div class="col-12 col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                <ErrorBoundary>
-                    <ChildContent>
-                        <PropertyCard Property="unit"></PropertyCard>
-                    </ChildContent>
-                    <ErrorContent>
-                        <p class="errorUI">Invalid property!</p>
-                    </ErrorContent>
-                </ErrorBoundary>
-            </div>
+        {           
+            <ErrorBoundary>
+                <ChildContent>
+                    <PropertyCard Property="unit"></PropertyCard>
+                </ChildContent>
+                <ErrorContent>
+                    <p class="errorUI">Invalid property!</p>
+                </ErrorContent>
+            </ErrorBoundary>
+
         }
     </div>
 
-@* 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Street Address
-                </th>
-                @if (!ActiveOnly)
-                {
-                    <th>
-                        Active
-                    </th>
-                }
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var unit in units)
-            {
-                <tr>
-                    <td>
-                        @unit.StreetAddress
-                    </td>
-                    @if (!ActiveOnly)
-                    {
-                        <td>
-                            @(unit.Active ? "Active" : "Inactive")
-                        </td>
-                    }
-                    <td>
-                        <a href="@($"unitedit/{unit.Id}")" class="btn btn-outline-primary btn-sm">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table> *@
 }
