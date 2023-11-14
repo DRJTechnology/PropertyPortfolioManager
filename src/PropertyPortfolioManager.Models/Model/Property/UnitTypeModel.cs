@@ -1,6 +1,6 @@
 ﻿namespace PropertyPortfolioManager.Models.Model.Property
 {
-    public class UnitTypeModel
+    public class EntityTypeModel
     {
         public int Id { get; set; }
 

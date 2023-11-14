@@ -6,31 +6,31 @@ using PropertyPortfolioManager.Models.Model.Property;
 namespace PropertyPortfolioManager.Client.Pages
 {
     [Authorize]
-	public partial class UnitTypeList
+	public partial class TenancyTypeList
     {
-		private IEnumerable<EntityTypeModel> unittypes;
+		private IEnumerable<EntityTypeModel> tenancytypes;
 
         [Inject]
-        public IUnitTypeDataService unitTypeDataService { get; set; }
+        public ITenancyTypeDataService tenancyTypeDataService { get; set; }
 
         public bool ActiveOnly { get; set; } = true;
 
         protected override async Task OnInitializedAsync()
 		{
-			await PopulateUnitTypeListAsync();
+			await PopulateTenancyTypeListAsync();
 		}
 
 		public async Task IncludeInactive(bool includeInactive)
 		{
             ActiveOnly = !includeInactive;
-            await PopulateUnitTypeListAsync();
+            await PopulateTenancyTypeListAsync();
         }
 
-		private async Task PopulateUnitTypeListAsync()
+		private async Task PopulateTenancyTypeListAsync()
 		{
 			try
 			{
-                unittypes = await this.unitTypeDataService.GetAllAsync<EntityTypeModel>(ActiveOnly);
+                tenancytypes = await this.tenancyTypeDataService.GetAllAsync<EntityTypeModel>(ActiveOnly);
             }
             catch (Exception ex)
 			{

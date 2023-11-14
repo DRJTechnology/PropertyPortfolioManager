@@ -5,18 +5,18 @@ using PropertyPortfolioManager.Models.Model.Property;
 
 namespace PropertyPortfolioManager.Client.Pages
 {
-    public partial class UnitTypeEdit
+    public partial class TenancyTypeEdit
     {
         [Inject]
-        public IUnitTypeDataService unitTypeDataService { get; set; }
+        public ITenancyTypeDataService tenancyTypeDataService { get; set; }
 
         [Inject]
         public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
-        public string? UnitTypeId { get; set; }
+        public string? TenancyTypeId { get; set; }
 
-        private EntityTypeModel UnitType { get; set; } = new EntityTypeModel();
+        private EntityTypeModel TenancyType { get; set; } = new EntityTypeModel();
 
         private bool Saved;
         private string Message = string.Empty;
@@ -26,15 +26,15 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             Saved = false;
 
-            int.TryParse(UnitTypeId, out var unitTypeId);
+            int.TryParse(TenancyTypeId, out var tenancyTypeId);
 
-            if (unitTypeId == 0) //new unit type is being created
+            if (tenancyTypeId == 0) //new tenancy type is being created
             {
-                UnitType = new EntityTypeModel() { Active = true };
+                TenancyType = new EntityTypeModel() { Active = true };
             }
             else
             {
-                UnitType = await this.unitTypeDataService.GetByIdAsync<EntityTypeModel>(unitTypeId);
+                TenancyType = await this.tenancyTypeDataService.GetByIdAsync<EntityTypeModel>(tenancyTypeId);
             }
         }
 
@@ -42,27 +42,27 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             Saved = false;
 
-            if (UnitType.Id == 0) //new
+            if (TenancyType.Id == 0) //new
             {
-                var addedUnitType = await this.unitTypeDataService.Create<EntityTypeModel>(UnitType);
-                if (addedUnitType != null)
+                var addedTenancyType = await this.tenancyTypeDataService.Create<EntityTypeModel>(TenancyType);
+                if (addedTenancyType != null)
                 {
                     StatusClass = "alert-success";
-                    Message = "New unit type added successfully.";
+                    Message = "New tenancy type added successfully.";
                     Saved = true;
                 }
                 else
                 {
                     StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new unit type. Please try again.";
+                    Message = "Something went wrong adding the new tenancy type. Please try again.";
                     Saved = false;
                 }
             }
             else
             {
-                await this.unitTypeDataService.Update<EntityTypeModel>(UnitType);
+                await this.tenancyTypeDataService.Update<EntityTypeModel>(TenancyType);
                 StatusClass = "alert-success";
-                Message = "Unit type updated successfully.";
+                Message = "Tenancy type updated successfully.";
                 Saved = true;
             }
         }
@@ -73,11 +73,11 @@ namespace PropertyPortfolioManager.Client.Pages
             Message = "There are some validation errors. Please try again.";
         }
 
-        protected async Task DeleteUnitType()
+        protected async Task DeleteTenancyType()
         {
             try
             {
-                await this.unitTypeDataService.DeleteAsync(UnitType.Id);
+                await this.tenancyTypeDataService.DeleteAsync(TenancyType.Id);
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
         protected void NavigateToList()
         {
-            NavigationManager.NavigateTo("/unittype");
+            NavigationManager.NavigateTo("/tenancytype");
         }
 
     }

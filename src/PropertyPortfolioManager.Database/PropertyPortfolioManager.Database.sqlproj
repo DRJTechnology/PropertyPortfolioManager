@@ -115,6 +115,13 @@
     <Build Include="Stored Procedures\property\Unit_Delete.sql" />
     <Build Include="Tables\general\File.sql" />
     <Build Include="Stored Procedures\general\GetFileIdFromItemId.sql" />
+    <Build Include="Tables\property\Tenancy.sql" />
+    <Build Include="Tables\property\TenancyType.sql" />
+    <Build Include="Stored Procedures\property\TenancyType_Create.sql" />
+    <Build Include="Stored Procedures\property\TenancyType_Delete.sql" />
+    <Build Include="Stored Procedures\property\TenancyType_GetAll.sql" />
+    <Build Include="Stored Procedures\property\TenancyType_GetById.sql" />
+    <Build Include="Stored Procedures\property\TenancyType_Update.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

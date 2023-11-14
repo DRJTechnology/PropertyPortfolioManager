@@ -13,7 +13,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
 {
     public class UnitTypeServiceTests
     {
-        private List<UnitTypeDto> unitTypeList;
+        private List<EntityTypeDto> unitTypeList;
 
         public UnitTypeServiceTests()
         {
@@ -31,7 +31,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
             var units = await unitTypeService.GetAll(portfolioId, false);
 
-            Assert.IsType<List<UnitTypeModel>>(units);
+            Assert.IsType<List<EntityTypeModel>>(units);
             Assert.Equal(7, units.Count());
             Assert.Equal(1, units.FirstOrDefault().Id);
         }
@@ -47,7 +47,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
             var units = await unitTypeService.GetAll(portfolioId, false);
 
-            Assert.IsType<List<UnitTypeModel>>(units);
+            Assert.IsType<List<EntityTypeModel>>(units);
             Assert.Equal(5, units.Count());
             Assert.Equal(1, units.FirstOrDefault().Id);
         }
@@ -64,7 +64,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
             var unit = await unitTypeService.GetById(unitTypeId, portfolioId);
 
-            Assert.IsType<UnitTypeModel>(unit);
+            Assert.IsType<EntityTypeModel>(unit);
             Assert.Equal(unitTypeId, unit.Id);
             Assert.Equal($"Unit Type {unitTypeId}", unit.Type);
         }
@@ -90,13 +90,13 @@ namespace PropertyPortfolioManager.Server.Services.Tests
         {
             var portfolioId = 2;
             var currentUserId = 2;
-            var newUnit = new UnitTypeModel()
+            var newUnit = new EntityTypeModel()
             {
                 Type = "TestUnitType1",
             };
 
             var unitTypeRepositoryMock = new Mock<IUnitTypeRepository>(MockBehavior.Strict);
-            unitTypeRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitTypeDto>()))
+            unitTypeRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<EntityTypeDto>()))
                                         .Returns(Task.FromResult(11));
 
             var unitTypeService = new UnitTypeService(unitTypeRepositoryMock.Object, null, TestExtensions.MapperInstance());
@@ -106,18 +106,18 @@ namespace PropertyPortfolioManager.Server.Services.Tests
         }
 
 
-        private UnitTypeDto GetById(int unitTypeId)
+        private EntityTypeDto GetById(int unitTypeId)
         {
             return this.unitTypeList.Where(u => u.Id == unitTypeId).FirstOrDefault();
         }
 
-        private List<UnitTypeDto> PopulateUnitTypes()
+        private List<EntityTypeDto> PopulateUnitTypes()
         {
-            var unitTypes = new List<UnitTypeDto>();
+            var unitTypes = new List<EntityTypeDto>();
             for (int i = 1; i < 8; i++)
             {
                 unitTypes.Add(
-                    new UnitTypeDto()
+                    new EntityTypeDto()
                     {
                         Id = (short)i,
                         PortfolioId = 2,

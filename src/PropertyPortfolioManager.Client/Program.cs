@@ -22,6 +22,7 @@ builder.Services.AddScoped<IUnitTypeDataService, UnitTypeDataService>();
 builder.Services.AddScoped<IContactDataService, ContactDataService>();
 builder.Services.AddScoped<IContactTypeDataService, ContactTypeDataService>();
 builder.Services.AddScoped<IUserDataService, UserDataService>();
+builder.Services.AddScoped<ITenancyTypeDataService, TenancyTypeDataService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<ProfileState>();
 

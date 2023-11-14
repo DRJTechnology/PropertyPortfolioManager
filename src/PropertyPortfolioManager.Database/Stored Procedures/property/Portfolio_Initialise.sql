@@ -41,4 +41,19 @@ AS
 	END
 	/* Unit Types - end */
 
+  
+	/* Tenancy Types - start */
+	IF NOT EXISTS (SELECT 1 FROM property.[TenancyType] WHERE PortfolioId = 2 AND [Type] = 'Assured Shorthold Tenancy (AST)')
+	BEGIN
+		INSERT INTO property.[TenancyType] (PortfolioId, [Type], Active, Deleted, [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
+		VALUES (2, 'Assured Shorthold Tenancy (AST)', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	END
+	IF NOT EXISTS (SELECT 1 FROM property.[TenancyType] WHERE PortfolioId = 2 AND [Type] = 'Company Let Agreement')
+	BEGIN
+		INSERT INTO property.[TenancyType] (PortfolioId, [Type], Active, Deleted, [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
+		VALUES (2, 'Company Let Agreement', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	END
+	/* Tenancy Types - end */
+
+
 RETURN 0

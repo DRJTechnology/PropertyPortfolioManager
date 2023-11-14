@@ -22,8 +22,8 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<PortfolioDto, PortfolioModel>();
             this.CreateMap<PortfolioModel, PortfolioDto>();
 
-            this.CreateMap<UnitTypeDto, UnitTypeModel>();
-            this.CreateMap<UnitTypeModel, UnitTypeDto>();
+            this.CreateMap<EntityTypeDto, EntityTypeModel>();
+            this.CreateMap<EntityTypeModel, EntityTypeDto>();
 
             this.CreateMap<ContactTypeDto, ContactTypeModel>();
             this.CreateMap<ContactTypeModel, ContactTypeDto>();

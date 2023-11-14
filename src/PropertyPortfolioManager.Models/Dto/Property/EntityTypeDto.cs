@@ -1,6 +1,6 @@
 ﻿namespace PropertyPortfolioManager.Models.Dto.Property
 {
-    public class UnitTypeDto : BaseDto
+    public class EntityTypeDto : BaseDto
     {
         public int PortfolioId { get; set; }
 

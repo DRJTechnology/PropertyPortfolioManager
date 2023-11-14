@@ -7,14 +7,14 @@ namespace PropertyPortfolioManager.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class UnitTypeController : BaseController
+    public class TenancyTypeController : BaseController
     {
-        private readonly IUnitTypeService unitTypeService;
+        private readonly ITenancyTypeService tenancyTypeService;
 
-        public UnitTypeController(IUserService userService, IUnitTypeService unitTypeService)
+        public TenancyTypeController(IUserService userService, ITenancyTypeService tenancyTypeService)
             : base(userService)
         {
-            this.unitTypeService = unitTypeService;
+            this.tenancyTypeService = tenancyTypeService;
         }
 
 
@@ -36,13 +36,13 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             else
             {
-                return await this.unitTypeService.GetAll((int)portfolioId, activeOnly);
+                return await this.tenancyTypeService.GetAll((int)portfolioId, activeOnly);
             }
         }
 
         [HttpGet]
-        [Route("GetById/{unitTypeId}")]
-        public async Task<EntityTypeModel> GetById(int unitTypeId)
+        [Route("GetById/{tenancyTypeId}")]
+        public async Task<EntityTypeModel> GetById(int tenancyTypeId)
         {
             var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
             if (portfolioId == null)
@@ -51,34 +51,34 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             else
             {
-                return await this.unitTypeService.GetById(unitTypeId, (int)portfolioId);
+                return await this.tenancyTypeService.GetById(tenancyTypeId, (int)portfolioId);
             }
         }
 
         [HttpPost]
         [Route("Create")]
-        public async Task<PpmApiResponse> Create(EntityTypeModel unitType)
+        public async Task<PpmApiResponse> Create(EntityTypeModel tenancyType)
         {
             try
             {
-                var newUnitTypeId = 0;
+                var newTenancyTypeId = 0;
                 var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
                 if (portfolioId == null)
                 {
                     return new PpmApiResponse()
                     {
                         Success = false,
-                        ErrorMessage = "UnitType_Create: User has no Selected Portfolio Id set."
+                        ErrorMessage = "TenancyType_Create: User has no Selected Portfolio Id set."
                     };
                 }
                 else
                 {
-                    newUnitTypeId = await this.unitTypeService.Create((await this.GetCurrentUser()).Id, (int)portfolioId, unitType);
+                    newTenancyTypeId = await this.tenancyTypeService.Create((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyType);
                 }
 
                 return new PpmApiResponse()
                 {
-                    CreatedId = newUnitTypeId,
+                    CreatedId = newTenancyTypeId,
                     Success = true,
                 };
             }
@@ -94,7 +94,7 @@ namespace PropertyPortfolioManager.Server.Controllers
 
         [HttpPost]
         [Route("Update")]
-        public async Task<PpmApiResponse> Update(EntityTypeModel unitType)
+        public async Task<PpmApiResponse> Update(EntityTypeModel tenancyType)
         {
             try
             {
@@ -104,16 +104,16 @@ namespace PropertyPortfolioManager.Server.Controllers
                     return new PpmApiResponse()
                     {
                         Success = false,
-                        ErrorMessage = "UnitType_Update: User has no Selected Portfolio Id set."
+                        ErrorMessage = "TenancyType_Update: User has no Selected Portfolio Id set."
                     };
                 }
                 else
                 {
-                    if (await this.unitTypeService.Update((await this.GetCurrentUser()).Id, (int)portfolioId, unitType))
+                    if (await this.tenancyTypeService.Update((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyType))
                     {
                         return new PpmApiResponse()
                         {
-                            CreatedId = unitType.Id,
+                            CreatedId = tenancyType.Id,
                             Success = true,
                         };
                     }
@@ -122,7 +122,7 @@ namespace PropertyPortfolioManager.Server.Controllers
                         return new PpmApiResponse()
                         {
                             Success = false,
-                            ErrorMessage = $"UnitTypeController: Failed to update unitTypeId {unitType.Id}"
+                            ErrorMessage = $"TenancyTypeController: Failed to update tenancyTypeId {tenancyType.Id}"
                         };
                     }
                 }
@@ -138,8 +138,8 @@ namespace PropertyPortfolioManager.Server.Controllers
         }
 
         [HttpDelete]
-        [Route("Delete/{unitTypeId}")]
-        public async Task<PpmApiResponse> Delete(int unitTypeId)
+        [Route("Delete/{tenancyTypeId}")]
+        public async Task<PpmApiResponse> Delete(int tenancyTypeId)
         {
             try
             {
@@ -149,12 +149,12 @@ namespace PropertyPortfolioManager.Server.Controllers
                     return new PpmApiResponse()
                     {
                         Success = false,
-                        ErrorMessage = "UnitType_Delete: User has no Selected Portfolio Id set."
+                        ErrorMessage = "TenancyType_Delete: User has no Selected Portfolio Id set."
                     };
                 }
                 else
                 {
-                    if (await this.unitTypeService.Delete((await this.GetCurrentUser()).Id, (int)portfolioId, unitTypeId))
+                    if (await this.tenancyTypeService.Delete((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyTypeId))
                     {
                         return new PpmApiResponse()
                         {
@@ -166,7 +166,7 @@ namespace PropertyPortfolioManager.Server.Controllers
                         return new PpmApiResponse()
                         {
                             Success = false,
-                            ErrorMessage = $"UnitTypeController: Failed to delete unitTypeId {unitTypeId}"
+                            ErrorMessage = $"TenancyTypeController: Failed to delete tenancyTypeId {tenancyTypeId}"
                         };
                     }
                 }

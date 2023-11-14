@@ -5,20 +5,20 @@ using System.Data;
 
 namespace PropertyPortfolioManager.Server.Repositories
 {
-    public class UnitTypeRepository : IUnitTypeRepository
+    public class TenancyTypeRepository : ITenancyTypeRepository
     {
         private readonly IDbConnection dbConnection;
 
-        public UnitTypeRepository(IDbConnection dbConnection)
+        public TenancyTypeRepository(IDbConnection dbConnection)
         {
             this.dbConnection = dbConnection;
         }
 
-        public async Task<int> Create(int userId, int portfolioId, EntityTypeDto newUnitType)
+        public async Task<int> Create(int userId, int portfolioId, EntityTypeDto newTenancyType)
         {
-            if (newUnitType == null)
+            if (newTenancyType == null)
             {
-                throw new ArgumentNullException("newUnitType");
+                throw new ArgumentNullException("newTenancyType");
             }
 
             try
@@ -26,11 +26,11 @@ namespace PropertyPortfolioManager.Server.Repositories
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@Type", newUnitType.Type);
-                parameters.Add("@Active", newUnitType.Active);
+                parameters.Add("@Type", newTenancyType.Type);
+                parameters.Add("@Active", newTenancyType.Active);
                 parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.UnitType_Create", parameters, commandType: CommandType.StoredProcedure);
+                await this.dbConnection.ExecuteAsync("property.TenancyType_Create", parameters, commandType: CommandType.StoredProcedure);
 
                 return parameters.Get<int>("@Id");
             }
@@ -46,9 +46,9 @@ namespace PropertyPortfolioManager.Server.Repositories
             parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@ActiveOnly", activeOnly);
 
-            var unitTypes = await this.dbConnection.QueryAsync<EntityTypeDto>("property.UnitType_GetAll", parameters, commandType: CommandType.StoredProcedure);
+            var tenancyTypes = await this.dbConnection.QueryAsync<EntityTypeDto>("property.TenancyType_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
-            return unitTypes.ToList(); ;
+            return tenancyTypes.ToList(); ;
         }
 
         public async Task<EntityTypeDto> GetById(int id, int portfolioId)
@@ -60,15 +60,15 @@ namespace PropertyPortfolioManager.Server.Repositories
                     parameters.Add("@Id", id);
                     parameters.Add("@PortfolioId", portfolioId);
 
-                    var unitType = await this.dbConnection.QueryFirstOrDefaultAsync<EntityTypeDto>("property.UnitType_GetById", parameters, commandType: CommandType.StoredProcedure);
+                    var tenancyType = await this.dbConnection.QueryFirstOrDefaultAsync<EntityTypeDto>("property.TenancyType_GetById", parameters, commandType: CommandType.StoredProcedure);
 
-                    if (unitType != null)
+                    if (tenancyType != null)
                     {
-                        return unitType!;
+                        return tenancyType!;
                     }
                     else
                     {
-                        throw new Exception($"Error: UnitType (Id {id}) not found!");
+                        throw new Exception($"Error: TenancyType (Id {id}) not found!");
                     }
                 }
                 catch (Exception ex)
@@ -78,33 +78,33 @@ namespace PropertyPortfolioManager.Server.Repositories
             }
         }
 
-        public async Task<bool> Update(int userId, int portfolioId, EntityTypeDto existingUnitType)
+        public async Task<bool> Update(int userId, int portfolioId, EntityTypeDto existingTenancyType)
         {
-            if (existingUnitType == null)
+            if (existingTenancyType == null)
             {
-                throw new ArgumentNullException("existingUnitType");
+                throw new ArgumentNullException("existingTenancyType");
             }
 
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", existingUnitType.Id);
+            parameters.Add("@Id", existingTenancyType.Id);
             parameters.Add("@PortfolioId", portfolioId);
-            parameters.Add("@Type", existingUnitType.Type);
-            parameters.Add("@Active", existingUnitType.Active);
+            parameters.Add("@Type", existingTenancyType.Type);
+            parameters.Add("@Active", existingTenancyType.Active);
             parameters.Add("@CurrentUserId", userId);
 
-            await this.dbConnection.ExecuteAsync("property.UnitType_Update", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.TenancyType_Update", parameters, commandType: CommandType.StoredProcedure);
 
             return true;
         }
 
-        public async Task<bool> Delete(int userId, int portfolioId, int unitTypeId)
+        public async Task<bool> Delete(int userId, int portfolioId, int tenancyTypeId)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@Id", unitTypeId);
+            parameters.Add("@Id", tenancyTypeId);
             parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@CurrentUserId", userId);
 
-            await this.dbConnection.ExecuteAsync("property.UnitType_Delete", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.TenancyType_Delete", parameters, commandType: CommandType.StoredProcedure);
 
             return true;
         }

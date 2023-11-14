@@ -1,0 +1,64 @@
+﻿@page "/tenancytype"
+
+<h3>Tenancy Types</h3>
+
+@if (tenancytypes == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <a href="tenancytypeedit">Create New Tenancy Type</a>
+        </div>
+        <div class="col">
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Type
+                </th>
+                @if (!ActiveOnly)
+                {
+                    <th>
+                        Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tenancytype in tenancytypes)
+            {
+                <tr>
+                    <td>
+                        @tenancytype.Type
+                    </td>
+                    @if (!ActiveOnly)
+                    {
+                        <td>
+                            @(tenancytype.Active ? "Active" : "Inactive")
+                        </td>
+                    }
+                    <td>
+                        <a href="@($"tenancytypeedit/{tenancytype.Id}")" class="btn btn-outline-primary btn-sm">
+                            Edit
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

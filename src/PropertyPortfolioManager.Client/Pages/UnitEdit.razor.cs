@@ -11,7 +11,7 @@ namespace PropertyPortfolioManager.Client.Pages
     [Authorize]
     public partial class UnitEdit
     {
-        private IEnumerable<UnitTypeModel> unittypes;
+        private IEnumerable<EntityTypeModel> unittypes;
 
         [Inject]
         public IUnitTypeDataService unitTypeDataService { get; set; }
@@ -44,7 +44,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
                 int.TryParse(UnitId, out var unitId);
 
-                unittypes = await this.unitTypeDataService.GetAllAsync<UnitTypeModel>();
+                unittypes = await this.unitTypeDataService.GetAllAsync<EntityTypeModel>();
 
                 if (unitId == 0) //new unit is being created
                 {

@@ -20,9 +20,9 @@ namespace PropertyPortfolioManager.Server.Services
             this.mapper = mapper;
         }
 
-        public async Task<int> Create(int currentUserId, int portfolioId, UnitTypeModel unit)
+        public async Task<int> Create(int currentUserId, int portfolioId, EntityTypeModel unitType)
         {
-            var unitTypeDto = this.mapper.Map<UnitTypeDto>(unit);
+            var unitTypeDto = this.mapper.Map<EntityTypeDto>(unitType);
             return await this.unitTypeRepository.Create(currentUserId, portfolioId, unitTypeDto);
         }
 
@@ -31,21 +31,21 @@ namespace PropertyPortfolioManager.Server.Services
             return await this.unitTypeRepository.Delete(currentUserId, portfolioId, unitTypeId);
         }
 
-        public async Task<List<UnitTypeModel>> GetAll(int portfolioId, bool activeOnly)
+        public async Task<List<EntityTypeModel>> GetAll(int portfolioId, bool activeOnly)
         {
             var unitTypeList = await this.unitTypeRepository.GetAll(portfolioId, activeOnly);
-            return this.mapper.Map<List<UnitTypeModel>>(unitTypeList);
+            return this.mapper.Map<List<EntityTypeModel>>(unitTypeList);
         }
 
-        public async Task<UnitTypeModel> GetById(int unitId, int portfolioId)
+        public async Task<EntityTypeModel> GetById(int unitId, int portfolioId)
         {
-            var unit = await this.unitTypeRepository.GetById(unitId, portfolioId);
-            return this.mapper.Map<UnitTypeModel>(unit);
+            var unitType = await this.unitTypeRepository.GetById(unitId, portfolioId);
+            return this.mapper.Map<EntityTypeModel>(unitType);
         }
 
-        public async Task<bool> Update(int currentUserId, int portfolioId, UnitTypeModel unit)
+        public async Task<bool> Update(int currentUserId, int portfolioId, EntityTypeModel unitType)
         {
-            var unitTypeDto = this.mapper.Map<UnitTypeDto>(unit);
+            var unitTypeDto = this.mapper.Map<EntityTypeDto>(unitType);
             return await this.unitTypeRepository.Update(currentUserId, portfolioId, unitTypeDto);
         }
     }
