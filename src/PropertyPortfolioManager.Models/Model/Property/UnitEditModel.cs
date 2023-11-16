@@ -1,5 +1,4 @@
-﻿using PropertyPortfolioManager.Models.Model.Document;
-using PropertyPortfolioManager.Models.Model.General;
+﻿using PropertyPortfolioManager.Models.Model.General;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlTypes;
@@ -21,7 +20,7 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public int AddressId { get; set; }
 
         [DisplayName("Unit Type")]
-        public int  UnitTypeId { get; set; }
+        public int UnitTypeId { get; set; }
 
         [DisplayName("Purchase Date")]
         [DataType(DataType.Date)] 

@@ -2,6 +2,7 @@
 using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
+using PropertyPortfolioManager.Models.Enums;
 using PropertyPortfolioManager.Models.Model.Document;
 using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
@@ -31,6 +32,11 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<ContactDto, ContactResponseModel>();
             this.CreateMap<ContactBasicDto, ContactBasicResponseModel>();
             this.CreateMap<ContactEditModel, ContactDto>();
+
+            this.CreateMap<TenancyDto, TenancyResponseModel>()
+                .ForMember(d => d.DurationUnit, x => x.MapFrom(s => (DurationUnitEnum)s.DurationUnitId));
+            this.CreateMap<TenancyEditModel, TenancyDto>()
+                .ForMember(d => d.DurationUnitId, x => x.MapFrom(s => (int)s.DurationUnit));
 
             this.CreateMap<DriveItem, DriveItemModel>()
                 .ForMember(d => d.IsFolder, x => x.MapFrom(s => s.Folder != null))
