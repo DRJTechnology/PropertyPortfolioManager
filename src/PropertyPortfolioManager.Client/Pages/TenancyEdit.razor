@@ -1,0 +1,96 @@
+﻿@page "/tenancyedit"
+@page "/tenancyedit/{TenancyId}"
+
+@if (!Saved & !Initialising)
+{
+    <section class="">
+         @if (TenancyModel.Id == 0)
+        {
+            <h1 class="page-title">New Tenancy</h1>
+        }
+        else
+        {
+            <h1 class="page-title">Details for @TenancyModel.Id</h1>
+           
+        }
+        <EditForm Model="@TenancyModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row mb-3">
+                <label for="unit" class="col-form-label col-md-3">Property: (ID = @TenancyModel.UnitId) </label>
+                <div class="col-md-8">
+                    <UnitSelector @bind-UnitId="TenancyModel.UnitId" ElementClass="form-select col-md-8"></UnitSelector>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="tenancytype" class="col-form-label col-md-3">Tenancy type: </label>
+                <div class="col-md-8">
+                    <InputSelect id="tenancytype" class="form-select col-md-8" @bind-Value="@TenancyModel.TenancyTypeId">
+                        @foreach (var tenancytype in tenancytypes)
+                        {
+                            <option value="@tenancytype.Id">@tenancytype.Type</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="startdate" class="col-form-label col-md-3">Start date: </label>
+                <div class="col-md-8">
+                    <InputDate id="startdate" @bind-Value="@TenancyModel.StartDate" class="form-control col-md-8" placeholder="Enter start date" autocomplete="off"></InputDate>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.StartDate)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="enddate" class="col-form-label col-md-3">End date: </label>
+                <div class="col-md-8">
+                    <InputDate id="enddate" @bind-Value="@TenancyModel.EndDate" class="form-control col-md-8" placeholder="Enter end date" autocomplete="off"></InputDate>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.EndDate)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="durationquantity" class="col-form-label col-md-3">Duration: </label>
+                <div class="col-md-8">
+                    <InputNumber id="durationquantity" @bind-Value="@TenancyModel.DurationQuantity" class="form-control col-md-8" placeholder="Enter duration quantity" autocomplete="off"></InputNumber>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.DurationQuantity)" />
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-3">
+                    <div class="form-check">
+                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@TenancyModel.Active"></InputCheckbox>
+                        <label class="form-check-label" for="active">
+                            Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1">Save tenancy</button>
+
+            @if (TenancyModel.Id > 0)
+            {
+                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteTenancy">
+                    Delete
+                </button>
+            }
+            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+
+        </EditForm>
+    </section>
+}
+else if (Initialising)
+{
+    <p>Loading data...</p>
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+    <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
+} 

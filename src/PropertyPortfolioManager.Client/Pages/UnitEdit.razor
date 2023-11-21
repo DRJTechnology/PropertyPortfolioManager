@@ -1,7 +1,7 @@
 ﻿@page "/unitedit"
 @page "/unitedit/{UnitId}"
 
-@if (!Saved & !DataLoading)
+@if (!Saved & !Initialising)
 {
     if (DocumentSelectVisible)
     {
@@ -126,7 +126,7 @@
         </EditForm>
     </section>
 }
-else if (DataLoading)
+else if (Initialising)
 {
     <p>Loading data...</p>
 }

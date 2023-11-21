@@ -2,6 +2,8 @@
 using DRJTechnology.Cache;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
+using PropertyPortfolioManager.Models.CacheKeys;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
@@ -31,19 +33,35 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<int> Create(int currentUserId, int portfolioId, UnitEditModel unit)
         {
+            var cacheKey = $"{CacheKeys.KeyUnitPrefix}{portfolioId}_{unit.Active}";
+            await this.cacheService.RemoveAsync(cacheKey);
+
             var unitDto = this.mapper.Map<UnitDto>(unit);
             return await this.unitRepository.Create(currentUserId, portfolioId, unitDto);
         }
 
         public async Task<bool> Delete(int currentUserId, int portfolioId, int unitId)
         {
+            var cacheKey = $"{CacheKeys.KeyUnitPrefix}{portfolioId}_True";
+            await this.cacheService.RemoveAsync(cacheKey);
+            cacheKey = $"{CacheKeys.KeyUnitPrefix}{portfolioId}_False";
+            await this.cacheService.RemoveAsync(cacheKey);
+
             return await this.unitRepository.Delete(currentUserId, portfolioId, unitId);
         }
 
         public async Task<List<UnitBasicResponseModel>> GetAll(int portfolioId, bool activeOnly)
         {
+            var cacheKey = $"{CacheKeys.KeyUnitPrefix}{portfolioId}_{activeOnly}";
+            var returnList = await this.cacheService.GetAsync<List<UnitBasicResponseModel>>(cacheKey);
+
+            if (returnList != null)
+            {
+                return returnList;
+            }
+
             var unitList = await this.unitRepository.GetAll(portfolioId, activeOnly);
-            var returnList = new List<UnitBasicResponseModel>();
+            returnList = new List<UnitBasicResponseModel>();
 
             foreach (var unit in unitList)
             {
@@ -51,6 +69,8 @@ namespace PropertyPortfolioManager.Server.Services
                 basicUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPictureId);
                 returnList.Add(basicUnit);
             }
+
+            await this.cacheService.SetAsync(cacheKey, returnList);
 
             return returnList;
         }
@@ -75,6 +95,9 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<bool> Update(int currentUserId, int portfolioId, UnitEditModel unit)
         {
+            var cacheKey = $"{CacheKeys.KeyUnitPrefix}{portfolioId}_{unit.Active}";
+            await this.cacheService.RemoveAsync(cacheKey);
+
             var unitDto = this.mapper.Map<UnitDto>(unit);
             return await this.unitRepository.Update(currentUserId, portfolioId, unitDto);
         }

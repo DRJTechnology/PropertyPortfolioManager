@@ -26,7 +26,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
 
         private bool Saved;
-        private bool DataLoading = true;
+        private bool Initialising = true;
         private string Message = string.Empty;
         private string StatusClass = string.Empty;
 
@@ -49,7 +49,7 @@ namespace PropertyPortfolioManager.Client.Pages
                     var contact = await this.contactDataService.GetByIdAsync<ContactEditModel>(contactId);
                     ContactModel = contact;
                 }
-                DataLoading = false;
+                Initialising = false;
             }
             catch (Exception ex)
             {

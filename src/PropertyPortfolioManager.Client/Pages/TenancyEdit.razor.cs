@@ -9,15 +9,15 @@ using PropertyPortfolioManager.Models.Model.Property;
 namespace PropertyPortfolioManager.Client.Pages
 {
     [Authorize]
-    public partial class UnitEdit
+    public partial class TenancyEdit
     {
-        private IEnumerable<EntityTypeModel> unittypes;
+        private IEnumerable<EntityTypeModel> tenancytypes;
 
         [Inject]
-        public IUnitTypeDataService unitTypeDataService { get; set; }
+        public ITenancyTypeDataService tenancyTypeDataService { get; set; }
 
         [Inject]
-        public IUnitDataService unitDataService { get; set; }
+        public ITenancyDataService tenancyDataService { get; set; }
 
         [Inject]
         public IDocumentService documentService { get; set; }
@@ -26,9 +26,9 @@ namespace PropertyPortfolioManager.Client.Pages
         public NavigationManager NavigationManager { get; set; }
 
         [Parameter]
-        public string? UnitId { get; set; }
+        public string? TenancyId { get; set; }
 
-        private UnitEditModel UnitModel { get; set; } = new UnitEditModel();
+        private TenancyEditModel TenancyModel { get; set; } = new TenancyEditModel();
         private bool DocumentSelectVisible = false;
 
         private bool Saved;
@@ -42,18 +42,18 @@ namespace PropertyPortfolioManager.Client.Pages
             {
                 Saved = false;
 
-                int.TryParse(UnitId, out var unitId);
+                int.TryParse(TenancyId, out var tenancyId);
 
-                unittypes = await this.unitTypeDataService.GetAllAsync<EntityTypeModel>();
+                tenancytypes = await this.tenancyTypeDataService.GetAllAsync<EntityTypeModel>();
 
-                if (unitId == 0) //new unit is being created
+                if (tenancyId == 0) //new tenancy is being created
                 {
-                    UnitModel = new UnitEditModel() {  Active = true };
+                    TenancyModel = new TenancyEditModel() {  Active = true };
                 }
                 else
                 {
-                    var unit = await this.unitDataService.GetByIdAsync<UnitEditModel>(unitId);
-                    UnitModel = unit;
+                    var tenancy = await this.tenancyDataService.GetByIdAsync<TenancyEditModel>(tenancyId);
+                    TenancyModel = tenancy;
                 }
                 Initialising = false;
             }
@@ -67,27 +67,27 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             Saved = false;
 
-            if (UnitModel.Id == 0) //new
+            if (TenancyModel.Id == 0) //new
             {
-                var addedUnit = await this.unitDataService.Create<UnitEditModel>(UnitModel);
-                if (addedUnit != 0)
+                var addedTenancy = await this.tenancyDataService.Create<TenancyEditModel>(TenancyModel);
+                if (addedTenancy != 0)
                 {
                     StatusClass = "alert-success";
-                    Message = "New unit type added successfully.";
+                    Message = "New tenancy type added successfully.";
                     Saved = true;
                 }
                 else
                 {
                     StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new unit type. Please try again.";
+                    Message = "Something went wrong adding the new tenancy type. Please try again.";
                     Saved = false;
                 }
             }
             else
             {
-                await this.unitDataService.Update<UnitEditModel>(UnitModel);
+                await this.tenancyDataService.Update<TenancyEditModel>(TenancyModel);
                 StatusClass = "alert-success";
-                Message = "Unit type updated successfully.";
+                Message = "Tenancy type updated successfully.";
                 Saved = true;
             }
         }
@@ -98,11 +98,11 @@ namespace PropertyPortfolioManager.Client.Pages
             Message = "There are some validation errors. Please try again.";
         }
 
-        protected async Task DeleteUnit()
+        protected async Task DeleteTenancy()
         {
             try
             {
-                await this.unitDataService.DeleteAsync(UnitModel.Id);
+                await this.tenancyDataService.DeleteAsync(TenancyModel.Id);
             }
             catch (Exception ex)
             {
@@ -117,25 +117,14 @@ namespace PropertyPortfolioManager.Client.Pages
 
         protected void NavigateToList()
         {
-            NavigationManager.NavigateTo("/unit");
+            NavigationManager.NavigateTo("/tenancy");
         }
 
-        protected void ShowImageSelection()
-        {
-            this.DocumentSelectVisible = true;
-        }
+        //protected async void UnitSelected(UnitBasicResponseModel unit)
+        //{
+        //    TenancyModel.UnitId = unit.Id;
+        //    //await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+        //}
 
-        protected void HideImageSelection()
-        {
-            this.DocumentSelectVisible = false;
-        }
-
-        protected async void MainImageSelected(DriveItemModel driveItem)
-        {
-            UnitModel.MainPictureBase64 = await this.documentService.GetImageBase64FromDriveItemId(driveItem.Id);
-            UnitModel.MainPicture = new FileModel() { ItemId = driveItem.Id, FileName = driveItem.Name, Size = driveItem.Size };
-            this.DocumentSelectVisible = false;
-            await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
-        }
     }
 }

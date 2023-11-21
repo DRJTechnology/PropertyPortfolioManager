@@ -9,7 +9,7 @@ namespace PropertyPortfolioManager.Client.Pages
     {
         private DriveItemModel CurrentFolder = new DriveItemModel();
         private List<string> knownExtensions = new List<string> { "aac", "ai", "bmp", "cs", "css", "csv", "doc", "docx", "exe", "gif", "heic", "html", "java", "jpg", "js", "json", "jsx", "key", "m4p", "md", "mdx", "mov", "mp3", "mp4", "otf", "pdf", "php", "png", "ppt", "pptx", "psd", "py", "raw", "rb", "sass", "scss", "sh", "sql", "svg", "tiff", "tsx", "ttf", "txt", "wav", "woff", "xls", "xlsx", "xml", "yml" };
-        private bool DataLoading = true;
+        private bool Initialising = true;
         private List<BreadcrumbItem> Breadcrumb = new List<BreadcrumbItem>();
 
         [Inject]
@@ -30,7 +30,7 @@ namespace PropertyPortfolioManager.Client.Pages
             {
                 CurrentFolder = await this.documentService.GetFolderAsync();
                 Breadcrumb.Add(new BreadcrumbItem() { Id = CurrentFolder.Id, Name = "Documents", WebUrl = CurrentFolder.WebUrl });
-                DataLoading = false;
+                Initialising = false;
             }
             catch (Exception ex)
             {

@@ -1,0 +1,14 @@
+﻿<InputSelect id="@ElementId" class="@ElementClass" @bind-Value="SelectedUnitId">
+    @if (Initialising)
+    {
+        <option value="0">{loading...}</option>
+    }
+    else
+    {
+        <option value="0">Select</option>
+        @foreach (var unit in units)
+        {
+            <option value="@unit.Id">@unit.StreetAddress</option>
+        }
+    }
+</InputSelect>
