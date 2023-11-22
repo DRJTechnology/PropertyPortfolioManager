@@ -10,7 +10,7 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	t.TenancyTypeId, tt.[Type], t.UnitId, a.StreetAddress, t.StartDate, t.EndDate, t.DurationQuantity, t.DurationUnitId, t.ExpireAfterEndDate, t.Active
+    SELECT	t.Id, t.TenancyTypeId, tt.[Type], t.UnitId, a.StreetAddress, t.StartDate, t.EndDate, t.DurationQuantity, t.DurationUnitId, t.ExpireAfterEndDate, t.Active
 	FROM	[property].[Tenancy] t
 	INNER JOIN [property].[TenancyType] tt ON t.TenancyTypeId = tt.Id
 	INNER JOIN [property].[Unit] u on t.UnitId = u.Id

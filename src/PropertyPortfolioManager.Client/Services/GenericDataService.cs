@@ -15,30 +15,44 @@ namespace PropertyPortfolioManager.Client.Services
             this.httpClient = httpClient;
         }
 
-        public async Task<int> Create<TEntity>(TEntity portfolio)
+        public async Task<int> Create<TEntity>(TEntity entity)
         {
-            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Create", portfolio);
-            if (response == null || !response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception($"Failed to create {ApiControllerName}.");
+                var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Create", entity);
+                if (response == null || !response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Failed to create {ApiControllerName}.");
+                }
+
+                var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
+
+                return returnValue.CreatedId;
             }
-
-            var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
-
-            return returnValue.CreatedId;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<bool> DeleteAsync(int portfolioId)
+        public async Task<bool> DeleteAsync(int entityId)
         {
-            var response = await httpClient.DeleteAsync($"api/{ApiControllerName}/Delete/{portfolioId}");
-            if (response == null || !response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception($"Failed to delete {ApiControllerName}.");
+                var response = await httpClient.DeleteAsync($"api/{ApiControllerName}/Delete/{entityId}");
+                if (response == null || !response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Failed to delete {ApiControllerName}.");
+                }
+
+                var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
+
+                return returnValue.Success;
             }
-
-            var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
-
-            return returnValue.Success;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<IEnumerable<TEntity>> GetAllAsync<TEntity>(bool ActiveOnly = true)
@@ -54,22 +68,36 @@ namespace PropertyPortfolioManager.Client.Services
             }
         }
 
-        public async Task<TEntity> GetByIdAsync<TEntity>(int portfolioId)
+        public async Task<TEntity> GetByIdAsync<TEntity>(int entityId)
         {
-            return await httpClient.GetFromJsonAsync<TEntity>($"api/{ApiControllerName}/GetById/{portfolioId}");
+            try
+            {
+                return await httpClient.GetFromJsonAsync<TEntity>($"api/{ApiControllerName}/GetById/{entityId}");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
-        public async Task<bool> Update<TEntity>(TEntity portfolio)
+        public async Task<bool> Update<TEntity>(TEntity entity)
         {
-            var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Update", portfolio);
-            if (response == null || !response.IsSuccessStatusCode)
+            try
             {
-                throw new Exception($"Failed to create {ApiControllerName}.");
+                var response = await httpClient.PostAsJsonAsync<TEntity>($"api/{ApiControllerName}/Update", entity);
+                if (response == null || !response.IsSuccessStatusCode)
+                {
+                    throw new Exception($"Failed to create {ApiControllerName}.");
+                }
+
+                var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
+
+                return returnValue.CreatedId > 0;
             }
-
-            var returnValue = await response.Content.ReadFromJsonAsync<PpmApiResponse>();
-
-            return returnValue.CreatedId > 0;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }

@@ -19,7 +19,7 @@
             <ValidationSummary />
 
             <div class="row mb-3">
-                <label for="unit" class="col-form-label col-md-3">Property: (ID = @TenancyModel.UnitId) </label>
+                <label for="unit" class="col-form-label col-md-3">Property: </label>
                 <div class="col-md-8">
                     <UnitSelector @bind-UnitId="TenancyModel.UnitId" ElementClass="form-select col-md-8"></UnitSelector>
                 </div>
@@ -59,6 +59,20 @@
                     <InputNumber id="durationquantity" @bind-Value="@TenancyModel.DurationQuantity" class="form-control col-md-8" placeholder="Enter duration quantity" autocomplete="off"></InputNumber>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.DurationQuantity)" />
+            </div>
+
+            <div class="row mb-3">
+                <label for="durationunit" class="col-form-label col-md-3">Duration unit: </label>
+                <div class="col-md-8">
+                    <ErrorBoundary>
+                        <ChildContent>
+                            <DurationUnitSelector @bind-DurationUnit="TenancyModel.DurationUnit" ElementClass="form-select col-md-8"></DurationUnitSelector>
+                        </ChildContent>
+                        <ErrorContent Context="Exception">
+                            <div>Error: @Exception.Message</div>
+                        </ErrorContent>
+                    </ErrorBoundary>
+                </div>
             </div>
 
             <div class="row mb-3">

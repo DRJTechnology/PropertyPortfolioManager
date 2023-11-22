@@ -32,6 +32,7 @@ namespace PropertyPortfolioManager.Server.Repositories
                 parameters.Add("@DurationQuantity", newTenancy.DurationQuantity);
                 parameters.Add("@DurationUnitId", newTenancy.DurationUnitId);
                 parameters.Add("@ExpireAfterEndDate", newTenancy.ExpireAfterEndDate);
+                parameters.Add("@Active", newTenancy.Active);
                 parameters.Add("@CurrentUserId", userId);
 
                 await this.dbConnection.ExecuteAsync("property.Tenancy_Create", parameters, commandType: CommandType.StoredProcedure);
@@ -57,53 +58,59 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<TenancyDto> GetById(int id, int portfolioId)
         {
+            try
             {
-                try
-                {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@Id", id);
-                    parameters.Add("@PortfolioId", portfolioId);
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", id);
+                parameters.Add("@PortfolioId", portfolioId);
 
-                    var tenancy = await this.dbConnection.QueryFirstOrDefaultAsync<TenancyDto>("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure);
+                var tenancy = await this.dbConnection.QueryFirstOrDefaultAsync<TenancyDto>("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure);
 
-                    if (tenancy != null)
-                    {
-                        return tenancy!;
-                    }
-                    else
-                    {
-                        throw new Exception($"Error: Tenancy (Id {id}) not found!");
-                    }
-                }
-                catch (Exception ex)
+                if (tenancy != null)
                 {
-                    throw;
+                    return tenancy!;
                 }
+                else
+                {
+                    throw new Exception($"Error: Tenancy (Id {id}) not found!");
+                }
+            }
+            catch (Exception ex)
+            {
+                throw;
             }
         }
 
         public async Task<bool> Update(int userId, int portfolioId, TenancyDto existingTenancy)
         {
-            if (existingTenancy == null)
+            try
             {
-                throw new ArgumentNullException("existingTenancy");
+                if (existingTenancy == null)
+                {
+                    throw new ArgumentNullException("existingTenancy");
+                }
+
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", existingTenancy.Id);
+                parameters.Add("@PortfolioId", portfolioId);
+                parameters.Add("@TenancyTypeId", existingTenancy.TenancyTypeId);
+                parameters.Add("@UnitId", existingTenancy.UnitId);
+                parameters.Add("@StartDate", existingTenancy.StartDate);
+                parameters.Add("@EndDate", existingTenancy.EndDate);
+                parameters.Add("@DurationQuantity", existingTenancy.DurationQuantity);
+                parameters.Add("@DurationUnitId", existingTenancy.DurationUnitId);
+                parameters.Add("@ExpireAfterEndDate", existingTenancy.ExpireAfterEndDate);
+                parameters.Add("@Active", existingTenancy.Active);
+                parameters.Add("@CurrentUserId", userId);
+
+                await this.dbConnection.ExecuteAsync("property.Tenancy_Update", parameters, commandType: CommandType.StoredProcedure);
+
+                return true;
             }
-
-            var parameters = new DynamicParameters();
-            parameters.Add("@Id", existingTenancy.Id);
-            parameters.Add("@PortfolioId", portfolioId);
-            parameters.Add("@TenancyTypeId", portfolioId);
-            parameters.Add("@UnitId", existingTenancy.UnitId);
-            parameters.Add("@StartDate", existingTenancy.StartDate);
-            parameters.Add("@EndDate", existingTenancy.EndDate);
-            parameters.Add("@DurationQuantity", existingTenancy.DurationQuantity);
-            parameters.Add("@DurationUnitId", existingTenancy.DurationUnitId);
-            parameters.Add("@ExpireAfterEndDate", existingTenancy.ExpireAfterEndDate);
-            parameters.Add("@CurrentUserId", userId);
-
-            await this.dbConnection.ExecuteAsync("property.Tenancy_Update", parameters, commandType: CommandType.StoredProcedure);
-
-            return true;
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public async Task<bool> Delete(int userId, int portfolioId, int tenancyId)
