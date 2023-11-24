@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Client.State;
 using PropertyPortfolioManager.Models.Model.Property;
 using System.Net.Http.Json;
@@ -10,8 +11,10 @@ namespace PropertyPortfolioManager.Client.Pages
         [Inject]
         public ProfileState ProfileState { get; set; }
 
+        //[Inject]
+        //public HttpClient Http { get; set; }
         [Inject]
-        public HttpClient Http { get; set; }
+        public IPortfolioDataService portfolioDataService { get; set; }
 
 
         [Parameter] public string? Action { get; set; }
@@ -20,8 +23,11 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             try
             {
-                var Portfolio = await Http.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetById/{2}");
-                ProfileState.CurrentPortfolio = Portfolio;
+                var Portfolio = await this.portfolioDataService.GetCurrentAsync();
+                if (Portfolio != null && Portfolio.Id != 0)
+                {
+                    ProfileState.CurrentPortfolio = Portfolio;
+                }
             }
             catch (Exception ex)
             {

@@ -16,5 +16,10 @@ namespace PropertyPortfolioManager.Client.Services
         {
             await httpClient.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/SelectForCurrentUser/{portfolioId}");
         }
+
+        public async Task<PortfolioModel> GetCurrentAsync()
+        {
+            return await httpClient.GetFromJsonAsync<PortfolioModel>($"api/Portfolio/GetCurrent");
+        }
     }
 }
