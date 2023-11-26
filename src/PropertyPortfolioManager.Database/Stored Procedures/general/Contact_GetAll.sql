@@ -10,10 +10,10 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	c.Id, c.PortfolioId, ct.[Type] AS ContactType, [Name], StreetAddress, c.Active
+    SELECT	c.Id, c.PortfolioId, /*ct.[Type] AS ContactType,*/ [Name], StreetAddress, c.Active
 	FROM	[general].[Contact] c
 	INNER JOIN	[general].[Address] a ON c.AddressId = a.Id
-	INNER Join	[general].[ContactType] ct ON c.ContactTypeId = ct.Id
+	--INNER Join	[general].[ContactType] ct ON c.ContactTypeId = ct.Id
 	Where	c.PortfolioId = @PortfolioId
 		AND c.Deleted = 0
 		AND (@ActiveOnly != 1 OR c.Active = 1)

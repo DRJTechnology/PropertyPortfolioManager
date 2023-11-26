@@ -1,7 +1,7 @@
 ﻿-- =============================================
 -- Author:		Dave Brown
 -- Create date: 01 Sep 2023
--- Description:	Updates a unit record
+-- Description:	Updates a contact record
 -- =============================================
 CREATE PROCEDURE [general].[Contact_Update]
 	@Id					INT, 
@@ -43,7 +43,7 @@ BEGIN
 	Where	Id = @AddressId
 
 	UPDATE	[general].[Contact]
-	SET		ContactTypeId = @ContactTypeId,
+	SET		--ContactTypeId = @ContactTypeId,
 			[Name] = @Name,
 			Notes = @Notes,
 			Active = @Active,

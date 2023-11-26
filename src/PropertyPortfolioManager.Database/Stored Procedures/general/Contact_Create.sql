@@ -1,8 +1,10 @@
-﻿-- =====================================
+﻿-- ==========================================================
 -- Author:		Dave Brown
 -- Create date: 05 Oct 2023
 -- Description:	Creates a contact record
--- =====================================
+--- ---------------------------------------------------------
+-- 08 Nov 2023	Dave Brown	ContactContactType table included
+-- ==========================================================
 CREATE PROCEDURE [general].[Contact_Create]
 	@Id					INT OUTPUT, 
 	@PortfolioId		INT,
@@ -25,9 +27,12 @@ BEGIN
 	DECLARE @AddressId INT
 	SET @AddressId = SCOPE_IDENTITY()
 
-    INSERT INTO [general].[Contact] (PortfolioId, ContactTypeId, [Name], AddressId, Notes, Active, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
-	VALUES (@PortfolioId, @ContactTypeId, @Name, @AddressId, @Notes, @Active, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
+    INSERT INTO [general].[Contact] (PortfolioId, [Name], AddressId, Notes, Active, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	VALUES (@PortfolioId, @Name, @AddressId, @Notes, @Active, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 	SET @Id = SCOPE_IDENTITY()
+
+	INSERT INTO [general].[ContactContactType] (ContactId, ContactTypeId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	VALUES (@Id, @ContactTypeId, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 END
