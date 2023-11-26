@@ -25,7 +25,7 @@ namespace PropertyPortfolioManager.Server.Repositories
             {
                 var parameters = new DynamicParameters();
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@TenancyTypeId", portfolioId);
+                parameters.Add("@TenancyTypeId", newTenancy.TenancyTypeId);
                 parameters.Add("@UnitId", newTenancy.UnitId);
                 parameters.Add("@StartDate", newTenancy.StartDate);
                 parameters.Add("@EndDate", newTenancy.EndDate);
