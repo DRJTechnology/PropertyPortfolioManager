@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
-using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Client.Interfaces;
-using PropertyPortfolioManager.Models.Model.Document;
-using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 
 namespace PropertyPortfolioManager.Client.Pages
@@ -35,6 +32,7 @@ namespace PropertyPortfolioManager.Client.Pages
         private bool Initialising = true;
         private string Message = string.Empty;
         private string StatusClass = string.Empty;
+        private int ContactId;
 
         protected override async Task OnInitializedAsync()
         {
@@ -60,6 +58,30 @@ namespace PropertyPortfolioManager.Client.Pages
             catch (Exception ex)
             {
                 throw;
+            }
+        }
+
+        protected void ContactSelected(int selectedContactId)
+        {
+            if (selectedContactId > 0)
+            {
+                AddContact(selectedContactId);
+            }
+        }
+
+        private async void AddContact(int selectedContactId)
+        {
+            var contact = await this.tenancyDataService.AddContact(new TenancyContactModel() { TenancyId = TenancyModel.Id, ContactId = selectedContactId } );
+            TenancyModel.Contacts.Add(contact);
+            await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+        }
+
+        private async void RemoveContact(int selectedContactId)
+        {
+            if (await this.tenancyDataService.RemoveContact(new TenancyContactModel() { TenancyId = TenancyModel.Id, ContactId = selectedContactId }))
+            {
+                TenancyModel.Contacts.Remove(TenancyModel.Contacts.Where(c => c.Id == selectedContactId).FirstOrDefault());
+                await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
             }
         }
 
@@ -119,12 +141,6 @@ namespace PropertyPortfolioManager.Client.Pages
         {
             NavigationManager.NavigateTo("/tenancy");
         }
-
-        //protected async void UnitSelected(UnitBasicResponseModel unit)
-        //{
-        //    TenancyModel.UnitId = unit.Id;
-        //    //await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
-        //}
 
     }
 }

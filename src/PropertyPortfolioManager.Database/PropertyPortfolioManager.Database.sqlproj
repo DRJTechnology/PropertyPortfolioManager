@@ -127,6 +127,10 @@
     <Build Include="Stored Procedures\property\Tenancy_GetAll.sql" />
     <Build Include="Stored Procedures\property\Tenancy_GetById.sql" />
     <Build Include="Stored Procedures\property\Tenancy_Update.sql" />
+    <Build Include="Stored Procedures\general\Contact_GetAllWithType.sql" />
+    <Build Include="Tables\property\TenancyContact.sql" />
+    <Build Include="Stored Procedures\property\Tenancy_RemoveContact.sql" />
+    <Build Include="Stored Procedures\property\Tenancy_AddContact.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

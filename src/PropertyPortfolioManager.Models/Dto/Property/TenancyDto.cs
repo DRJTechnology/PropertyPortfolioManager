@@ -1,7 +1,14 @@
-﻿namespace PropertyPortfolioManager.Models.Dto.Property
+﻿using PropertyPortfolioManager.Models.Dto.General;
+
+namespace PropertyPortfolioManager.Models.Dto.Property
 {
     public class TenancyDto : BaseDto
     {
+        public TenancyDto()
+        {
+            this.Contacts = new List<ContactBasicDto>();
+        }
+
         public int TenancyTypeId { get; set; }
 
         public String Type { get; set; } = string.Empty;
@@ -21,5 +28,7 @@
         public bool ExpireAfterEndDate { get; set; }
 
         public bool Active { get; set; }
+
+        public List<ContactBasicDto> Contacts { get; set; }
     }
 }

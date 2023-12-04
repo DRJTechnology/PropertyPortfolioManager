@@ -1,4 +1,6 @@
-﻿using PropertyPortfolioManager.Models.Enums;
+﻿using PropertyPortfolioManager.Models.Dto.General;
+using PropertyPortfolioManager.Models.Enums;
+using PropertyPortfolioManager.Models.Model.General;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
@@ -29,6 +31,8 @@ namespace PropertyPortfolioManager.Models.Model.Property
         public bool ExpiresAfterEndDate { get; set; }
 
         public bool Active { get; set; }
+
+        public List<ContactResponseModel> Contacts { get; set; }
 
         public bool Deleted { get; set; }
     }

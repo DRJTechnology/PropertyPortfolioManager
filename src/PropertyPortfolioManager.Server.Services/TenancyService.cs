@@ -64,5 +64,17 @@ namespace PropertyPortfolioManager.Server.Services
             var tenancyDto = this.mapper.Map<TenancyDto>(tenancy);
             return await this.tenancyRepository.Update(currentUserId, portfolioId, tenancyDto);
         }
+
+        public async Task<bool> RemoveContact(int currentUserId, int portfolioId, TenancyContactModel tenancyContact)
+        {
+            var tenancyContactDto = this.mapper.Map<TenancyContactDto>(tenancyContact);
+            return await this.tenancyRepository.RemoveContact(currentUserId, portfolioId, tenancyContactDto);
+        }
+
+        public async Task<int> AddContact(int currentUserId, int portfolioId, TenancyContactModel tenancyContact)
+        {
+            var tenancyContactDto = this.mapper.Map<TenancyContactDto>(tenancyContact);
+            return await this.tenancyRepository.AddContact(currentUserId, portfolioId, tenancyContactDto);
+        }
     }
 }

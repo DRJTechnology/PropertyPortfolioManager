@@ -1,0 +1,14 @@
+﻿<InputSelect id="@ElementId" class="@ElementClass" @bind-Value="SelectedContactId">
+    @if (Initialising)
+    {
+        <option value="0">{loading...}</option>
+    }
+    else
+    {
+        <option value="0">@SelectPrompt</option>
+        @foreach (var contact in contacts)
+        {
+            <option value="@contact.Id">@contact.Name</option>
+        }
+    }
+</InputSelect>

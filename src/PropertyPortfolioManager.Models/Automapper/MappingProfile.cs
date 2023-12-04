@@ -29,6 +29,7 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<ContactTypeDto, ContactTypeModel>();
             this.CreateMap<ContactTypeModel, ContactTypeDto>();
 
+            this.CreateMap<ContactBasicDto, ContactResponseModel>();
             this.CreateMap<ContactDto, ContactResponseModel>();
             this.CreateMap<ContactBasicDto, ContactBasicResponseModel>();
             this.CreateMap<ContactEditModel, ContactDto>();
@@ -37,6 +38,9 @@ namespace PropertyPortfolioManager.Models.Automapper
                 .ForMember(d => d.DurationUnit, x => x.MapFrom(s => (DurationUnitEnum)s.DurationUnitId));
             this.CreateMap<TenancyEditModel, TenancyDto>()
                 .ForMember(d => d.DurationUnitId, x => x.MapFrom(s => (int)s.DurationUnit));
+
+            this.CreateMap<TenancyContactDto, TenancyContactModel>();
+            this.CreateMap<TenancyContactModel, TenancyContactDto>();
 
             this.CreateMap<DriveItem, DriveItemModel>()
                 .ForMember(d => d.IsFolder, x => x.MapFrom(s => s.Folder != null))

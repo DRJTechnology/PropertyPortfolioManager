@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Models.InternalObjects;
+using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 
@@ -10,11 +12,13 @@ namespace PropertyPortfolioManager.Server.Controllers
     public class TenancyController : BaseController
     {
         private readonly ITenancyService tenancyService;
+        private readonly IContactService contactService;
 
-        public TenancyController(IUserService userService, ITenancyService tenancyService)
+        public TenancyController(IUserService userService, ITenancyService tenancyService, IContactService contactService)
             : base(userService)
         {
             this.tenancyService = tenancyService;
+            this.contactService = contactService;
         }
 
 
@@ -167,6 +171,76 @@ namespace PropertyPortfolioManager.Server.Controllers
                         {
                             Success = false,
                             ErrorMessage = $"TenancyTypeController: Failed to delete tenancyTypeId {tenancyId}"
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return new PpmApiResponse()
+                {
+                    Success = false,
+                    ErrorMessage = ex.Message,
+                };
+            }
+        }
+
+        [HttpPost]
+        [Route("AddContact")]
+        public async Task<ContactResponseModel> AddContact(TenancyContactModel tenancyContact)
+        {
+            try
+            {
+                var newTenancyContactId = 0;
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    throw new Exception("Tenancy_AddContact: User has no Selected Portfolio Id set.");
+                }
+                else
+                {
+                    newTenancyContactId = await this.tenancyService.AddContact((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyContact);
+                }
+
+                return await this.contactService.GetById(tenancyContact.ContactId, (int)portfolioId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Tenancy_AddContact: Internal error.");
+            }
+        }
+
+        [HttpPost]
+        [Route("RemoveContact")]
+        public async Task<PpmApiResponse> RemoveContact(TenancyContactModel tenancyContact)
+        {
+            try
+            {
+                var newTenancyContactId = 0;
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return new PpmApiResponse()
+                    {
+                        Success = false,
+                        ErrorMessage = "Tenancy_AddContact: User has no Selected Portfolio Id set."
+                    };
+                }
+                else
+                {
+                    if (await this.tenancyService.RemoveContact((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyContact))
+                    {
+                        return new PpmApiResponse()
+                        {
+                            Success = true,
+                        };
+                    }
+                    else
+                    {
+                        return new PpmApiResponse()
+                        {
+                            Success = false,
+                            ErrorMessage = $"TenancyController: Failed to remove contact ({tenancyContact.ContactId}) from tenancy ({tenancyContact.TenancyId})"
                         };
                     }
                 }

@@ -9,5 +9,7 @@ namespace PropertyPortfolioManager.Server.Services.Interfaces
         Task<int> Create(int currentUserId, int portfolioId, TenancyEditModel tenancy);
         Task<bool> Update(int currentUserId, int portfolioId, TenancyEditModel tenancy);
         Task<bool> Delete(int currentUserId, int portfolioId, int unitTypeId);
+        Task<bool> RemoveContact(int currentUserId, int portfolioId, TenancyContactModel tenancyContact);
+        Task<int> AddContact(int currentUserId, int portfolioId, TenancyContactModel tenancyContact);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using System.Data;
@@ -53,7 +54,7 @@ namespace PropertyPortfolioManager.Server.Repositories
 
             var tenancys = await this.dbConnection.QueryAsync<TenancyDto>("property.Tenancy_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
-            return tenancys.ToList(); ;
+            return tenancys.ToList();
         }
 
         public async Task<TenancyDto> GetById(int id, int portfolioId)
@@ -64,16 +65,21 @@ namespace PropertyPortfolioManager.Server.Repositories
                 parameters.Add("@Id", id);
                 parameters.Add("@PortfolioId", portfolioId);
 
-                var tenancy = await this.dbConnection.QueryFirstOrDefaultAsync<TenancyDto>("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure);
+                using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure))
+                {
+                    var tenancy = multipleResults.Read<TenancyDto>().SingleOrDefault();
 
-                if (tenancy != null)
-                {
-                    return tenancy!;
+                    if (tenancy != null)
+                    {
+                        tenancy.Contacts = multipleResults.Read<ContactBasicDto>().ToList();
+                        return tenancy;
+                    }
+                    else
+                    {
+                        throw new Exception($"Error: Tenancy (Id {id}) not found!");
+                    }
                 }
-                else
-                {
-                    throw new Exception($"Error: Tenancy (Id {id}) not found!");
-                }
+
             }
             catch (Exception ex)
             {
@@ -125,5 +131,43 @@ namespace PropertyPortfolioManager.Server.Repositories
             return true;
         }
 
+        public async Task<bool> RemoveContact(int userId, int portfolioId, TenancyContactDto tenancyContact)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@TenancyId", tenancyContact.TenancyId);
+            parameters.Add("@ContactId", tenancyContact.ContactId);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@CurrentUserId", userId);
+
+            await this.dbConnection.ExecuteAsync("property.Tenancy_RemoveContact", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
+        }
+
+        public async Task<int> AddContact(int userId, int portfolioId, TenancyContactDto newTenancyContact)
+        {
+            if (newTenancyContact == null)
+            {
+                throw new ArgumentNullException("newTenancyContact");
+            }
+
+            try
+            {
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+                parameters.Add("@TenancyId", newTenancyContact.TenancyId);
+                parameters.Add("@ContactId", newTenancyContact.ContactId);
+                parameters.Add("@PortfolioId", portfolioId);
+                parameters.Add("@CurrentUserId", userId);
+
+                await this.dbConnection.ExecuteAsync("property.Tenancy_AddContact", parameters, commandType: CommandType.StoredProcedure);
+
+                return parameters.Get<int>("@Id");
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+        }
     }
 }

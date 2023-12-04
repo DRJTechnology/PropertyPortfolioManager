@@ -4,14 +4,14 @@
 @if (!Saved & !Initialising)
 {
     <section class="">
-         @if (TenancyModel.Id == 0)
+        @if (TenancyModel.Id == 0)
         {
             <h1 class="page-title">New Tenancy</h1>
         }
         else
         {
             <h1 class="page-title">Details for @TenancyModel.Id</h1>
-           
+
         }
         <EditForm Model="@TenancyModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
@@ -39,15 +39,13 @@
 
             <div class="row mb-3">
                 <label for="startdate" class="col-form-label col-md-3">Start date: </label>
-                <div class="col-md-8">
+                <div class="col-md-3">
                     <InputDate id="startdate" @bind-Value="@TenancyModel.StartDate" class="form-control col-md-8" placeholder="Enter start date" autocomplete="off"></InputDate>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.StartDate)" />
-            </div>
 
-            <div class="row mb-3">
-                <label for="enddate" class="col-form-label col-md-3">End date: </label>
-                <div class="col-md-8">
+                <label for="enddate" class="col-form-label col-md-1 offset-md-1">End date: </label>
+                <div class="col-md-3">
                     <InputDate id="enddate" @bind-Value="@TenancyModel.EndDate" class="form-control col-md-8" placeholder="Enter end date" autocomplete="off"></InputDate>
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.EndDate)" />
@@ -83,6 +81,40 @@
                             Active
                         </label>
                     </div>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="durationunit" class="col-form-label col-md-3">Contacts: </label>
+                <div class="col-md-8">
+                    <table>
+                    @foreach (var contact in TenancyModel.Contacts)
+                    {
+                        <tr>
+                            <td>
+                                @contact.Name
+                            </td>
+                            <td>
+                                    <a class="btn btn-link" @onclick="() => RemoveContact(contact.Id)">
+                                    <i class="bi bi-trash"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                    <tr>
+                        <td colspan="2">
+                                <ErrorBoundary>
+                                    <ChildContent>
+                                        @* <ContactSelector @bind-ContactId="ContactId" ElementClass="form-select" SelectPrompt="Add Tenant"></ContactSelector> *@
+                                        <ContactSelector ElementClass="form-select" SelectPrompt="Add Tenant" ContactIdChanged="ContactSelected"></ContactSelector>
+                                    </ChildContent>
+                                    <ErrorContent Context="Exception">
+                                        <div>Error: @Exception.Message</div>
+                                    </ErrorContent>
+                                </ErrorBoundary>
+                        </td>
+                    </tr>
+                    </table>
                 </div>
             </div>
 
