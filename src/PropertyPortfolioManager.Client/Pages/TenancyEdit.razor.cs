@@ -26,13 +26,12 @@ namespace PropertyPortfolioManager.Client.Pages
         public string? TenancyId { get; set; }
 
         private TenancyEditModel TenancyModel { get; set; } = new TenancyEditModel();
-        private bool DocumentSelectVisible = false;
 
         private bool Saved;
         private bool Initialising = true;
         private string Message = string.Empty;
         private string StatusClass = string.Empty;
-        private int ContactId;
+        private bool ContactSelectVisible = false;
 
         protected override async Task OnInitializedAsync()
         {
@@ -72,7 +71,11 @@ namespace PropertyPortfolioManager.Client.Pages
         private async void AddContact(int selectedContactId)
         {
             var contact = await this.tenancyDataService.AddContact(new TenancyContactModel() { TenancyId = TenancyModel.Id, ContactId = selectedContactId } );
-            TenancyModel.Contacts.Add(contact);
+            if (!TenancyModel.Contacts.Exists(c => c.Id == contact.Id))
+            {
+                TenancyModel.Contacts.Add(contact);
+            }
+            ContactSelectVisible = false;
             await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
         }
 
@@ -140,6 +143,16 @@ namespace PropertyPortfolioManager.Client.Pages
         protected void NavigateToList()
         {
             NavigationManager.NavigateTo("/tenancy");
+        }
+
+        protected void ShowContactSelection()
+        {
+            this.ContactSelectVisible = true;
+        }
+
+        protected void HideContactSelection()
+        {
+            this.ContactSelectVisible = false;
         }
 
     }

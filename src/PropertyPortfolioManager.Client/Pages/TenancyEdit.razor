@@ -3,6 +3,36 @@
 
 @if (!Saved & !Initialising)
 {
+    if (ContactSelectVisible)
+    {
+        <div class="modal d-block" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add tenant</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="@HideContactSelection">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <ErrorBoundary>
+                            <ChildContent>
+                                @* <ContactSelector @bind-ContactId="ContactId" ElementClass="form-select" SelectPrompt="Add Tenant"></ContactSelector> *@
+                                <ContactSelector ElementClass="form-select" SelectPrompt="Add Tenant" ContactIdChanged="ContactSelected"></ContactSelector>
+                            </ChildContent>
+                            <ErrorContent Context="Exception">
+                                <div>Error: @Exception.Message</div>
+                            </ErrorContent>
+                        </ErrorBoundary>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="@HideContactSelection" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     <section class="">
         @if (TenancyModel.Id == 0)
         {
@@ -85,7 +115,7 @@
             </div>
 
             <div class="row mb-3">
-                <label for="durationunit" class="col-form-label col-md-3">Contacts: </label>
+                <label for="durationunit" class="col-form-label col-md-3">Tenants: </label>
                 <div class="col-md-8">
                     <table>
                     @foreach (var contact in TenancyModel.Contacts)
@@ -101,17 +131,17 @@
                             </td>
                         </tr>
                     }
+                        @if (TenancyModel.Contacts.Count == 0)
+                        {
+                            <tr>
+                                <td colspan="2">
+                                    No Tenants Assigned
+                                </td>
+                            </tr>
+                        }
                     <tr>
                         <td colspan="2">
-                                <ErrorBoundary>
-                                    <ChildContent>
-                                        @* <ContactSelector @bind-ContactId="ContactId" ElementClass="form-select" SelectPrompt="Add Tenant"></ContactSelector> *@
-                                        <ContactSelector ElementClass="form-select" SelectPrompt="Add Tenant" ContactIdChanged="ContactSelected"></ContactSelector>
-                                    </ChildContent>
-                                    <ErrorContent Context="Exception">
-                                        <div>Error: @Exception.Message</div>
-                                    </ErrorContent>
-                                </ErrorBoundary>
+                                <button type="button" class="btn btn-outline-primary" @onclick="@ShowContactSelection">Add tenant</button>
                         </td>
                     </tr>
                     </table>
