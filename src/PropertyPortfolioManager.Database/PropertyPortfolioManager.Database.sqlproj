@@ -68,12 +68,13 @@
     <Folder Include="Stored Procedures\property" />
     <Folder Include="Stored Procedures\profile" />
     <Folder Include="Stored Procedures\general" />
+    <Folder Include="Tables\finance" />
+    <Folder Include="Stored Procedures\finance" />
+    <Folder Include="Snapshots" />
+    <Folder Include="Schemas" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="Security\db_executor.sql" />
-    <Build Include="Security\profile.sql" />
-    <Build Include="Security\property.sql" />
-    <Build Include="Security\general.sql" />
     <Build Include="Tables\general\Address.sql" />
     <Build Include="Tables\profile\User.sql" />
     <Build Include="Tables\property\Portfolio.sql" />
@@ -131,6 +132,20 @@
     <Build Include="Tables\property\TenancyContact.sql" />
     <Build Include="Stored Procedures\property\Tenancy_RemoveContact.sql" />
     <Build Include="Stored Procedures\property\Tenancy_AddContact.sql" />
+    <Build Include="Tables\finance\AccountType.sql" />
+    <Build Include="Tables\finance\Account.sql" />
+    <Build Include="Tables\finance\Transaction.sql" />
+    <Build Include="Stored Procedures\finance\Account_Create.sql" />
+    <Build Include="Stored Procedures\finance\Account_GetAll.sql" />
+    <Build Include="Stored Procedures\finance\Account_GetById.sql" />
+    <Build Include="Stored Procedures\finance\Account_Update.sql" />
+    <Build Include="Security\ppm-user.sql" />
+    <Build Include="Schemas\finance.sql" />
+    <Build Include="Schemas\general.sql" />
+    <Build Include="Schemas\profile.sql" />
+    <Build Include="Schemas\property.sql" />
+    <Build Include="Stored Procedures\finance\AccountType_GetAll.sql" />
+    <Build Include="Stored Procedures\finance\Account_Delete.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

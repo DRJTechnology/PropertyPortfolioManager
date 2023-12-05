@@ -1,0 +1,73 @@
+﻿@page "/account"
+
+<h3>Accounts</h3>
+
+@if (accounts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row">
+        <div class="col">
+            <a href="accountedit">Create New Account</a>
+        </div>
+        <div class="col">
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Name
+                </th>
+                <th>
+                    Type
+                </th>
+                @if (!ActiveOnly)
+                {
+                    <th>
+                        Active
+                    </th>
+                }
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var account in accounts)
+            {
+                <tr>
+                    <td>
+                        @account.AccountName
+                    </td>
+                    <td>
+                        @account.Type
+                    </td>
+                    @if (!ActiveOnly)
+                    {
+                        <td>
+                            @(account.Active ? "Active" : "Inactive")
+                        </td>
+                    }
+                    <td>
+                        @if (account.PortfolioId > -1)
+                        {
+                            <a href="@($"accountedit/{account.Id}")" class="btn btn-outline-primary btn-sm">
+                                Edit
+                            </a>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

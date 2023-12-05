@@ -1,0 +1,73 @@
+﻿@page "/accountedit"
+@page "/accountedit/{AccountId}"
+
+@if (!Saved & !Initialising)
+{
+    <section class="">
+         @if (AccountModel.Id == 0)
+        {
+            <h1 class="page-title">New Account</h1>
+        }
+        else
+        {
+            <h1 class="page-title">Details for @AccountModel.AccountName</h1>
+           
+        }
+        <EditForm Model="@AccountModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="row mb-3">
+                <label for="name" class="col-form-label col-md-3">Name: </label>
+                <div class="col-md-8">
+                    <InputText id="name" @bind-Value="@AccountModel.AccountName" class="form-control col-md-8" placeholder="Enter name" autocomplete="off"></InputText>
+                </div>
+                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => AccountModel.AccountName)" />
+            </div>
+            
+            <div class="row mb-3">
+            <label for="accounttype" class="col-form-label col-md-3">Account type: </label>
+                <div class="col-md-8">
+                    <InputSelect id="accounttype" class="form-select col-md-8" @bind-Value="@AccountModel.AccountTypeId">
+                        @foreach (var accounttype in accounttypes)
+                        {
+                        <option value="@accounttype.Id">@accounttype.Type</option>
+                        }
+                    </InputSelect>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-8 offset-md-3">
+                    <div class="form-check">
+                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@AccountModel.Active"></InputCheckbox>
+                        <label class="form-check-label" for="active">
+                            Active
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary me-1">Save account</button>
+
+            @if (AccountModel.Id > 0)
+            {
+                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteAccount">
+                    Delete
+                </button>
+            }
+            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+
+        </EditForm>
+    </section>
+}
+else if (Initialising)
+{
+    <p>Loading data...</p>
+}
+else
+{
+    <div class="alert @StatusClass">@Message</div>
+    <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
+} 

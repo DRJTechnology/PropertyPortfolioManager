@@ -36,6 +36,8 @@ namespace PropertyPortfolioManager.Server
             services.AddScoped<IUnitService, UnitService>();
             services.AddScoped<ITenancyTypeService, TenancyTypeService>();
             services.AddScoped<ITenancyService, TenancyService>();
+            services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<IAccountTypeService, AccountTypeService>();
             services.AddScoped<IDocumentService, DocumentService>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPortfolioRepository, PortfolioRepository>();
@@ -45,6 +47,8 @@ namespace PropertyPortfolioManager.Server
             services.AddScoped<IUnitRepository, UnitRepository>();
             services.AddScoped<ITenancyTypeRepository, TenancyTypeRepository>();
             services.AddScoped<ITenancyRepository, TenancyRepository>();
+            services.AddScoped<IAccountRepository, AccountRepository>();
+            services.AddScoped<IAccountTypeRepository, AccountTypeRepository>();
 
             services.AddTransient<IDbConnection>(db => new SqlConnection(configuration.GetConnectionString("PpmDatabaseConnectionString")));
 

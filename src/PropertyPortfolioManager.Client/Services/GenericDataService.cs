@@ -1,6 +1,5 @@
 ﻿using PropertyPortfolioManager.Client.Interfaces;
 using PropertyPortfolioManager.Models.InternalObjects;
-using System.Net;
 using System.Net.Http.Json;
 
 namespace PropertyPortfolioManager.Client.Services

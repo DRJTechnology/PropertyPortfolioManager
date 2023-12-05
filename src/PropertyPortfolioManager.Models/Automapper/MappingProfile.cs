@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Microsoft.Graph.Models;
+using PropertyPortfolioManager.Models.Dto.Finance;
 using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Enums;
 using PropertyPortfolioManager.Models.Model.Document;
+using PropertyPortfolioManager.Models.Model.Finance;
 using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 
@@ -49,6 +51,13 @@ namespace PropertyPortfolioManager.Models.Automapper
 
             this.CreateMap<FileDto, FileModel>();
             this.CreateMap<FileModel, FileDto>();
+
+            this.CreateMap<AccountDto, AccountResponseModel>()
+                .ForMember(d => d.AccountName, x => x.MapFrom(s => s.Name));
+            this.CreateMap<AccountEditModel, AccountDto>()
+                .ForMember(d => d.Name, x => x.MapFrom(s => s.AccountName));
+
+            this.CreateMap<AccountTypeDto, AccountTypeResponseModel>();
 
         }
     }
