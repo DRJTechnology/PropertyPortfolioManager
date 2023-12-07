@@ -16,5 +16,6 @@ BEGIN
 	Where	(a.PortfolioId = @PortfolioId OR a.PortfolioId = -1)
 		AND a.Deleted = 0
 		AND (@ActiveOnly != 1 OR a.Active = 1)
+	ORDER BY [Name]
 
 END

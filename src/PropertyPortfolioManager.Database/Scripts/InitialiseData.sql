@@ -50,29 +50,37 @@ END
 
 --	Populate Contact Types - End
 
+-- Populate finance Transaction Types - Start
+IF NOT EXISTS(SELECT 1 FROM [finance].[TransactionType] WHERE Id = 1)
+BEGIN
+	INSERT INTO [finance].[TransactionType] (Id, [Type], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
+	VALUES (1, 'Journal', 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+END
+-- Populate finance Transaction Types - End
+
 -- Populate finance Account Types - Start
 IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 1)
 BEGIN
 	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
-	VALUES (1, 'Assets', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	VALUES (1, 'Asset', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
 
 IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 2)
 BEGIN
 	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
-	VALUES (2, 'Liabilities', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	VALUES (2, 'Liability', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
 
 IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 3)
 BEGIN
 	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
-	VALUES (3, 'Revenues', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	VALUES (3, 'Revenue', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
 
 IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 4)
 BEGIN
 	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
-	VALUES (4, 'Expenses', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+	VALUES (4, 'Expense', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
 
 IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 5)
@@ -80,6 +88,13 @@ BEGIN
 	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
 	VALUES (5, 'Equity', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
+
+IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 6)
+BEGIN
+	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
+	VALUES (6, 'Long-term Liability', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+END
+
 -- Populate finance Account Types - End
 
 -- Populate initial finance Accounts - Start

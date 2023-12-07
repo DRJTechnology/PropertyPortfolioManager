@@ -146,6 +146,8 @@
     <Build Include="Schemas\property.sql" />
     <Build Include="Stored Procedures\finance\AccountType_GetAll.sql" />
     <Build Include="Stored Procedures\finance\Account_Delete.sql" />
+    <Build Include="Tables\finance\TransactionType.sql" />
+    <Build Include="Tables\finance\TransactionDetail.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />
