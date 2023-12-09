@@ -10,9 +10,8 @@ AS
 BEGIN
 	SET NOCOUNT ON;
 
-    SELECT	c.Id, c.PortfolioId, /*c.ContactTypeId, ct.[Type] AS ContactType,*/ c.[Name], c.AddressId, c.Notes, c.Active, c.Deleted, c.CreateUserId, c.CreateDate, c.AmendUserId, c.AmendDate
+    SELECT	c.Id, c.PortfolioId, c.[Name], c.AddressId, c.Notes, c.Active, c.Deleted, c.CreateUserId, c.CreateDate, c.AmendUserId, c.AmendDate
 	FROM	[general].[Contact] c
-	--INNER JOIN	[general].[ContactType] ct on c.ContactTypeId = ct.id
 	WHERE	c.PortfolioId = @PortfolioId AND c.Id = @Id
 
     SELECT	a.Id, StreetAddress, TownCity, CountyRegion, PostCode, a.Deleted, a.CreateUserId, a.CreateDate, a.AmendUserId, a.AmendDate

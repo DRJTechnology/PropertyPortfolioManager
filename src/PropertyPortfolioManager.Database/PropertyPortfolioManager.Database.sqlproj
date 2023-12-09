@@ -148,6 +148,8 @@
     <Build Include="Stored Procedures\finance\Account_Delete.sql" />
     <Build Include="Tables\finance\TransactionType.sql" />
     <Build Include="Tables\finance\TransactionDetail.sql" />
+    <Build Include="Stored Procedures\finance\TransactionDetail_Get.sql" />
+    <Build Include="Stored Procedures\finance\TransactionType_GetAll.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Scripts\InitialiseData.sql" />

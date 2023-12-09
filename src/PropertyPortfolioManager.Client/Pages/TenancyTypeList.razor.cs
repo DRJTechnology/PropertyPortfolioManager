@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using PropertyPortfolioManager.Client.Interfaces;
-using PropertyPortfolioManager.Models.Model.Property;
+using PropertyPortfolioManager.Models.Model.General;
 
 namespace PropertyPortfolioManager.Client.Pages
 {

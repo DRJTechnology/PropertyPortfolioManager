@@ -15,10 +15,6 @@ namespace PropertyPortfolioManager.Models.Dto.General
 
         public int AddressId { get; set; }
 
-        public int ContactTypeId { get; set; }
-
-        public String ContactType { get; set; } = string.Empty;
-
         public string Notes { get; set; } = string.Empty;
 
         public bool Active { get; set; }

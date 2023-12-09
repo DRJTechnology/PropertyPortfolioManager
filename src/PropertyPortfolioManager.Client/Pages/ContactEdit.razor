@@ -57,19 +57,6 @@
                 </div>
                 <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactModel.Address.PostCode)" />
             </div>
-            
-            <div class="row mb-3">
-            <label for="contacttype" class="col-form-label col-md-3">Contact type: </label>
-                <div class="col-md-8">
-                    <InputSelect id="contacttype" class="form-select col-md-8" @bind-Value="@ContactModel.ContactTypeId">
-                        @foreach (var contacttype in contacttypes)
-                        {
-                        <option value="@contacttype.Id">@contacttype.Type</option>
-                        }
-                    </InputSelect>
-                </div>
-            </div>
-
 
             <div class="row mb-3">
                 <label for="notes" class="col-form-label col-md-3">Notes: </label>

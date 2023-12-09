@@ -11,7 +11,7 @@ namespace PropertyPortfolioManager.Client.Pages
     [Authorize]
     public partial class AccountEdit
     {
-        private IEnumerable<EntityTypeModel> accounttypes;
+        private IEnumerable<EntityTypeBasicModel> accounttypes;
 
         [Inject]
         public IAccountTypeDataService accountTypeDataService { get; set; }
@@ -43,7 +43,7 @@ namespace PropertyPortfolioManager.Client.Pages
 
                 int.TryParse(AccountId, out var accountId);
 
-                accounttypes = await this.accountTypeDataService.GetAllAsync<EntityTypeModel>();
+                accounttypes = await this.accountTypeDataService.GetAllAsync();
 
                 if (accountId == 0) //new account is being created
                 {

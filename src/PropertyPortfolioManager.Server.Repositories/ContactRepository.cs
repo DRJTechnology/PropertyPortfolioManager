@@ -28,7 +28,6 @@ namespace PropertyPortfolioManager.Server.Repositories
                 parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
                 parameters.Add("@PortfolioId", portfolioId);
                 parameters.Add("@Name", newContact.Name);
-                parameters.Add("@ContactTypeId", newContact.ContactTypeId);
                 parameters.Add("@StreetAddress", newContact.Address.StreetAddress);
                 parameters.Add("@TownCity", newContact.Address.TownCity);
                 parameters.Add("@CountyRegion", newContact.Address.CountyRegion);
@@ -95,7 +94,6 @@ namespace PropertyPortfolioManager.Server.Repositories
             parameters.Add("@Id", existingContact.Id);
             parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@Name", existingContact.Name);
-            parameters.Add("@ContactTypeId", existingContact.ContactTypeId);
             parameters.Add("@StreetAddress", existingContact.Address.StreetAddress);
             parameters.Add("@TownCity", existingContact.Address.TownCity);
             parameters.Add("@CountyRegion", existingContact.Address.CountyRegion);

@@ -26,6 +26,8 @@ builder.Services.AddScoped<ITenancyTypeDataService, TenancyTypeDataService>();
 builder.Services.AddScoped<ITenancyDataService, TenancyDataService>();
 builder.Services.AddScoped<IAccountDataService, AccountDataService>();
 builder.Services.AddScoped<IAccountTypeDataService, AccountTypeDataService>();
+builder.Services.AddScoped<ITransactionDetailDataService, TransactionDetailDataService>();
+builder.Services.AddScoped<ITransactionTypeDataService, TransactionTypeDataService>();
 builder.Services.AddScoped<IDocumentService, DocumentService>();
 builder.Services.AddScoped<ProfileState>();
 

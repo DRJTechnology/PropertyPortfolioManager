@@ -1,6 +1,6 @@
-﻿namespace PropertyPortfolioManager.Models.Model.Finance
+﻿namespace PropertyPortfolioManager.Models.Model.General
 {
-    public class AccountTypeResponseModel
+    public class EntityTypeBasicModel
     {
         public int Id { get; set; }
 

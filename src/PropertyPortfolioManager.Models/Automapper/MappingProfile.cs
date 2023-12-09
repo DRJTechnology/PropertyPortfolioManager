@@ -57,8 +57,10 @@ namespace PropertyPortfolioManager.Models.Automapper
             this.CreateMap<AccountEditModel, AccountDto>()
                 .ForMember(d => d.Name, x => x.MapFrom(s => s.AccountName));
 
-            this.CreateMap<AccountTypeDto, AccountTypeResponseModel>();
+            this.CreateMap<AccountTypeDto, EntityTypeBasicModel>();
 
+            this.CreateMap<TransactionDetailDto, TransactionDetailResponseModel>();
+            this.CreateMap<TransactionTypeDto, EntityTypeBasicModel>();
         }
     }
 }

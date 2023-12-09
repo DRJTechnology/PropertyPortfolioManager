@@ -8,7 +8,7 @@
 CREATE PROCEDURE [general].[Contact_Create]
 	@Id					INT OUTPUT, 
 	@PortfolioId		INT,
-	@ContactTypeId		INT,
+	--@ContactTypeId		INT,
 	@Name				NVARCHAR(255),
 	@StreetAddress		NVARCHAR(255) = NULL,
 	@TownCity			NVARCHAR(128) = NULL,
@@ -32,7 +32,7 @@ BEGIN
 
 	SET @Id = SCOPE_IDENTITY()
 
-	INSERT INTO [general].[ContactContactType] (ContactId, ContactTypeId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
-	VALUES (@Id, @ContactTypeId, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
+	--INSERT INTO [general].[ContactContactType] (ContactId, ContactTypeId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	--VALUES (@Id, @ContactTypeId, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 END

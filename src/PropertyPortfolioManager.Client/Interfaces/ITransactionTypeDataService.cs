@@ -2,7 +2,7 @@
 
 namespace PropertyPortfolioManager.Client.Interfaces
 {
-    public interface IAccountTypeDataService
+    public interface ITransactionTypeDataService
     {
         Task<IEnumerable<EntityTypeBasicModel>> GetAllAsync();
     }

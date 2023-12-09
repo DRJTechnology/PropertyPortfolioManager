@@ -8,8 +8,6 @@ namespace PropertyPortfolioManager.Client.Pages
     [Authorize]
     public partial class ContactEdit
     {
-        private IEnumerable<ContactTypeModel> contacttypes;
-
         [Inject]
         public IContactTypeDataService contactTypeDataService { get; set; }
 
@@ -38,8 +36,6 @@ namespace PropertyPortfolioManager.Client.Pages
 
                 int.TryParse(ContactId, out var contactId);
 
-                contacttypes = await this.contactTypeDataService.GetAllAsync<ContactTypeModel>();
-
                 if (contactId == 0) //new contact is being created
                 {
                     ContactModel = new ContactEditModel() {  Active = true };
@@ -67,13 +63,13 @@ namespace PropertyPortfolioManager.Client.Pages
                 if (addedContact != 0)
                 {
                     StatusClass = "alert-success";
-                    Message = "New contact type added successfully.";
+                    Message = "New contact added successfully.";
                     Saved = true;
                 }
                 else
                 {
                     StatusClass = "alert-danger";
-                    Message = "Something went wrong adding the new contact type. Please try again.";
+                    Message = "Something went wrong adding the new contact. Please try again.";
                     Saved = false;
                 }
             }
@@ -81,7 +77,7 @@ namespace PropertyPortfolioManager.Client.Pages
             {
                 await this.contactDataService.Update<ContactEditModel>(ContactModel);
                 StatusClass = "alert-success";
-                Message = "Contact type updated successfully.";
+                Message = "Contact updated successfully.";
                 Saved = true;
             }
         }

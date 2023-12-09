@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using DRJTechnology.Cache;
 using PropertyPortfolioManager.Models.Dto.Property;
-using PropertyPortfolioManager.Models.Model.Property;
+using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 

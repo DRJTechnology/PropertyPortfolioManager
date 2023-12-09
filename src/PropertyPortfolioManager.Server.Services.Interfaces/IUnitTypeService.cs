@@ -1,4 +1,4 @@
-﻿using PropertyPortfolioManager.Models.Model.Property;
+﻿using PropertyPortfolioManager.Models.Model.General;
 
 namespace PropertyPortfolioManager.Server.Services.Interfaces
 {

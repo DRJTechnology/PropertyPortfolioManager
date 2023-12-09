@@ -1,6 +1,6 @@
 ﻿using Moq;
 using PropertyPortfolioManager.Models.Dto.Property;
-using PropertyPortfolioManager.Models.Model.Property;
+using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using PropertyPortfolioManager.Server.Services.Tests.Extensions;
 using System;

@@ -15,9 +15,6 @@ namespace PropertyPortfolioManager.Models.Model.General
 
         public int AddressId { get; set; }
 
-        [DisplayName("Contact Type")]
-        public int ContactTypeId { get; set; }
-
         public string Notes { get; set; } = string.Empty;
 
         public bool Active { get; set; }

@@ -6,7 +6,6 @@
 CREATE PROCEDURE [general].[Contact_Update]
 	@Id					INT, 
 	@PortfolioId		INT,
-	@ContactTypeId		INT,
 	@Name				NVARCHAR(50),
 	@StreetAddress		NVARCHAR(255) = NULL,
 	@TownCity			NVARCHAR(128) = NULL,
@@ -43,8 +42,7 @@ BEGIN
 	Where	Id = @AddressId
 
 	UPDATE	[general].[Contact]
-	SET		--ContactTypeId = @ContactTypeId,
-			[Name] = @Name,
+	SET		[Name] = @Name,
 			Notes = @Notes,
 			Active = @Active,
 			AmendUserId = @CurrentUserId,

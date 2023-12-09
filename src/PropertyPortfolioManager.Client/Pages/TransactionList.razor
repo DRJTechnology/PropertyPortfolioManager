@@ -1,0 +1,112 @@
+﻿@page "/transaction"
+
+<h3>Transactions</h3>
+
+@if (Initialising)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div class="row mb-3">
+        <label for="fromdate" class="col-form-label col-md-2">From date: </label>
+        <div class="col-md-4">
+            <InputDate id="fromdate" @bind-Value="@fromDate" class="form-control col-md-8" placeholder="Enter from date" autocomplete="off"></InputDate>
+        </div>
+
+        <label for="todate" class="col-form-label col-md-2">To date: </label>
+        <div class="col-md-4">
+            <InputDate id="todate" @bind-Value="@toDate" class="form-control col-md-8" placeholder="Enter to date" autocomplete="off"></InputDate>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="accountid" class="col-form-label col-md-2">Account Id: </label>
+        <div class="col-md-4">
+            <InputSelect id="account" class="form-select col-md-8" @bind-Value="@accountId">
+                <option value="0">All accounts</option>
+                @foreach (var account in accounts)
+                {
+                    <option value="@account.Id">@account.AccountName</option>
+                }
+            </InputSelect>
+        </div>
+
+        <label for="transactiontype" class="col-form-label col-md-2">Transaction Type Id: </label>
+        <div class="col-md-4">
+            <InputSelect id="transactiontype" class="form-select col-md-8" @bind-Value="@transactionTypeId">
+                <option value="0">All transaction types</option>
+                @foreach (var type in transactiontypes)
+                {
+                    <option value="@type.Id">@type.Type</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col text-end">
+            <button type="button" class="btn btn-outline-primary" @onclick="() => PopulateTransactionListAsync()">Filter</button>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Account
+                </th>
+                <th>
+                    Type
+                </th>
+                <th>
+                    Date
+                </th>
+                <th>
+                    Reference
+                </th>
+                <th>
+                    Description
+                </th>
+                <th class="text-end">
+                    Debit
+                </th>
+                <th class="text-end">
+                    Credit
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var transaction in transactionDetails)
+            {
+                <tr>
+                    <td>
+                        @transaction.Account
+                    </td>
+                    <td>
+                        @transaction.Type
+                    </td>
+                    <td>
+                        @transaction.Date.ToString("dd MMM yyyy")
+                    </td>
+                    <td>
+                        @transaction.Reference
+                    </td>
+                    <td>
+                        @transaction.Description
+                    </td>
+                    <td class="text-end">
+                        @if (transaction.Credit > 0)
+                        {
+                            @string.Format("{0:N2}", transaction.Credit)
+                        }
+                    </td>
+                    <td class="text-end">
+                        @if (transaction.Debit > 0)
+                        {
+                            @string.Format("{0:N2}", transaction.Debit)
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

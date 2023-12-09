@@ -2,7 +2,7 @@
 
 namespace PropertyPortfolioManager.Server.Services.Interfaces
 {
-    public interface IAccountTypeService
+    public interface ITransactionTypeService
     {
         Task<List<EntityTypeBasicModel>> GetAll();
     }

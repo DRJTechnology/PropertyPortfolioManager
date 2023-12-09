@@ -4,11 +4,11 @@ using System.Net.Http.Json;
 
 namespace PropertyPortfolioManager.Client.Services
 {
-    public class AccountTypeDataService : IAccountTypeDataService
+    public class TransactionTypeDataService : ITransactionTypeDataService
     {
         protected HttpClient httpClient { get; }
 
-        public AccountTypeDataService(HttpClient httpClient)
+        public TransactionTypeDataService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }
@@ -17,7 +17,7 @@ namespace PropertyPortfolioManager.Client.Services
         {
             try
             {
-                var returnVal = await httpClient.GetFromJsonAsync<IEnumerable<EntityTypeBasicModel>>($"api/AccountType/GetAll");
+                var returnVal = await httpClient.GetFromJsonAsync<IEnumerable<EntityTypeBasicModel>>($"api/TransactionType/GetAll");
                 return returnVal;
             }
             catch (Exception ex)

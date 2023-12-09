@@ -6,23 +6,23 @@ using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Services
 {
-    public class AccountTypeService : IAccountTypeService
+    public class TransactionTypeService : ITransactionTypeService
     {
-        private readonly IAccountTypeRepository accountTypeRepository;
+        private readonly ITransactionTypeRepository transactionTypeRepository;
         private readonly ICacheService cacheService;
         private readonly IMapper mapper;
 
-        public AccountTypeService(IAccountTypeRepository accountTypeRepository, ICacheService cacheService, IMapper mapper)
+        public TransactionTypeService(ITransactionTypeRepository transactionTypeRepository, ICacheService cacheService, IMapper mapper)
         {
-            this.accountTypeRepository = accountTypeRepository;
+            this.transactionTypeRepository = transactionTypeRepository;
             this.cacheService = cacheService;
             this.mapper = mapper;
         }
 
         public async Task<List<EntityTypeBasicModel>> GetAll()
         {
-            var accountList = await this.accountTypeRepository.GetAll();
-            return this.mapper.Map<List<EntityTypeBasicModel>>(accountList);
+            var transactionTypeList = await this.transactionTypeRepository.GetAll();
+            return this.mapper.Map<List<EntityTypeBasicModel>>(transactionTypeList);
         }
     }
 }
