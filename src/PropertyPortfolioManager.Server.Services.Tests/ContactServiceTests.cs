@@ -91,7 +91,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var newContact = new ContactEditModel()
             {
                 Name = "Test1",
-                ContactTypeId = 1,
             };
 
             var contactRepositoryMock = new Mock<IContactRepository>(MockBehavior.Strict);
@@ -112,7 +111,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var newContact = new ContactEditModel()
             {
                 Name = "Test1",
-                ContactTypeId = 1,
                 Address = new AddressModel()
                 {
                     Id = 5,
@@ -141,7 +139,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             {
                 Id = 2,
                 Name = "Test1",
-                ContactTypeId = 1,
                 Address = new AddressModel()
                 {
                     Id = 5,
@@ -170,7 +167,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             {
                 Id = 2,
                 Name = "Test1",
-                ContactTypeId = 1,
                 Address = new AddressModel()
                 {
                     Id = 5,
@@ -209,7 +205,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
                     {
                         Id = i,
                         Name = $"Name {i}",
-                        ContactType = "Supplier",
                         StreetAddress = $"{1} Long Road",
                         Active = i != 2 && i != 4,
                     }
@@ -229,8 +224,6 @@ namespace PropertyPortfolioManager.Server.Services.Tests
                         Id = i,
                         PortfolioId = 2,
                         Name = $"Name {i}",
-                        ContactTypeId = 1,
-                        ContactType = "Supplier",
                         Active = i != 2 && i != 4,
                         CreateDate = DateTime.Now.AddMonths(-1),
                         CreateUserId = 1,
