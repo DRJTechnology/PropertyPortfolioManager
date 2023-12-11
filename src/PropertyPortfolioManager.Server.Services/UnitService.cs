@@ -81,7 +81,7 @@ namespace PropertyPortfolioManager.Server.Services
             {
                 var unit = await this.unitRepository.GetById(unitId, portfolioId);
                 var returnUnit = this.mapper.Map<UnitResponseModel>(unit);
-                if (unit.MainPicture != null)
+                if (unit?.MainPicture != null)
                 {
                     returnUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPicture.ItemId);
                 }

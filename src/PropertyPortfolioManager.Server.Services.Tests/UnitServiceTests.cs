@@ -1,11 +1,10 @@
-﻿using AutoMapper;
+﻿using DRJTechnology.Cache;
 using Moq;
-using PropertyPortfolioManager.Models.Automapper;
-using PropertyPortfolioManager.Models.Dto.General;
 using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
+using PropertyPortfolioManager.Server.Services.Interfaces;
 using PropertyPortfolioManager.Server.Services.Tests.Extensions;
 
 namespace PropertyPortfolioManager.Server.Services.Tests
@@ -29,7 +28,14 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
                                         .Returns(Task.FromResult(this.basicUnitList));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.GetAsync<List<UnitBasicResponseModel>>(It.IsAny<string>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
+            cacheServiceMock.Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<List<UnitBasicResponseModel>>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
+
+            var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var units = await unitService.GetAll(portfolioId, false);
 
             Assert.IsType<List<UnitBasicResponseModel>>(units);
@@ -45,8 +51,16 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.GetAll(portfolioId, false))
                                         .Returns(Task.FromResult(this.basicUnitList.Where(ct => ct.Active).ToList()));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.GetAsync<List<UnitBasicResponseModel>>(It.IsAny<string>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
+            cacheServiceMock.Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<List<UnitBasicResponseModel>>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
+
+            var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var units = await unitService.GetAll(portfolioId, false);
+
 
             Assert.IsType<List<UnitBasicResponseModel>>(units);
             Assert.Equal(8, units.Count());
@@ -63,7 +77,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.GetById(unitId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitId)));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
             var unit = await unitService.GetById(unitId, portfolioId);
 
             Assert.IsType<UnitResponseModel>(unit);
@@ -81,7 +95,10 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.GetById(unitId, portfolioId))
                                         .Returns(Task.FromResult(this.GetById(unitId)));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, null, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var unit = await unitService.GetById(unitId, portfolioId);
 
             Assert.Null(unit);
@@ -102,7 +119,10 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(57));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.RemoveAsync(It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, null, TestExtensions.MapperInstance(), null);
             var unitId = await unitService.Create(currentUserId, portfolioId, newUnit);
 
             Assert.Equal(57, unitId);
@@ -130,7 +150,10 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.Create(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(57));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.RemoveAsync(It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, null, TestExtensions.MapperInstance(), null);
             var unitId = await unitService.Create(currentUserId, portfolioId, newUnit);
 
             Assert.Equal(57, unitId);
@@ -158,8 +181,11 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             var unitRepositoryMock = new Mock<IUnitRepository>(MockBehavior.Strict);
             unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(true));
+            
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.RemoveAsync(It.IsAny<string>())).Returns(Task.CompletedTask);
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, null, TestExtensions.MapperInstance(), null);
             var response = await unitService.Update(currentUserId, portfolioId, existingUnit);
 
             Assert.True(response);
@@ -188,7 +214,10 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             unitRepositoryMock.Setup(r => r.Update(It.IsAny<int>(), portfolioId, It.IsAny<UnitDto>()))
                                         .Returns(Task.FromResult(false));
 
-            var unitService = new UnitService(null, unitRepositoryMock.Object, null, null, TestExtensions.MapperInstance(), null);
+            var cacheServiceMock = new Mock<ICacheService>(MockBehavior.Strict);
+            cacheServiceMock.Setup(s => s.RemoveAsync(It.IsAny<string>())).Returns(Task.CompletedTask);
+
+            var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, null, TestExtensions.MapperInstance(), null);
             var response = await unitService.Update(currentUserId, portfolioId, existingUnit);
 
             Assert.False(response);
