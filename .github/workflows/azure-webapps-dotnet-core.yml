@@ -66,8 +66,17 @@ jobs:
         with:
           files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
         env:
-          AzureAd.Instance: https://login.microsoftonline.com/
-          AzureAd.Domain: drjtechnology.co.uk
+          AzureAd.Instance: ${{ secrets.AZUREAD_INSTANCE }}
+          AzureAd.Domain: ${{ secrets.AZUREAD_DOMAIN }}
+          AzureAd.TenantId: ${{ secrets.AZUREAD_TENANTID }}
+          AzureAd.ClientId: ${{ secrets.AZUREAD_CLIENTID }}
+          AzureAd.Scopes: ${{ secrets.AZUREAD_SCOPES }}
+          AzureAd.CallbackPath: ${{ secrets.AZUREAD_CALLBACKPATH }}
+          AzureAd.ClientSecret: ${{ secrets.AZUREAD_CLIENTSECRET }}
+          DRJCache.ConnectionString: ${{ secrets.DRJCACHE_CONNECTIONSTRING }}
+          ConnectionStrings.PpmDatabaseConnectionString: ${{ secrets.CONNECTIONSTRINGS_PPMDATABASECONNECTIONSTRING }}
+          Settings.SharepointSettings.SiteId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
+          Settings.SharepointSettings.DriveId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
