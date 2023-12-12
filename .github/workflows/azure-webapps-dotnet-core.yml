@@ -61,12 +61,6 @@ jobs:
       - name: dotnet publish
         run: dotnet publish ./src/PropertyPortfolioManager.Server/PropertyPortfolioManager.Server.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
-        with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
       - name: App Settings Variable Substitution
         uses: microsoft/variable-substitution@v1
         with:
@@ -74,6 +68,12 @@ jobs:
         env:
           AzureAd.Instance: https://login.microsoftonline.com/
           AzureAd.Domain: drjtechnology.co.uk
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v3
+        with:
+          name: .net-app
+          path: ${{env.DOTNET_ROOT}}/myapp
           
     
   deploy:
