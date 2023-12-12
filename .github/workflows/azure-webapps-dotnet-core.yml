@@ -67,6 +67,15 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
+      - name: App Settings Variable Substitution
+        uses: microsoft/variable-substitution@v1
+        with:
+          files: '${{env.DOTNET_ROOT}}/myapp/appsettings.json'
+        env:
+          AzureAd.Instance: https://login.microsoftonline.com/
+          AzureAd.Domain: drjtechnology.co.uk
+          
+    
   deploy:
     permissions:
       contents: none
