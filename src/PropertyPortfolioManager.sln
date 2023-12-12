@@ -5,8 +5,6 @@ VisualStudioVersion = 17.4.33205.214
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Models", "PropertyPortfolioManager.Models\PropertyPortfolioManager.Models.csproj", "{87EDC298-ED76-4BE7-818B-1402839332F0}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "PropertyPortfolioManager.Database", "PropertyPortfolioManager.Database\PropertyPortfolioManager.Database.sqlproj", "{05DEB012-55A2-44C0-A464-637412F4D858}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Client", "PropertyPortfolioManager.Client\PropertyPortfolioManager.Client.csproj", "{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PropertyPortfolioManager.Server", "PropertyPortfolioManager.Server\PropertyPortfolioManager.Server.csproj", "{ED948B7E-C530-4E0E-B710-3E06BBA151F0}"
@@ -33,12 +31,6 @@ Global
 		{87EDC298-ED76-4BE7-818B-1402839332F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{87EDC298-ED76-4BE7-818B-1402839332F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{87EDC298-ED76-4BE7-818B-1402839332F0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Build.0 = Release|Any CPU
-		{05DEB012-55A2-44C0-A464-637412F4D858}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C68E4984-216E-4BA1-BDF3-A5B69E02D73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
