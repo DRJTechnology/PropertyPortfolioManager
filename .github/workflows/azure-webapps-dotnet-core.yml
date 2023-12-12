@@ -59,7 +59,7 @@ jobs:
         run: dotnet build ./src/PropertyPortfolioManager.sln --configuration Release --no-restore
 
       - name: dotnet publish
-        run: dotnet publish ./src/PropertyPortfolioManager.sln -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
+        run: dotnet publish ./src/PropertyPortfolioManager.Server/PropertyPortfolioManager.Server.csproj -c Release -o ${{env.DOTNET_ROOT}}/myapp --no-build
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
