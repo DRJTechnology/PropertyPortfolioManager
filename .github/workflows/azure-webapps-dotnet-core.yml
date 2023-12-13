@@ -77,7 +77,7 @@ jobs:
           DRJCache.KeyPrefix: ${{ secrets.DRJCACHE_KEYPREFIX }}
           ConnectionStrings.PpmDatabaseConnectionString: ${{ secrets.CONNECTIONSTRINGS_PPMDATABASECONNECTIONSTRING }}
           Settings.SharepointSettings.SiteId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
-          Settings.SharepointSettings.DriveId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
+          Settings.SharepointSettings.DriveId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_DRIVEID }}
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3
