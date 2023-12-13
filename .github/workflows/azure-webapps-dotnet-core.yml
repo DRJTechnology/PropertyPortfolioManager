@@ -74,6 +74,7 @@ jobs:
           AzureAd.CallbackPath: ${{ secrets.AZUREAD_CALLBACKPATH }}
           AzureAd.ClientSecret: ${{ secrets.AZUREAD_CLIENTSECRET }}
           DRJCache.ConnectionString: ${{ secrets.DRJCACHE_CONNECTIONSTRING }}
+          DRJCache.KeyPrefix: ${{ secrets.DRJCACHE_KEYPREFIX }}
           ConnectionStrings.PpmDatabaseConnectionString: ${{ secrets.CONNECTIONSTRINGS_PPMDATABASECONNECTIONSTRING }}
           Settings.SharepointSettings.SiteId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
           Settings.SharepointSettings.DriveId: ${{ secrets.SETTINGS_SHAREPOINTSETTINGS_SITEID }}
