@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers

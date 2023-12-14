@@ -1,6 +1,7 @@
 using NLog;
 using NLog.Web;
 using PropertyPortfolioManager.Server;
+using PropertyPortfolioManager.Server.Middleware;
 
 var logger = LogManager
     .Setup()
@@ -48,6 +49,8 @@ try
     app.MapRazorPages();
     app.MapControllers();
     app.MapFallbackToFile("index.html");
+
+    app.UseMiddleware<ExceptionMiddleware>();
 
     app.Run();
 }
