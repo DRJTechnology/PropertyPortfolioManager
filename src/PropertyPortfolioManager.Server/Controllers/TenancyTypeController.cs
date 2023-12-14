@@ -9,49 +9,69 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class TenancyTypeController : BaseController
     {
+        private readonly ILogger<TenancyTypeController> logger;
         private readonly ITenancyTypeService tenancyTypeService;
 
-        public TenancyTypeController(IUserService userService, ITenancyTypeService tenancyTypeService)
+        public TenancyTypeController(ILogger<TenancyTypeController> logger, IUserService userService, ITenancyTypeService tenancyTypeService)
             : base(userService)
         {
+            this.logger = logger;
             this.tenancyTypeService = tenancyTypeService;
         }
 
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<EntityTypeModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             return await this.GetAll(true);
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<EntityTypeModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<EntityTypeModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<EntityTypeModel>());
+                }
+                else
+                {
+                    var returnVal = await this.tenancyTypeService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(returnVal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.tenancyTypeService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{tenancyTypeId}")]
-        public async Task<EntityTypeModel> GetById(int tenancyTypeId)
+        public async Task<IActionResult> GetById(int tenancyTypeId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new EntityTypeModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new EntityTypeModel());
+                }
+                else
+                {
+                    var tenancyType = await this.tenancyTypeService.GetById(tenancyTypeId, (int)portfolioId);
+                    return this.Ok(tenancyType);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.tenancyTypeService.GetById(tenancyTypeId, (int)portfolioId);
+                logger.LogError(ex, $"GetById{tenancyTypeId}");
+                return this.BadRequest();
             }
         }
 
@@ -84,6 +104,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -129,6 +150,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -173,6 +195,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{tenancyTypeId}");
                 return new PpmApiResponse()
                 {
                     Success = false,

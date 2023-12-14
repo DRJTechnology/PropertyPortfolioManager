@@ -16,16 +16,9 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<List<TransactionTypeDto>> GetAll()
         {
-            try
-            {
-                var transactionTypes = await this.dbConnection.QueryAsync<TransactionTypeDto>("finance.TransactionType_GetAll", commandType: CommandType.StoredProcedure);
+            var transactionTypes = await this.dbConnection.QueryAsync<TransactionTypeDto>("finance.TransactionType_GetAll", commandType: CommandType.StoredProcedure);
 
-                return transactionTypes.ToList(); ;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return transactionTypes.ToList(); ;
         }
     }
 }

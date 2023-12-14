@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Finance;
-using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers
@@ -10,41 +9,61 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class AccountController : BaseController
     {
+        private readonly ILogger<AccountController> logger;
         private readonly IAccountService accountService;
 
-        public AccountController(IUserService userService, IAccountService accountService)
+        public AccountController(ILogger<AccountController> logger, IUserService userService, IAccountService accountService)
             : base(userService)
         {
+            this.logger = logger;
             this.accountService = accountService;
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<AccountResponseModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<AccountResponseModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<AccountResponseModel>());
+                }
+                else
+                {
+                    var accounts =  await this.accountService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(accounts);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.accountService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{accountId}")]
-        public async Task<AccountResponseModel> GetById(int accountId)
+        public async Task<IActionResult> GetById(int accountId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new AccountResponseModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new AccountResponseModel());
+                }
+                else
+                {
+                    var account = await this.accountService.GetById(accountId, (int)portfolioId);
+                    return this.Ok(account);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.accountService.GetById(accountId, (int)portfolioId);
+                logger.LogError(ex, $"GetById/{accountId}");
+                return this.BadRequest();
             }
         }
 
@@ -76,6 +95,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -121,6 +141,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -165,6 +186,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{accountId}");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -172,6 +194,5 @@ namespace PropertyPortfolioManager.Server.Controllers
                 };
             }
         }
-
     }
 }

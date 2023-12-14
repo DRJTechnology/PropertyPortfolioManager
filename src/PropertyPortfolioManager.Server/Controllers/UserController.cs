@@ -1,11 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Graph;
-using Microsoft.Graph.Models;
 using Microsoft.Identity.Web.Resource;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.Server.Services.Interfaces;
-using System.Diagnostics;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {
@@ -15,11 +13,13 @@ namespace PropertyPortfolioManager.Server.Controllers
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class UserController : ControllerBase
     {
+        private readonly ILogger<UserController> logger;
         private readonly IUserService userService;
         private readonly GraphServiceClient graphServiceClient;
 
-        public UserController(IUserService userService, GraphServiceClient graphServiceClient)
+        public UserController(ILogger<UserController> logger, IUserService userService, GraphServiceClient graphServiceClient)
         {
+            this.logger = logger;
             this.userService = userService;
             this.graphServiceClient = graphServiceClient;
         }
@@ -33,15 +33,17 @@ namespace PropertyPortfolioManager.Server.Controllers
 
         [HttpGet]
         [Route("GetCurrent")]
-        public async Task<UserDto> GetCurrent()
+        public async Task<IActionResult> GetCurrent()
         {
             try
             {
-                return await this.userService.GetCurrent(User);
+                var returnVal = await this.userService.GetCurrent(User);
+                return Ok(returnVal);
             }
             catch (Exception ex)
             {
-                throw;
+                logger.LogError(ex, $"GetCurrent");
+                return this.BadRequest();
             }
         }
     }

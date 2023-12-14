@@ -1,7 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.Model.Finance;
-using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 using System.Globalization;
 
@@ -11,30 +9,41 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class TransactionDetailController : BaseController
     {
+        private readonly ILogger<TransactionDetailController> logger;
         private readonly ITransactionDetailService transactionDetailService;
 
-        public TransactionDetailController(IUserService userService, ITransactionDetailService transactionDetailService)
+        public TransactionDetailController(ILogger<TransactionDetailController> logger, IUserService userService, ITransactionDetailService transactionDetailService)
             : base(userService)
         {
+            this.logger = logger;
             this.transactionDetailService = transactionDetailService;
         }
 
         [HttpGet]
         [Route("GetList/{fromDate}/{toDate}/{accountId}/{transactionTypeId}")]
-        public async Task<List<TransactionDetailResponseModel>> GetList(string fromDate, string toDate, int accountId, int transactionTypeId)
+        public async Task<IActionResult> GetList(string fromDate, string toDate, int accountId, int transactionTypeId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<TransactionDetailResponseModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<TransactionDetailResponseModel>());
+                }
+                else
+                {
+                    DateTime from = DateTime.ParseExact(fromDate, "yyyyMMdd", CultureInfo.InvariantCulture);
+                    DateTime to = DateTime.ParseExact(toDate, "yyyyMMdd", CultureInfo.InvariantCulture);
+                    var returnData = await this.transactionDetailService.GetAsync((int)portfolioId, from, to, accountId, transactionTypeId);
+                    return this.Ok(returnData);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                DateTime from = DateTime.ParseExact(fromDate, "yyyyMMdd", CultureInfo.InvariantCulture);
-                DateTime to = DateTime.ParseExact(toDate, "yyyyMMdd", CultureInfo.InvariantCulture);
-                var returnData = await this.transactionDetailService.GetAsync((int)portfolioId, from, to, accountId, transactionTypeId);
-                return returnData;
+                logger.LogError(ex, $"GetList/{fromDate}/{toDate}/{accountId}/{transactionTypeId}");
+                return this.BadRequest();
             }
+
         }
     }
 }

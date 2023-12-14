@@ -8,19 +8,30 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class AccountTypeController : BaseController
     {
+        private readonly ILogger<AccountTypeController> logger;
         private readonly IAccountTypeService accountTypeService;
 
-        public AccountTypeController(IUserService userService, IAccountTypeService accountTypeService)
+        public AccountTypeController(ILogger<AccountTypeController> logger, IUserService userService, IAccountTypeService accountTypeService)
             : base(userService)
         {
+            this.logger = logger;
             this.accountTypeService = accountTypeService;
         }
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<EntityTypeBasicModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
-            return await this.accountTypeService.GetAll();
+            try
+            {
+                var returnVal = await this.accountTypeService.GetAll();
+                return this.Ok(returnVal);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
+            }
         }
     }
 }

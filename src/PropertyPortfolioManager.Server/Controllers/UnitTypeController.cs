@@ -9,49 +9,69 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class UnitTypeController : BaseController
     {
+        private readonly ILogger<PortfolioController> logger;
         private readonly IUnitTypeService unitTypeService;
 
-        public UnitTypeController(IUserService userService, IUnitTypeService unitTypeService)
+        public UnitTypeController(ILogger<PortfolioController> logger, IUserService userService, IUnitTypeService unitTypeService)
             : base(userService)
         {
+            this.logger = logger;
             this.unitTypeService = unitTypeService;
         }
 
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<EntityTypeModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             return await this.GetAll(true);
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<EntityTypeModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<EntityTypeModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<EntityTypeModel>());
+                }
+                else
+                {
+                    var units = await this.unitTypeService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(units);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.unitTypeService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{unitTypeId}")]
-        public async Task<EntityTypeModel> GetById(int unitTypeId)
+        public async Task<IActionResult> GetById(int unitTypeId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new EntityTypeModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new EntityTypeModel());
+                }
+                else
+                {
+                    var unitType = await this.unitTypeService.GetById(unitTypeId, (int)portfolioId);
+                    return this.Ok(unitType);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.unitTypeService.GetById(unitTypeId, (int)portfolioId);
+                logger.LogError(ex, $"GetById{unitTypeId}");
+                return this.BadRequest();
             }
         }
 
@@ -84,6 +104,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -129,6 +150,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -173,6 +195,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{unitTypeId}");
                 return new PpmApiResponse()
                 {
                     Success = false,

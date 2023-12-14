@@ -9,41 +9,61 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class ContactTypeController : BaseController
     {
+        private readonly ILogger<ContactTypeController> logger;
         private readonly IContactTypeService contactTypeService;
 
-        public ContactTypeController(IUserService userService, IContactTypeService contactTypeService)
+        public ContactTypeController(ILogger<ContactTypeController> logger, IUserService userService, IContactTypeService contactTypeService)
             : base(userService)
         {
+            this.logger = logger;
             this.contactTypeService = contactTypeService;
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<ContactTypeModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<ContactTypeModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<ContactTypeModel>());
+                }
+                else
+                {
+                    var returnVal = await this.contactTypeService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(returnVal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.contactTypeService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{contactTypeId}")]
-        public async Task<ContactTypeModel> GetById(int contactTypeId)
+        public async Task<IActionResult> GetById(int contactTypeId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new ContactTypeModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new ContactTypeModel());
+                }
+                else
+                {
+                    var returnVal = await this.contactTypeService.GetById(contactTypeId, (int)portfolioId);
+                    return this.Ok(returnVal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.contactTypeService.GetById(contactTypeId, (int)portfolioId);
+                logger.LogError(ex, $"GetById{contactTypeId}");
+                return this.BadRequest();
             }
         }
 
@@ -76,6 +96,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -121,6 +142,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -165,6 +187,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{contactTypeId}");
                 return new PpmApiResponse()
                 {
                     Success = false,

@@ -77,20 +77,13 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<UnitResponseModel> GetById(int unitId, int portfolioId)
         {
-            try
+            var unit = await this.unitRepository.GetById(unitId, portfolioId);
+            var returnUnit = this.mapper.Map<UnitResponseModel>(unit);
+            if (unit?.MainPicture != null)
             {
-                var unit = await this.unitRepository.GetById(unitId, portfolioId);
-                var returnUnit = this.mapper.Map<UnitResponseModel>(unit);
-                if (unit?.MainPicture != null)
-                {
-                    returnUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPicture.ItemId);
-                }
-                return returnUnit;
+                returnUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPicture.ItemId);
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return returnUnit;
         }
 
         public async Task<bool> Update(int currentUserId, int portfolioId, UnitEditModel unit)

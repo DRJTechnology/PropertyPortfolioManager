@@ -21,23 +21,16 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newContactType");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@Type", newContactType.Type);
-                parameters.Add("@Active", newContactType.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@Type", newContactType.Type);
+            parameters.Add("@Active", newContactType.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("general.ContactType_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("general.ContactType_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<ContactTypeDto>> GetAll(int portfolioId, bool activeOnly)
@@ -54,26 +47,19 @@ namespace PropertyPortfolioManager.Server.Repositories
         public async Task<ContactTypeDto> GetById(int id, int portfolioId)
         {
             {
-                try
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", id);
+                parameters.Add("@PortfolioId", portfolioId);
+
+                var contactType = await this.dbConnection.QueryFirstOrDefaultAsync<ContactTypeDto>("general.ContactType_GetById", parameters, commandType: CommandType.StoredProcedure);
+
+                if (contactType != null)
                 {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@Id", id);
-                    parameters.Add("@PortfolioId", portfolioId);
-
-                    var contactType = await this.dbConnection.QueryFirstOrDefaultAsync<ContactTypeDto>("general.ContactType_GetById", parameters, commandType: CommandType.StoredProcedure);
-
-                    if (contactType != null)
-                    {
-                        return contactType!;
-                    }
-                    else
-                    {
-                        throw new Exception($"Error: ContactType (Id {id}) not found!");
-                    }
+                    return contactType!;
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw;
+                    throw new Exception($"Error: ContactType (Id {id}) not found!");
                 }
             }
         }

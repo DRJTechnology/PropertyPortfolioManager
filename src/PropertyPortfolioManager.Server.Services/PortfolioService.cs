@@ -41,15 +41,15 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<List<PortfolioModel>> GetAll(int userId, bool activeOnly)
         {
-            try
-            {
+            //try
+            //{
                 var portfolioList = await this.portfolioRepository.GetAll(userId, activeOnly);
                 return this.mapper.Map<List<PortfolioModel>>(portfolioList);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    throw;
+            //}
         }
 
         public async Task<PortfolioModel> GetById(int portfolioId, int userId)

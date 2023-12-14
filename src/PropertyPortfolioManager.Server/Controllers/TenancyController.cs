@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Graph.Models;
 using PropertyPortfolioManager.Models.InternalObjects;
-using PropertyPortfolioManager.Models.Model.General;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 
@@ -11,12 +9,14 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class TenancyController : BaseController
     {
+        private readonly ILogger<TenancyController> logger;
         private readonly ITenancyService tenancyService;
         private readonly IContactService contactService;
 
-        public TenancyController(IUserService userService, ITenancyService tenancyService, IContactService contactService)
+        public TenancyController(ILogger<TenancyController> logger, IUserService userService, ITenancyService tenancyService, IContactService contactService)
             : base(userService)
         {
+            this.logger = logger;
             this.tenancyService = tenancyService;
             this.contactService = contactService;
         }
@@ -24,38 +24,56 @@ namespace PropertyPortfolioManager.Server.Controllers
 
         [HttpGet]
         [Route("GetAll")]
-        public async Task<List<TenancyResponseModel>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             return await this.GetAll(true);
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<TenancyResponseModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<TenancyResponseModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<TenancyResponseModel>());
+                }
+                else
+                {
+                    var returnVal = await this.tenancyService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(returnVal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.tenancyService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{tenancyId}")]
-        public async Task<TenancyResponseModel> GetById(int tenancyId)
+        public async Task<IActionResult> GetById(int tenancyId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new TenancyResponseModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new TenancyResponseModel());
+                }
+                else
+                {
+                    var portfolio = await this.tenancyService.GetById(tenancyId, (int)portfolioId);
+                    return this.Ok(portfolio);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.tenancyService.GetById(tenancyId, (int)portfolioId);
+                logger.LogError(ex, $"GetById{tenancyId}");
+                return this.BadRequest();
             }
         }
 
@@ -87,6 +105,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -132,6 +151,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -177,6 +197,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{tenancyId}");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -187,7 +208,7 @@ namespace PropertyPortfolioManager.Server.Controllers
 
         [HttpPost]
         [Route("AddContact")]
-        public async Task<ContactResponseModel> AddContact(TenancyContactModel tenancyContact)
+        public async Task<IActionResult> AddContact(TenancyContactModel tenancyContact)
         {
             try
             {
@@ -202,11 +223,13 @@ namespace PropertyPortfolioManager.Server.Controllers
                     newTenancyContactId = await this.tenancyService.AddContact((await this.GetCurrentUser()).Id, (int)portfolioId, tenancyContact);
                 }
 
-                return await this.contactService.GetById(tenancyContact.ContactId, (int)portfolioId);
+                var returnVal = await this.contactService.GetById(tenancyContact.ContactId, (int)portfolioId);
+                return this.Ok(returnVal);
             }
             catch (Exception ex)
             {
-                throw new Exception("Tenancy_AddContact: Internal error.");
+                logger.LogError(ex, $"AddContact");
+                return this.BadRequest();
             }
         }
 
@@ -216,7 +239,6 @@ namespace PropertyPortfolioManager.Server.Controllers
         {
             try
             {
-                var newTenancyContactId = 0;
                 var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
                 if (portfolioId == null)
                 {
@@ -247,6 +269,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"RemoveContact");
                 return new PpmApiResponse()
                 {
                     Success = false,

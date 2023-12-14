@@ -1,13 +1,7 @@
 ﻿using Dapper;
-using Microsoft.Data.SqlClient;
 using PropertyPortfolioManager.Models.Dto.Profile;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PropertyPortfolioManager.Server.Repositories
 {

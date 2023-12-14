@@ -1,54 +1,73 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 
 namespace PropertyPortfolioManager.Server.Controllers
 {
-	[Route("api/[controller]")]
+    [Route("api/[controller]")]
 	[ApiController]
 	public class PortfolioController : BaseController
 	{
-		private readonly IPortfolioService portfolioService;
+        private readonly ILogger<PortfolioController> logger;
+        private readonly IPortfolioService portfolioService;
 
-		public PortfolioController(IUserService userService, IPortfolioService portfolioService)
+		public PortfolioController(ILogger<PortfolioController> logger, IUserService userService, IPortfolioService portfolioService)
 			: base(userService)
 		{
+			this.logger = logger;
 			this.portfolioService = portfolioService;
 		}
 
 		[HttpGet]
 		[Route("GetAll/{activeOnly}")]
-		public async Task<List<PortfolioModel>> GetAll(bool activeOnly)
+		public async Task<IActionResult> GetAll(bool activeOnly)
 		{
 			try
 			{
-				var returnVal = await this.portfolioService.GetAll((await this.GetCurrentUser()).Id, activeOnly);
-				return returnVal;
+                var returnVal = await this.portfolioService.GetAll((await this.GetCurrentUser()).Id, activeOnly);
+				return this.Ok(returnVal);
 			}
 			catch (Exception ex)
 			{
-				throw;
+                logger.LogError(ex, $"GetAll");
+				return this.BadRequest();
 			}
 		}
 
 		[HttpGet]
 		[Route("GetById/{portfolioId}")]
-		public async Task<PortfolioModel> GetById(int portfolioId)
+		public async Task<IActionResult> GetById(int portfolioId)
 		{
-			var portfolio = await this.portfolioService.GetById(portfolioId, (await this.GetCurrentUser()).Id);
-			return portfolio;
+            try
+            {
+                var portfolio = await this.portfolioService.GetById(portfolioId, (await this.GetCurrentUser()).Id);
+                return this.Ok(portfolio);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"GetById{portfolioId}");
+                return this.BadRequest();
+            }
         }
 
 		[HttpGet]
 		[Route("GetCurrent")]
-		public async Task<PortfolioModel> GetCurrent()
+		public async Task<IActionResult> GetCurrent()
 		{
-			return await this.portfolioService.GetCurrent(User);
-		}
+            try
+            {
+                var user = await this.portfolioService.GetCurrent(User);
+                return this.Ok(user);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"GetCurrent");
+                return this.BadRequest();
+            }
+        }
 
-		[HttpPost]
+        [HttpPost]
 		[Route("Create")]
 		public async Task<PpmApiResponse> Create(PortfolioModel portfolio)
 		{
@@ -63,7 +82,8 @@ namespace PropertyPortfolioManager.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return new PpmApiResponse()
+                logger.LogError(ex, $"Create");
+                return new PpmApiResponse()
 				{
 					Success = false,
 					ErrorMessage = ex.Message,
@@ -96,7 +116,8 @@ namespace PropertyPortfolioManager.Server.Controllers
 			}
 			catch (Exception ex)
 			{
-				return new PpmApiResponse()
+                logger.LogError(ex, $"Update");
+                return new PpmApiResponse()
 				{
 					Success = false,
 					ErrorMessage = ex.Message,
@@ -117,7 +138,7 @@ namespace PropertyPortfolioManager.Server.Controllers
 			}
 			else
 			{
-				return new PpmApiResponse()
+                return new PpmApiResponse()
 				{
 					Success = false,
 					ErrorMessage = "Failed to set current portfolio for user",
@@ -151,6 +172,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete {portfolioId}");
                 return new PpmApiResponse()
                 {
                     Success = false,

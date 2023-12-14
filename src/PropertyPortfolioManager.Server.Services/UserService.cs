@@ -28,37 +28,30 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<UserDto> GetCurrent(ClaimsPrincipal user)
         {
-            try
+            var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
+            var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
+
+            if (currentUser != null)
             {
-                var cacheKey = $"{CacheKeys.KeyUserPrefix}{user.GetObjectId()}";
-                var currentUser = await this.cacheService.GetAsync<UserDto>(cacheKey);
-
-                if (currentUser != null)
-                {
-                    return currentUser;
-                }
-
-                var userObjectIdentifier = new Guid(user.GetObjectId()!);
-                var userDto = await this.userRepository.GetByObjectIdentifier(userObjectIdentifier);
-
-                if (userDto == null)
-                {
-                    userDto = new UserDto()
-                    {
-                        ObjectIdentifier = userObjectIdentifier,
-                        Name = user.FindFirstValue("name") ?? "No name",
-                    };
-                    userDto.Id = await this.userRepository.Create(userDto);
-                }
-
-                await this.cacheService.SetAsync(cacheKey, userDto);
-
-                return userDto;
+                return currentUser;
             }
-            catch (Exception ex)
+
+            var userObjectIdentifier = new Guid(user.GetObjectId()!);
+            var userDto = await this.userRepository.GetByObjectIdentifier(userObjectIdentifier);
+
+            if (userDto == null)
             {
-                throw;
+                userDto = new UserDto()
+                {
+                    ObjectIdentifier = userObjectIdentifier,
+                    Name = user.FindFirstValue("name") ?? "No name",
+                };
+                userDto.Id = await this.userRepository.Create(userDto);
             }
+
+            await this.cacheService.SetAsync(cacheKey, userDto);
+
+            return userDto;
         }
     }
 }

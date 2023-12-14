@@ -9,41 +9,61 @@ namespace PropertyPortfolioManager.Server.Controllers
     [ApiController]
     public class UnitController : BaseController
     {
+        private readonly ILogger<UnitController> logger;
         private readonly IUnitService unitService;
 
-        public UnitController(IUserService userService, IUnitService unitService)
+        public UnitController(ILogger<UnitController> logger, IUserService userService, IUnitService unitService)
             : base(userService)
         {
+            this.logger = logger;
             this.unitService = unitService;
         }
 
         [HttpGet]
         [Route("GetAll/{activeOnly}")]
-        public async Task<List<UnitBasicResponseModel>> GetAll(bool activeOnly)
+        public async Task<IActionResult> GetAll(bool activeOnly)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new List<UnitBasicResponseModel>();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<UnitBasicResponseModel>());
+                }
+                else
+                {
+                    var returnVal = await this.unitService.GetAll((int)portfolioId, activeOnly);
+                    return this.Ok(returnVal);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.unitService.GetAll((int)portfolioId, activeOnly);
+                logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
             }
         }
 
         [HttpGet]
         [Route("GetById/{unitId}")]
-        public async Task<UnitResponseModel> GetById(int unitId)
+        public async Task<IActionResult> GetById(int unitId)
         {
-            var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
-            if (portfolioId == null)
+            try
             {
-                return new UnitResponseModel();
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new UnitResponseModel());
+                }
+                else
+                {
+                    var unit = await this.unitService.GetById(unitId, (int)portfolioId);
+                    return this.Ok(unit);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                return await this.unitService.GetById(unitId, (int)portfolioId);
+                logger.LogError(ex, $"GetById{unitId}");
+                return this.BadRequest();
             }
         }
 
@@ -75,6 +95,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Create");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -120,6 +141,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Update");
                 return new PpmApiResponse()
                 {
                     Success = false,
@@ -165,6 +187,7 @@ namespace PropertyPortfolioManager.Server.Controllers
             }
             catch (Exception ex)
             {
+                logger.LogError(ex, $"Delete/{unitId}");
                 return new PpmApiResponse()
                 {
                     Success = false,
