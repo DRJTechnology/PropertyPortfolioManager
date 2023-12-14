@@ -26,21 +26,14 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<DriveItemModel> GetFolderAsync(string driveItemId = "root")
         {
-            try
-            {
-                var folderDetails = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].GetAsync();
+            var folderDetails = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].GetAsync();
 
-                var driveItem = this.mapper.Map<DriveItemModel>(folderDetails);
+            var driveItem = this.mapper.Map<DriveItemModel>(folderDetails);
 
-                var folderItems = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].Children.GetAsync();
-                driveItem.DriveItemList = this.mapper.Map<List<DriveItemModel>>(folderItems.Value.ToList());
+            var folderItems = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[driveItemId].Children.GetAsync();
+            driveItem.DriveItemList = this.mapper.Map<List<DriveItemModel>>(folderItems.Value.ToList());
 
-                return driveItem;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return driveItem;
         }
 
         public async Task<string> GetImageBase64Async(string imageId)

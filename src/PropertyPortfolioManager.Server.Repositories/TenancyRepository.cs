@@ -22,28 +22,21 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newTenancy");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@TenancyTypeId", newTenancy.TenancyTypeId);
-                parameters.Add("@UnitId", newTenancy.UnitId);
-                parameters.Add("@StartDate", newTenancy.StartDate);
-                parameters.Add("@EndDate", newTenancy.EndDate);
-                parameters.Add("@DurationQuantity", newTenancy.DurationQuantity);
-                parameters.Add("@DurationUnitId", newTenancy.DurationUnitId);
-                parameters.Add("@ExpireAfterEndDate", newTenancy.ExpireAfterEndDate);
-                parameters.Add("@Active", newTenancy.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@TenancyTypeId", newTenancy.TenancyTypeId);
+            parameters.Add("@UnitId", newTenancy.UnitId);
+            parameters.Add("@StartDate", newTenancy.StartDate);
+            parameters.Add("@EndDate", newTenancy.EndDate);
+            parameters.Add("@DurationQuantity", newTenancy.DurationQuantity);
+            parameters.Add("@DurationUnitId", newTenancy.DurationUnitId);
+            parameters.Add("@ExpireAfterEndDate", newTenancy.ExpireAfterEndDate);
+            parameters.Add("@Active", newTenancy.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.Tenancy_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.Tenancy_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<TenancyDto>> GetAll(int portfolioId, bool activeOnly)
@@ -59,64 +52,49 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<TenancyDto> GetById(int id, int portfolioId)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                parameters.Add("@PortfolioId", portfolioId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            parameters.Add("@PortfolioId", portfolioId);
 
-                using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure))
+            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Tenancy_GetById", parameters, commandType: CommandType.StoredProcedure))
+            {
+                var tenancy = multipleResults.Read<TenancyDto>().SingleOrDefault();
+
+                if (tenancy != null)
                 {
-                    var tenancy = multipleResults.Read<TenancyDto>().SingleOrDefault();
-
-                    if (tenancy != null)
-                    {
-                        tenancy.Contacts = multipleResults.Read<ContactBasicDto>().ToList();
-                        return tenancy;
-                    }
-                    else
-                    {
-                        throw new Exception($"Error: Tenancy (Id {id}) not found!");
-                    }
+                    tenancy.Contacts = multipleResults.Read<ContactBasicDto>().ToList();
+                    return tenancy;
                 }
-
-            }
-            catch (Exception ex)
-            {
-                throw;
+                else
+                {
+                    throw new Exception($"Error: Tenancy (Id {id}) not found!");
+                }
             }
         }
 
         public async Task<bool> Update(int userId, int portfolioId, TenancyDto existingTenancy)
         {
-            try
+            if (existingTenancy == null)
             {
-                if (existingTenancy == null)
-                {
-                    throw new ArgumentNullException("existingTenancy");
-                }
-
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", existingTenancy.Id);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@TenancyTypeId", existingTenancy.TenancyTypeId);
-                parameters.Add("@UnitId", existingTenancy.UnitId);
-                parameters.Add("@StartDate", existingTenancy.StartDate);
-                parameters.Add("@EndDate", existingTenancy.EndDate);
-                parameters.Add("@DurationQuantity", existingTenancy.DurationQuantity);
-                parameters.Add("@DurationUnitId", existingTenancy.DurationUnitId);
-                parameters.Add("@ExpireAfterEndDate", existingTenancy.ExpireAfterEndDate);
-                parameters.Add("@Active", existingTenancy.Active);
-                parameters.Add("@CurrentUserId", userId);
-
-                await this.dbConnection.ExecuteAsync("property.Tenancy_Update", parameters, commandType: CommandType.StoredProcedure);
-
-                return true;
+                throw new ArgumentNullException("existingTenancy");
             }
-            catch (Exception ex)
-            {
-                throw;
-            }
+
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", existingTenancy.Id);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@TenancyTypeId", existingTenancy.TenancyTypeId);
+            parameters.Add("@UnitId", existingTenancy.UnitId);
+            parameters.Add("@StartDate", existingTenancy.StartDate);
+            parameters.Add("@EndDate", existingTenancy.EndDate);
+            parameters.Add("@DurationQuantity", existingTenancy.DurationQuantity);
+            parameters.Add("@DurationUnitId", existingTenancy.DurationUnitId);
+            parameters.Add("@ExpireAfterEndDate", existingTenancy.ExpireAfterEndDate);
+            parameters.Add("@Active", existingTenancy.Active);
+            parameters.Add("@CurrentUserId", userId);
+
+            await this.dbConnection.ExecuteAsync("property.Tenancy_Update", parameters, commandType: CommandType.StoredProcedure);
+
+            return true;
         }
 
         public async Task<bool> Delete(int userId, int portfolioId, int tenancyId)
@@ -151,23 +129,16 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newTenancyContact");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@TenancyId", newTenancyContact.TenancyId);
-                parameters.Add("@ContactId", newTenancyContact.ContactId);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@TenancyId", newTenancyContact.TenancyId);
+            parameters.Add("@ContactId", newTenancyContact.ContactId);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.Tenancy_AddContact", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.Tenancy_AddContact", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
     }
 }

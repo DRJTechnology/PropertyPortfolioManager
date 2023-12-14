@@ -22,35 +22,28 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newUnit");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@Code", newUnit.Code);
-                parameters.Add("@UnitTypeId", newUnit.UnitTypeId);
-                parameters.Add("@StreetAddress", newUnit.Address.StreetAddress);
-                parameters.Add("@TownCity", newUnit.Address.TownCity);
-                parameters.Add("@CountyRegion", newUnit.Address.CountyRegion);
-                parameters.Add("@PostCode", newUnit.Address.PostCode);
-                parameters.Add("@PurchasePrice", newUnit.PurchasePrice);
-                parameters.Add("@PurchaseDate", newUnit.PurchaseDate);
-                parameters.Add("@SalePrice", newUnit.SalePrice);
-                parameters.Add("@SaleDate", newUnit.SaleDate);
-                parameters.Add("@MainPictureId", newUnit.MainPicture.ItemId);
-                parameters.Add("@MainPictureFileName", newUnit.MainPicture.FileName);
-                parameters.Add("@MainPictureSize", newUnit.MainPicture.Size);
-                parameters.Add("@Active", newUnit.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@Code", newUnit.Code);
+            parameters.Add("@UnitTypeId", newUnit.UnitTypeId);
+            parameters.Add("@StreetAddress", newUnit.Address.StreetAddress);
+            parameters.Add("@TownCity", newUnit.Address.TownCity);
+            parameters.Add("@CountyRegion", newUnit.Address.CountyRegion);
+            parameters.Add("@PostCode", newUnit.Address.PostCode);
+            parameters.Add("@PurchasePrice", newUnit.PurchasePrice);
+            parameters.Add("@PurchaseDate", newUnit.PurchaseDate);
+            parameters.Add("@SalePrice", newUnit.SalePrice);
+            parameters.Add("@SaleDate", newUnit.SaleDate);
+            parameters.Add("@MainPictureId", newUnit.MainPicture.ItemId);
+            parameters.Add("@MainPictureFileName", newUnit.MainPicture.FileName);
+            parameters.Add("@MainPictureSize", newUnit.MainPicture.Size);
+            parameters.Add("@Active", newUnit.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.Unit_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<bool> Delete(int currentUserId, int portfolioId, int unitId)
@@ -78,28 +71,21 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<UnitDto> GetById(int id, int portfolioId)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                parameters.Add("@PortfolioId", portfolioId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            parameters.Add("@PortfolioId", portfolioId);
 
-                using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
+            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("property.Unit_GetById", parameters, commandType: CommandType.StoredProcedure))
+            {
+                var unit = multipleResults.Read<UnitDto>().SingleOrDefault();
+
+                if (unit != null)
                 {
-                    var unit = multipleResults.Read<UnitDto>().SingleOrDefault();
-
-                    if (unit != null)
-                    {
-                        unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
-                        unit.MainPicture = multipleResults.Read<FileDto>().SingleOrDefault();
-                    }
-
-                    return unit;
+                    unit.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
+                    unit.MainPicture = multipleResults.Read<FileDto>().SingleOrDefault();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw;
+
+                return unit;
             }
         }
 

@@ -10,6 +10,7 @@ using Microsoft.Identity.Web;
 using DRJTechnology.Cache;
 using PropertyPortfolioManager.Models.Automapper;
 using PropertyPortfolioManager.Server.Shared.Configuration;
+using Microsoft.Graph.Models.ExternalConnectors;
 
 namespace PropertyPortfolioManager.Server
 {
@@ -22,8 +23,14 @@ namespace PropertyPortfolioManager.Server
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddMicrosoftIdentityWebApi(configuration.GetSection("AzureAd"))
                     .EnableTokenAcquisitionToCallDownstreamApi()
-                        .AddMicrosoftGraph(configuration.GetSection("MicrosoftGraph"))
-                        .AddInMemoryTokenCaches();
+                    .AddMicrosoftGraph(configuration.GetSection("MicrosoftGraph"))
+                    .AddDistributedTokenCaches();
+
+            services.AddStackExchangeRedisCache(options =>
+            {
+                var connectionUrl = configuration.GetConnectionString("Redis");
+                options.Configuration = connectionUrl;
+            });
 
             services.AddControllersWithViews();
             services.AddRazorPages();

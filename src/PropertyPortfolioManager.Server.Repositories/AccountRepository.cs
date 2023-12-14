@@ -22,25 +22,18 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newAccount");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@AccountTypeId", newAccount.AccountTypeId);
-                parameters.Add("@Name", newAccount.Name);
-                parameters.Add("@Notes", newAccount.Notes);
-                parameters.Add("@Active", newAccount.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@AccountTypeId", newAccount.AccountTypeId);
+            parameters.Add("@Name", newAccount.Name);
+            parameters.Add("@Notes", newAccount.Notes);
+            parameters.Add("@Active", newAccount.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("finance.Account_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("finance.Account_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<AccountDto>> GetAll(int portfolioId, bool activeOnly)
@@ -56,19 +49,12 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<AccountDto> GetById(int id, int portfolioId)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                parameters.Add("@PortfolioId", portfolioId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            parameters.Add("@PortfolioId", portfolioId);
 
-                var account = await this.dbConnection.QueryAsync<AccountDto>("finance.Account_GetById", parameters, commandType: CommandType.StoredProcedure);
-                return account.SingleOrDefault()!;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var account = await this.dbConnection.QueryAsync<AccountDto>("finance.Account_GetById", parameters, commandType: CommandType.StoredProcedure);
+            return account.SingleOrDefault()!;
         }
 
         public async Task<bool> Update(int userId, int portfolioId, AccountDto existingAccount)

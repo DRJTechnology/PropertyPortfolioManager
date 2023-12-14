@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using PropertyPortfolioManager.Models.Dto.General;
-using PropertyPortfolioManager.Models.Dto.Property;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using System.Data;
 
@@ -22,28 +21,21 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newContact");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@Name", newContact.Name);
-                parameters.Add("@StreetAddress", newContact.Address.StreetAddress);
-                parameters.Add("@TownCity", newContact.Address.TownCity);
-                parameters.Add("@CountyRegion", newContact.Address.CountyRegion);
-                parameters.Add("@PostCode", newContact.Address.PostCode);
-                parameters.Add("@Notes", newContact.Notes);
-                parameters.Add("@Active", newContact.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@Name", newContact.Name);
+            parameters.Add("@StreetAddress", newContact.Address.StreetAddress);
+            parameters.Add("@TownCity", newContact.Address.TownCity);
+            parameters.Add("@CountyRegion", newContact.Address.CountyRegion);
+            parameters.Add("@PostCode", newContact.Address.PostCode);
+            parameters.Add("@Notes", newContact.Notes);
+            parameters.Add("@Active", newContact.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("general.Contact_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("general.Contact_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<ContactBasicDto>> GetAll(int portfolioId, bool activeOnly)
@@ -59,27 +51,20 @@ namespace PropertyPortfolioManager.Server.Repositories
 
         public async Task<ContactDto> GetById(int id, int portfolioId)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                parameters.Add("@PortfolioId", portfolioId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            parameters.Add("@PortfolioId", portfolioId);
 
-                using (var multipleResults = await this.dbConnection.QueryMultipleAsync("general.Contact_GetById", parameters, commandType: CommandType.StoredProcedure))
+            using (var multipleResults = await this.dbConnection.QueryMultipleAsync("general.Contact_GetById", parameters, commandType: CommandType.StoredProcedure))
+            {
+                var contact = multipleResults.Read<ContactDto>().SingleOrDefault();
+
+                if (contact != null)
                 {
-                    var contact = multipleResults.Read<ContactDto>().SingleOrDefault();
-
-                    if (contact != null)
-                    {
-                        contact.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
-                    }
-
-                    return contact;
+                    contact.Address = multipleResults.Read<AddressDto>().SingleOrDefault();
                 }
-            }
-            catch (Exception ex)
-            {
-                throw;
+
+                return contact;
             }
         }
 

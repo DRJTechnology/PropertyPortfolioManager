@@ -48,15 +48,8 @@ namespace PropertyPortfolioManager.Server.Services
 
         public async Task<TenancyResponseModel> GetById(int tenancyId, int portfolioId)
         {
-            try
-            {
-                var tenancy = await this.tenancyRepository.GetById(tenancyId, portfolioId);
-                return this.mapper.Map<TenancyResponseModel>(tenancy);
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            var tenancy = await this.tenancyRepository.GetById(tenancyId, portfolioId);
+            return this.mapper.Map<TenancyResponseModel>(tenancy);
         }
 
         public async Task<bool> Update(int currentUserId, int portfolioId, TenancyEditModel tenancy)

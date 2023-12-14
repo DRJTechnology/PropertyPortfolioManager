@@ -21,82 +21,54 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newPortfolio");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@Name", newPortfolio.Name);
-                parameters.Add("@Active", newPortfolio.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@Name", newPortfolio.Name);
+            parameters.Add("@Active", newPortfolio.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.Portfolio_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.Portfolio_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<PortfolioDto>> GetAll(int userId, bool activeOnly)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@UserId", userId);
-                parameters.Add("@ActiveOnly", activeOnly);
+            var parameters = new DynamicParameters();
+            parameters.Add("@UserId", userId);
+            parameters.Add("@ActiveOnly", activeOnly);
 
-                var portfolios = await this.dbConnection.QueryAsync<PortfolioDto>("property.Portfolio_GetAll", parameters, commandType: CommandType.StoredProcedure);
+            var portfolios = await this.dbConnection.QueryAsync<PortfolioDto>("property.Portfolio_GetAll", parameters, commandType: CommandType.StoredProcedure);
 
-                return portfolios.ToList(); ;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return portfolios.ToList();
         }
 
         public async Task<PortfolioDto> GetById(int id, int userId)
         {
-            try
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", id);
+            parameters.Add("@UserId", userId);
+
+            var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
+
+            if (portfolio != null)
             {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", id);
-                parameters.Add("@UserId", userId);
-
-                var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetById", parameters, commandType: CommandType.StoredProcedure);
-
-                if (portfolio != null)
-                {
-                    return portfolio!;
-                }
-                else
-                {
-                    throw new Exception($"Error: Portfolio (Id {id}) not found!");
-                }
+                return portfolio!;
             }
-            catch (Exception ex)
+            else
             {
-                throw;
+                throw new Exception($"Error: Portfolio (Id {id}) not found!");
             }
         }
 
         public async Task<PortfolioDto> GetByUserObjectIdentifier(Guid userObjectIdentifier)
         {
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@ObjectIdentifier", userObjectIdentifier);
+            var parameters = new DynamicParameters();
+            parameters.Add("@ObjectIdentifier", userObjectIdentifier);
 
-                var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetByUserObjectIdentifier", parameters, commandType: CommandType.StoredProcedure);
+            var portfolio = await this.dbConnection.QueryFirstOrDefaultAsync<PortfolioDto>("property.Portfolio_GetByUserObjectIdentifier", parameters, commandType: CommandType.StoredProcedure);
 
-                return portfolio;
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return portfolio;
         }
 
         public async Task<bool> SelectForUser(int portfolioId, int userId)

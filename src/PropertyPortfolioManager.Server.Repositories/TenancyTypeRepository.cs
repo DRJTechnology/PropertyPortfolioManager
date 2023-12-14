@@ -21,23 +21,16 @@ namespace PropertyPortfolioManager.Server.Repositories
                 throw new ArgumentNullException("newTenancyType");
             }
 
-            try
-            {
-                var parameters = new DynamicParameters();
-                parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
-                parameters.Add("@PortfolioId", portfolioId);
-                parameters.Add("@Type", newTenancyType.Type);
-                parameters.Add("@Active", newTenancyType.Active);
-                parameters.Add("@CurrentUserId", userId);
+            var parameters = new DynamicParameters();
+            parameters.Add("@Id", dbType: DbType.Int32, direction: ParameterDirection.Output);
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@Type", newTenancyType.Type);
+            parameters.Add("@Active", newTenancyType.Active);
+            parameters.Add("@CurrentUserId", userId);
 
-                await this.dbConnection.ExecuteAsync("property.TenancyType_Create", parameters, commandType: CommandType.StoredProcedure);
+            await this.dbConnection.ExecuteAsync("property.TenancyType_Create", parameters, commandType: CommandType.StoredProcedure);
 
-                return parameters.Get<int>("@Id");
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return parameters.Get<int>("@Id");
         }
 
         public async Task<List<EntityTypeDto>> GetAll(int portfolioId, bool activeOnly)
@@ -54,26 +47,19 @@ namespace PropertyPortfolioManager.Server.Repositories
         public async Task<EntityTypeDto> GetById(int id, int portfolioId)
         {
             {
-                try
+                var parameters = new DynamicParameters();
+                parameters.Add("@Id", id);
+                parameters.Add("@PortfolioId", portfolioId);
+
+                var tenancyType = await this.dbConnection.QueryFirstOrDefaultAsync<EntityTypeDto>("property.TenancyType_GetById", parameters, commandType: CommandType.StoredProcedure);
+
+                if (tenancyType != null)
                 {
-                    var parameters = new DynamicParameters();
-                    parameters.Add("@Id", id);
-                    parameters.Add("@PortfolioId", portfolioId);
-
-                    var tenancyType = await this.dbConnection.QueryFirstOrDefaultAsync<EntityTypeDto>("property.TenancyType_GetById", parameters, commandType: CommandType.StoredProcedure);
-
-                    if (tenancyType != null)
-                    {
-                        return tenancyType!;
-                    }
-                    else
-                    {
-                        throw new Exception($"Error: TenancyType (Id {id}) not found!");
-                    }
+                    return tenancyType!;
                 }
-                catch (Exception ex)
+                else
                 {
-                    throw;
+                    throw new Exception($"Error: TenancyType (Id {id}) not found!");
                 }
             }
         }
