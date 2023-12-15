@@ -4,6 +4,23 @@ html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
+ul.dropdown-menu .nav-link {
+    color: #000;
+}
+
+ul.dropdown-menu .nav-link.active {
+        color: #000;
+        font-weight: 600;
+    }
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
 h1:focus {
     outline: none;
 }
