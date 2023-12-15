@@ -1,29 +1,30 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using PropertyPortfolioManager.Client.State;
 
 namespace PropertyPortfolioManager.Client.Shared
 {
     public partial class NavMenu
     {
-        private bool collapseNavMenu = true;
-
         [Inject]
         public ProfileState ProfileState { get; set; }
 
-        private string? NavMenuCssClass => collapseNavMenu ? "collapse" : null;
+        [Inject]
+        NavigationManager Navigation { get; set; }
 
         protected override void OnInitialized()
         {
             ProfileState.OnChange += StateHasChanged;
-        }
-        private void ToggleNavMenu()
-        {
-            collapseNavMenu = !collapseNavMenu;
         }
 
         public void Dispose()
         {
             ProfileState.OnChange -= StateHasChanged;
         }
+        public void BeginLogOut()
+        {
+            Navigation.NavigateToLogout("authentication/logout");
+        }
+
     }
 }
