@@ -3,14 +3,17 @@
 <header>
     <NavMenu />
 </header>
-<div class="container">
+<div class="page-banner container-fluid px-4">
+    <SectionOutlet SectionName="top-bar" />
+</div>
+<div class="container-fluid mx-2">
     <main role="main" class="pb-3">
         @Body
     </main>
 </div>
 
 <footer class="border-top footer text-muted bg-primary">
-    <div class="container">
+    <div class="container-fluid">
         &copy; 2023 - Property Portfolio Manager
     </div>
 </footer>

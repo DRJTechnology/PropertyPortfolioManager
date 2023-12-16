@@ -6,12 +6,15 @@
     <section class="">
          @if (AccountModel.Id == 0)
         {
-            <h1 class="page-title">New Account</h1>
+        <SectionContent SectionName="top-bar">
+            <div>New Account</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @AccountModel.AccountName</h1>
-           
+        <SectionContent SectionName="top-bar">
+            <div>Details for @AccountModel.AccountName</div>
+        </SectionContent>
         }
         <EditForm Model="@AccountModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 

@@ -4,13 +4,23 @@
 
 <PageTitle>Index</PageTitle>
 
-<h1>Welcome to Property Portfolio Manager</h1>
-
 <AuthorizeView>
     <Authorized>
-        <h2>Hello, @context.User.Identity?.Name!</h2>
+        <SectionContent SectionName="top-bar">
+            <div>Dashdoard</div>
+        </SectionContent>
     </Authorized>
-    <NotAuthorized>
-        <p>Select <a href="authentication/login">Log in</a> to access the system</p>
-    </NotAuthorized>
 </AuthorizeView>
+
+<div class="page-content">
+    <h1>Welcome to Property Portfolio Manager</h1>
+
+    <AuthorizeView>
+        <Authorized>
+            <h2>Hello, @context.User.Identity?.Name!</h2>
+        </Authorized>
+        <NotAuthorized>
+            <p>Select <a href="authentication/login">Log in</a> to access the system</p>
+        </NotAuthorized>
+    </AuthorizeView>
+</div>
