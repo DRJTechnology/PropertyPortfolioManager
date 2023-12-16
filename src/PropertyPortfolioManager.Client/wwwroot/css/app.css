@@ -2,9 +2,13 @@
 
 html, body {
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    height: 100%;
+}
+body {
+    background-color:#f5f9ff;
 }
 
-ul.dropdown-menu .nav-link {
+ul .dropdown-menu .nav-link {
     color: #000;
 }
 
@@ -12,6 +16,21 @@ ul.dropdown-menu .nav-link.active {
         color: #000;
         font-weight: 600;
     }
+
+.page-banner {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    background-color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.page-content {
+    background-color: #fff;
+    border-radius: 1rem;
+    padding: 1rem;
+}
 
 .footer {
     position: absolute;
