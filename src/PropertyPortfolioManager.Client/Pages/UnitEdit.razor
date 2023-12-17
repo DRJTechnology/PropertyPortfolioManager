@@ -26,14 +26,17 @@
     }
 
     <section class="">
-         @if (UnitModel.Id == 0)
+        @if (UnitModel.Id == 0)
         {
-            <h1 class="page-title">New Unit</h1>
+        <SectionContent SectionName="top-bar">
+            <div>New Unit</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @UnitModel.Code</h1>
-           
+        <SectionContent SectionName="top-bar">
+            <div>Details for @UnitModel.Code</div>
+        </SectionContent>
         }
         <EditForm Model="@UnitModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 

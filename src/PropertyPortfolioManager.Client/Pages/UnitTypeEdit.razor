@@ -6,12 +6,15 @@
     <section class="">
         @if (UnitType.Id == 0)
         {
-            <h1 class="page-title">New Unit Type</h1>
+        <SectionContent SectionName="top-bar">
+            <div>New Unit Type</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @UnitType.Type</h1>
-           
+        <SectionContent SectionName="top-bar">
+            <div>Details for @UnitType.Type</div>
+        </SectionContent>
         }
         <EditForm Model="@UnitType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 

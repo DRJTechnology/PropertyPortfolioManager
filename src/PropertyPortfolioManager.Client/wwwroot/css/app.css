@@ -21,7 +21,6 @@ ul.dropdown-menu .nav-link.active {
     padding-top: 1rem;
     padding-bottom: 1rem;
     background-color: #fff;
-    margin-bottom: 1.5rem;
     font-size: 1.25rem;
     font-weight: 600;
 }
@@ -29,6 +28,7 @@ ul.dropdown-menu .nav-link.active {
 .page-content {
     background-color: #fff;
     border-radius: 1rem;
+    border: solid 1px #e3e6eb;
     padding: 1rem;
 }
 

@@ -3,10 +3,15 @@
 <header>
     <NavMenu />
 </header>
-<div class="page-banner container-fluid px-4">
-    <SectionOutlet SectionName="top-bar" />
-</div>
-<div class="container-fluid mx-2">
+<AuthorizeView>
+    <Authorized>
+        <div class="page-banner container-fluid px-4">
+            <SectionOutlet SectionName="top-bar" />
+        </div>
+    </Authorized>
+</AuthorizeView>
+
+<div class="container-fluid px-4 pt-4">
     <main role="main" class="pb-3">
         @Body
     </main>

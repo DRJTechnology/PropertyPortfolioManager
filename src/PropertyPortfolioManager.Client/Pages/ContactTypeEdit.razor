@@ -6,12 +6,15 @@
     <section class="">
         @if (ContactType.Id == 0)
         {
-            <h1 class="page-title">New Contact Type</h1>
+        <SectionContent SectionName="top-bar">
+            <div>New Contact Type</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @ContactType.Type</h1>
-           
+        <SectionContent SectionName="top-bar">
+                <div>Details for @ContactType.Type</div>
+        </SectionContent>
         }
         <EditForm Model="@ContactType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 

@@ -6,12 +6,15 @@
     <section class="">
         @if (Portfolio.Id == 0)
         {
-            <h1 class="page-title">New Portfolio</h1>
+        <SectionContent SectionName="top-bar">
+            <div>New Portfolio</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @Portfolio.Name</h1>
-           
+        <SectionContent SectionName="top-bar">
+            <div>Details for @Portfolio.Name</div>
+        </SectionContent>
         }
         <EditForm Model="@Portfolio" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
