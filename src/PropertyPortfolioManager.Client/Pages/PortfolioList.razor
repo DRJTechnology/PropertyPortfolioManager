@@ -1,7 +1,22 @@
 ﻿@page "/portfolio"
 
 <SectionContent SectionName="top-bar">
-    <div>Portfolios</div>
+    <div class="row">
+        <div class="col">
+            <div>Portfolios</div>
+        </div>
+        <div class="col">
+            <a href="portfolioedit">Create New Portfolio</a>
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
 </SectionContent>
 
 @if (portfolios == null)
@@ -11,22 +26,6 @@
 else
 {
     <div class="page-content">
-        <div class="row">
-            <div class="col">
-                <a href="portfolioedit">Create New Portfolio</a>
-            </div>
-            <div class="col">
-                @if (ActiveOnly)
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-                }
-                else
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-                }
-            </div>
-        </div>
-
         <table class="table">
             <thead>
                 <tr>

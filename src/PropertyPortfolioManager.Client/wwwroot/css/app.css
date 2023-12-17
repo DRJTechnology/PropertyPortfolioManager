@@ -30,10 +30,10 @@ ul.dropdown-menu .nav-link.active {
     border-radius: 1rem;
     border: solid 1px #e3e6eb;
     padding: 1rem;
+    margin-bottom: 1rem;
 }
 
 .footer {
-    position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
