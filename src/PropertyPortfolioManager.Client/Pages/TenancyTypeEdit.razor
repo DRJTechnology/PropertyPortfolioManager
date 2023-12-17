@@ -6,12 +6,15 @@
     <section class="">
         @if (TenancyType.Id == 0)
         {
-            <h1 class="page-title">New Tenancy Type</h1>
+        <SectionContent SectionName="top-bar">
+                <div>New Tenancy Type</div>
+        </SectionContent>
         }
         else
         {
-            <h1 class="page-title">Details for @TenancyType.Type</h1>
-           
+        <SectionContent SectionName="top-bar">
+            <div>Details for @TenancyType.Type</div>
+        </SectionContent>
         }
         <EditForm Model="@TenancyType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
