@@ -10,58 +10,60 @@
 }
 else
 {
-    <div class="row">
-        <div class="col">
-            <a href="portfolioedit">Create New Portfolio</a>
-        </div>
-        <div class="col">
-            @if (ActiveOnly)
-            {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-            }
-            else
-            {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-            }
-        </div>
-    </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                @if (!ActiveOnly)
+    <div class="page-content">
+        <div class="row">
+            <div class="col">
+                <a href="portfolioedit">Create New Portfolio</a>
+            </div>
+            <div class="col">
+                @if (ActiveOnly)
                 {
-                    <th>
-                        Active
-                    </th>
+                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
                 }
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var portfolio in portfolios)
-            {
+                else
+                {
+                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                }
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @portfolio.Name
-                    </td>
+                    <th>
+                        Name
+                    </th>
                     @if (!ActiveOnly)
                     {
-                        <td>
-                            @(portfolio.Active ? "Active" : "Inactive")
-                        </td>
+                        <th>
+                            Active
+                        </th>
                     }
-                    <td>
-                        <a href="@($"portfolioedit/{portfolio.Id}")" class="btn btn-outline-primary btn-sm">
-                            Edit
-                        </a>
-                        <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(() => SelectPortfolio(portfolio.Id))">Select Portfolio</button>
-                    </td>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var portfolio in portfolios)
+                {
+                    <tr>
+                        <td>
+                            @portfolio.Name
+                        </td>
+                        @if (!ActiveOnly)
+                        {
+                            <td>
+                                @(portfolio.Active ? "Active" : "Inactive")
+                            </td>
+                        }
+                        <td>
+                            <a href="@($"portfolioedit/{portfolio.Id}")" class="btn btn-outline-primary btn-sm">
+                                Edit
+                            </a>
+                            <button type="button" class="btn btn-outline-primary btn-sm" @onclick="(() => SelectPortfolio(portfolio.Id))">Select Portfolio</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }

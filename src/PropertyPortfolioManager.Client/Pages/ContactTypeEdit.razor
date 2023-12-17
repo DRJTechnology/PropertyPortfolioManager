@@ -16,41 +16,43 @@
                 <div>Details for @ContactType.Type</div>
         </SectionContent>
         }
-        <EditForm Model="@ContactType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+        <div class="page-content">
+            <EditForm Model="@ContactType" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            <div class="row mb-3">
-                <label for="type" class="col-form-label col-md-3">Type: </label>
-                <div class="col-md-8">
-                    <InputText id="type" @bind-Value="@ContactType.Type" class="form-control col-md-8" placeholder="Enter type"></InputText>
+                <div class="row mb-3">
+                    <label for="type" class="col-form-label col-md-3">Type: </label>
+                    <div class="col-md-8">
+                        <InputText id="type" @bind-Value="@ContactType.Type" class="form-control col-md-8" placeholder="Enter type"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactType.Type)" />
                 </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => ContactType.Type)" />
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-md-8 offset-md-3">
-                    <div class="form-check">
-                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@ContactType.Active"></InputCheckbox>
-                        <label class="form-check-label" for="active">
-                            Active
-                        </label>
+                <div class="row mb-3">
+                    <div class="col-md-8 offset-md-3">
+                        <div class="form-check">
+                            <InputCheckbox id="active" class="form-check-input" @bind-Value="@ContactType.Active"></InputCheckbox>
+                            <label class="form-check-label" for="active">
+                                Active
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary me-1">Save contact type</button>
+                <button type="submit" class="btn btn-primary me-1">Save contact type</button>
 
-            @if (ContactType.Id > 0)
-            {
-                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteContactType">
-                    Delete
-                </button>
-            }
-            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+                @if (ContactType.Id > 0)
+                {
+                    <button type="button" class="btn btn-danger my-1" @onclick="@DeleteContactType">
+                        Delete
+                    </button>
+                }
+                <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
 
-        </EditForm>
+            </EditForm>
+        </div>
     </section>
 }
 else

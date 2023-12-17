@@ -16,41 +16,43 @@
             <div>Details for @Portfolio.Name</div>
         </SectionContent>
         }
-        <EditForm Model="@Portfolio" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+        <div class="page-content">
+            <EditForm Model="@Portfolio" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            <div class="row mb-3">
-                <label for="name" class="col-form-label col-md-3">Name: </label>
-                <div class="col-md-8">
-                    <InputText id="name" @bind-Value="@Portfolio.Name" class="form-control col-md-8" placeholder="Enter name" autocomplete="off"></InputText>
+                <div class="row mb-3">
+                    <label for="name" class="col-form-label col-md-3">Name: </label>
+                    <div class="col-md-8">
+                        <InputText id="name" @bind-Value="@Portfolio.Name" class="form-control col-md-8" placeholder="Enter name" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => Portfolio.Name)" />
                 </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => Portfolio.Name)" />
-            </div>
 
-            <div class="row mb-3">
-                <div class="col-md-8 offset-md-3">
-                    <div class="form-check">
-                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@Portfolio.Active"></InputCheckbox>
-                        <label class="form-check-label" for="active">
-                            Active
-                        </label>
+                <div class="row mb-3">
+                    <div class="col-md-8 offset-md-3">
+                        <div class="form-check">
+                            <InputCheckbox id="active" class="form-check-input" @bind-Value="@Portfolio.Active"></InputCheckbox>
+                            <label class="form-check-label" for="active">
+                                Active
+                            </label>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary me-1">Save portfolio</button>
+                <button type="submit" class="btn btn-primary me-1">Save portfolio</button>
 
-            @if (Portfolio.Id > 0)
-            {
-                <button type="button" class="btn btn-danger my-1" @onclick="@DeletePortfolio">
-                    Delete
-                </button>
-            }
-            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+                @if (Portfolio.Id > 0)
+                {
+                    <button type="button" class="btn btn-danger my-1" @onclick="@DeletePortfolio">
+                        Delete
+                    </button>
+                }
+                <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
 
-        </EditForm>
+            </EditForm>
+        </div>
     </section>
 }
 else

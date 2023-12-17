@@ -38,95 +38,97 @@
             <div>Details for @UnitModel.Code</div>
         </SectionContent>
         }
-        <EditForm Model="@UnitModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+        <div class="page-content">
+            <EditForm Model="@UnitModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            <div class="row mb-3">
-                <div class="col-md-3">
-                    <img class="image-fill" src="data:image/png;base64, @UnitModel.MainPictureBase64" />
-                </div>
-                <div class="col-md-8">
-                    <button type="button" class="btn btn-outline-primary" @onclick="@ShowImageSelection">Select new image</button>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="code" class="col-form-label col-md-3">Code: </label>
-                <div class="col-md-8">
-                    <InputText id="code" @bind-Value="@UnitModel.Code" class="form-control col-md-8" placeholder="Enter code" autocomplete="off"></InputText>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Code)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="address_streetaddress" class="col-form-label col-md-3">Street address: </label>
-                <div class="col-md-8">
-                    <InputText id="address_streetaddress" @bind-Value="@UnitModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address" autocomplete="off"></InputText>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.StreetAddress)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="address_towncity" class="col-form-label col-md-3">Town/City: </label>
-                <div class="col-md-8">
-                    <InputText id="address_towncity" @bind-Value="@UnitModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city" autocomplete="off"></InputText>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.TownCity)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="address_countyregion" class="col-form-label col-md-3">County/Region: </label>
-                <div class="col-md-8">
-                    <InputText id="address_countyregion" @bind-Value="@UnitModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region" autocomplete="off"></InputText>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.CountyRegion)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="address_postcode" class="col-form-label col-md-3">Postcode: </label>
-                <div class="col-md-8">
-                    <InputText id="address_postcode" @bind-Value="@UnitModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode" autocomplete="off"></InputText>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.PostCode)" />
-            </div>
-            
-            <div class="row mb-3">
-            <label for="unittype" class="col-form-label col-md-3">Unit type: </label>
-                <div class="col-md-8">
-                    <InputSelect id="unittype" class="form-select col-md-8" @bind-Value="@UnitModel.UnitTypeId">
-                        @foreach (var unittype in unittypes)
-                        {
-                        <option value="@unittype.Id">@unittype.Type</option>
-                        }
-                    </InputSelect>
-                </div>
-            </div>
-
-
-            <div class="row mb-3">
-                <div class="col-md-8 offset-md-3">
-                    <div class="form-check">
-                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@UnitModel.Active"></InputCheckbox>
-                        <label class="form-check-label" for="active">
-                            Active
-                        </label>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <img class="image-fill" src="data:image/png;base64, @UnitModel.MainPictureBase64" />
+                    </div>
+                    <div class="col-md-8">
+                        <button type="button" class="btn btn-outline-primary" @onclick="@ShowImageSelection">Select new image</button>
                     </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary me-1">Save unit</button>
+                <div class="row mb-3">
+                    <label for="code" class="col-form-label col-md-3">Code: </label>
+                    <div class="col-md-8">
+                        <InputText id="code" @bind-Value="@UnitModel.Code" class="form-control col-md-8" placeholder="Enter code" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Code)" />
+                </div>
 
-            @if (UnitModel.Id > 0)
-            {
-                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteUnit">
-                    Delete
-                </button>
-            }
-            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+                <div class="row mb-3">
+                    <label for="address_streetaddress" class="col-form-label col-md-3">Street address: </label>
+                    <div class="col-md-8">
+                        <InputText id="address_streetaddress" @bind-Value="@UnitModel.Address.StreetAddress" class="form-control col-md-8" placeholder="Enter street address" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.StreetAddress)" />
+                </div>
 
-        </EditForm>
+                <div class="row mb-3">
+                    <label for="address_towncity" class="col-form-label col-md-3">Town/City: </label>
+                    <div class="col-md-8">
+                        <InputText id="address_towncity" @bind-Value="@UnitModel.Address.TownCity" class="form-control col-md-8" placeholder="Enter town/city" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.TownCity)" />
+                </div>
+
+                <div class="row mb-3">
+                    <label for="address_countyregion" class="col-form-label col-md-3">County/Region: </label>
+                    <div class="col-md-8">
+                        <InputText id="address_countyregion" @bind-Value="@UnitModel.Address.CountyRegion" class="form-control col-md-8" placeholder="Enter county/region" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.CountyRegion)" />
+                </div>
+
+                <div class="row mb-3">
+                    <label for="address_postcode" class="col-form-label col-md-3">Postcode: </label>
+                    <div class="col-md-8">
+                        <InputText id="address_postcode" @bind-Value="@UnitModel.Address.PostCode" class="form-control col-md-8" placeholder="Enter postcode" autocomplete="off"></InputText>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => UnitModel.Address.PostCode)" />
+                </div>
+            
+                <div class="row mb-3">
+                <label for="unittype" class="col-form-label col-md-3">Unit type: </label>
+                    <div class="col-md-8">
+                        <InputSelect id="unittype" class="form-select col-md-8" @bind-Value="@UnitModel.UnitTypeId">
+                            @foreach (var unittype in unittypes)
+                            {
+                            <option value="@unittype.Id">@unittype.Type</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+
+                <div class="row mb-3">
+                    <div class="col-md-8 offset-md-3">
+                        <div class="form-check">
+                            <InputCheckbox id="active" class="form-check-input" @bind-Value="@UnitModel.Active"></InputCheckbox>
+                            <label class="form-check-label" for="active">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary me-1">Save unit</button>
+
+                @if (UnitModel.Id > 0)
+                {
+                    <button type="button" class="btn btn-danger my-1" @onclick="@DeleteUnit">
+                        Delete
+                    </button>
+                }
+                <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+
+            </EditForm>
+        </div>
     </section>
 }
 else if (Initialising)

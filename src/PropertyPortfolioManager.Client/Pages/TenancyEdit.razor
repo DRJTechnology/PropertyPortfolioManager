@@ -46,122 +46,124 @@
             <div>Details for @TenancyModel.Id</div>
         </SectionContent>
         }
-        <EditForm Model="@TenancyModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+        <div class="page-content">
+            <EditForm Model="@TenancyModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
-            <DataAnnotationsValidator />
-            <ValidationSummary />
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            <div class="row mb-3">
-                <label for="unit" class="col-form-label col-md-3">Property: </label>
-                <div class="col-md-8">
-                    <UnitSelector @bind-UnitId="TenancyModel.UnitId" ElementClass="form-select col-md-8"></UnitSelector>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="tenancytype" class="col-form-label col-md-3">Tenancy type: </label>
-                <div class="col-md-8">
-                    <InputSelect id="tenancytype" class="form-select col-md-8" @bind-Value="@TenancyModel.TenancyTypeId">
-                        @foreach (var tenancytype in tenancytypes)
-                        {
-                            <option value="@tenancytype.Id">@tenancytype.Type</option>
-                        }
-                    </InputSelect>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <label for="startdate" class="col-form-label col-md-3">Start date: </label>
-                <div class="col-md-3">
-                    <InputDate id="startdate" @bind-Value="@TenancyModel.StartDate" class="form-control col-md-8" placeholder="Enter start date" autocomplete="off"></InputDate>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.StartDate)" />
-
-                <label for="enddate" class="col-form-label col-md-1 offset-md-1">End date: </label>
-                <div class="col-md-3">
-                    <InputDate id="enddate" @bind-Value="@TenancyModel.EndDate" class="form-control col-md-8" placeholder="Enter end date" autocomplete="off"></InputDate>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.EndDate)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="durationquantity" class="col-form-label col-md-3">Duration: </label>
-                <div class="col-md-8">
-                    <InputNumber id="durationquantity" @bind-Value="@TenancyModel.DurationQuantity" class="form-control col-md-8" placeholder="Enter duration quantity" autocomplete="off"></InputNumber>
-                </div>
-                <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.DurationQuantity)" />
-            </div>
-
-            <div class="row mb-3">
-                <label for="durationunit" class="col-form-label col-md-3">Duration unit: </label>
-                <div class="col-md-8">
-                    <ErrorBoundary>
-                        <ChildContent>
-                            <DurationUnitSelector @bind-DurationUnit="TenancyModel.DurationUnit" ElementClass="form-select col-md-8"></DurationUnitSelector>
-                        </ChildContent>
-                        <ErrorContent Context="Exception">
-                            <div>Error: @Exception.Message</div>
-                        </ErrorContent>
-                    </ErrorBoundary>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-8 offset-md-3">
-                    <div class="form-check">
-                        <InputCheckbox id="active" class="form-check-input" @bind-Value="@TenancyModel.Active"></InputCheckbox>
-                        <label class="form-check-label" for="active">
-                            Active
-                        </label>
+                <div class="row mb-3">
+                    <label for="unit" class="col-form-label col-md-3">Property: </label>
+                    <div class="col-md-8">
+                        <UnitSelector @bind-UnitId="TenancyModel.UnitId" ElementClass="form-select col-md-8"></UnitSelector>
                     </div>
                 </div>
-            </div>
 
-            <div class="row mb-3">
-                <label for="durationunit" class="col-form-label col-md-3">Tenants: </label>
-                <div class="col-md-8">
-                    <table>
-                    @foreach (var contact in TenancyModel.Contacts)
-                    {
-                        <tr>
-                            <td>
-                                @contact.Name
-                            </td>
-                            <td>
-                                    <a class="btn btn-link" @onclick="() => RemoveContact(contact.Id)">
-                                    <i class="bi bi-trash"></i>
-                                </a>
-                            </td>
-                        </tr>
-                    }
-                        @if (TenancyModel.Contacts.Count == 0)
+                <div class="row mb-3">
+                    <label for="tenancytype" class="col-form-label col-md-3">Tenancy type: </label>
+                    <div class="col-md-8">
+                        <InputSelect id="tenancytype" class="form-select col-md-8" @bind-Value="@TenancyModel.TenancyTypeId">
+                            @foreach (var tenancytype in tenancytypes)
+                            {
+                                <option value="@tenancytype.Id">@tenancytype.Type</option>
+                            }
+                        </InputSelect>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="startdate" class="col-form-label col-md-3">Start date: </label>
+                    <div class="col-md-3">
+                        <InputDate id="startdate" @bind-Value="@TenancyModel.StartDate" class="form-control col-md-8" placeholder="Enter start date" autocomplete="off"></InputDate>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.StartDate)" />
+
+                    <label for="enddate" class="col-form-label col-md-1 offset-md-1">End date: </label>
+                    <div class="col-md-3">
+                        <InputDate id="enddate" @bind-Value="@TenancyModel.EndDate" class="form-control col-md-8" placeholder="Enter end date" autocomplete="off"></InputDate>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.EndDate)" />
+                </div>
+
+                <div class="row mb-3">
+                    <label for="durationquantity" class="col-form-label col-md-3">Duration: </label>
+                    <div class="col-md-8">
+                        <InputNumber id="durationquantity" @bind-Value="@TenancyModel.DurationQuantity" class="form-control col-md-8" placeholder="Enter duration quantity" autocomplete="off"></InputNumber>
+                    </div>
+                    <ValidationMessage class="offset-md-3 col-md-8" For="@(() => TenancyModel.DurationQuantity)" />
+                </div>
+
+                <div class="row mb-3">
+                    <label for="durationunit" class="col-form-label col-md-3">Duration unit: </label>
+                    <div class="col-md-8">
+                        <ErrorBoundary>
+                            <ChildContent>
+                                <DurationUnitSelector @bind-DurationUnit="TenancyModel.DurationUnit" ElementClass="form-select col-md-8"></DurationUnitSelector>
+                            </ChildContent>
+                            <ErrorContent Context="Exception">
+                                <div>Error: @Exception.Message</div>
+                            </ErrorContent>
+                        </ErrorBoundary>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-8 offset-md-3">
+                        <div class="form-check">
+                            <InputCheckbox id="active" class="form-check-input" @bind-Value="@TenancyModel.Active"></InputCheckbox>
+                            <label class="form-check-label" for="active">
+                                Active
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <label for="durationunit" class="col-form-label col-md-3">Tenants: </label>
+                    <div class="col-md-8">
+                        <table>
+                        @foreach (var contact in TenancyModel.Contacts)
                         {
                             <tr>
-                                <td colspan="2">
-                                    No Tenants Assigned
+                                <td>
+                                    @contact.Name
+                                </td>
+                                <td>
+                                        <a class="btn btn-link" @onclick="() => RemoveContact(contact.Id)">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
                                 </td>
                             </tr>
                         }
-                    <tr>
-                        <td colspan="2">
-                                <button type="button" class="btn btn-outline-primary" @onclick="@ShowContactSelection">Add tenant</button>
-                        </td>
-                    </tr>
-                    </table>
+                            @if (TenancyModel.Contacts.Count == 0)
+                            {
+                                <tr>
+                                    <td colspan="2">
+                                        No Tenants Assigned
+                                    </td>
+                                </tr>
+                            }
+                        <tr>
+                            <td colspan="2">
+                                    <button type="button" class="btn btn-outline-primary" @onclick="@ShowContactSelection">Add tenant</button>
+                            </td>
+                        </tr>
+                        </table>
+                    </div>
                 </div>
-            </div>
 
-            <button type="submit" class="btn btn-primary me-1">Save tenancy</button>
+                <button type="submit" class="btn btn-primary me-1">Save tenancy</button>
 
-            @if (TenancyModel.Id > 0)
-            {
-                <button type="button" class="btn btn-danger my-1" @onclick="@DeleteTenancy">
-                    Delete
-                </button>
-            }
-            <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
+                @if (TenancyModel.Id > 0)
+                {
+                    <button type="button" class="btn btn-danger my-1" @onclick="@DeleteTenancy">
+                        Delete
+                    </button>
+                }
+                <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
 
-        </EditForm>
+            </EditForm>
+        </div>
     </section>
 }
 else if (Initialising)

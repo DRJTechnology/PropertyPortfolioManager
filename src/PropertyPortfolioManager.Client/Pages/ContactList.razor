@@ -10,57 +10,59 @@
 }
 else
 {
-    <div class="row">
-        <div class="col">
-            <a href="contactedit">Create New Contact</a>
-        </div>
-        <div class="col">
-            @if (ActiveOnly)
-            {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-            }
-            else
-            {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-            }
-        </div>
-    </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Name
-                </th>
-                @if (!ActiveOnly)
+    <div class="page-content">
+        <div class="row">
+            <div class="col">
+                <a href="contactedit">Create New Contact</a>
+            </div>
+            <div class="col">
+                @if (ActiveOnly)
                 {
-                    <th>
-                        Active
-                    </th>
+                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
                 }
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var contact in contacts)
-            {
+                else
+                {
+                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                }
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @contact.Name
-                    </td>
+                    <th>
+                        Name
+                    </th>
                     @if (!ActiveOnly)
                     {
-                        <td>
-                            @(contact.Active ? "Active" : "Inactive")
-                        </td>
+                        <th>
+                            Active
+                        </th>
                     }
-                    <td>
-                        <a href="@($"contactedit/{contact.Id}")" class="btn btn-outline-primary btn-sm">
-                            Edit
-                        </a>
-                    </td>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var contact in contacts)
+                {
+                    <tr>
+                        <td>
+                            @contact.Name
+                        </td>
+                        @if (!ActiveOnly)
+                        {
+                            <td>
+                                @(contact.Active ? "Active" : "Inactive")
+                            </td>
+                        }
+                        <td>
+                            <a href="@($"contactedit/{contact.Id}")" class="btn btn-outline-primary btn-sm">
+                                Edit
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 }
