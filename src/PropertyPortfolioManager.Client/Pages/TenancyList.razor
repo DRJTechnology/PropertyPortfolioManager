@@ -1,7 +1,22 @@
 ﻿@page "/tenancy"
 
 <SectionContent SectionName="top-bar">
-    <div>Tenancies</div>
+    <div class="row">
+        <div class="col">
+            <div>Tenancies</div>
+        </div>
+        <div class="col">
+            <a href="tenancyedit">Create New Tenancy</a>
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
 </SectionContent>
 
 @if (tenancies == null)
@@ -11,22 +26,6 @@
 else
 {
     <div class="page-content">
-        <div class="row">
-            <div class="col">
-                <a href="tenancyedit">Create New Tenancy</a>
-            </div>
-            <div class="col">
-                @if (ActiveOnly)
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-                }
-                else
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-                }
-            </div>
-        </div>
-
         <table class="table">
             <thead>
                 <tr>

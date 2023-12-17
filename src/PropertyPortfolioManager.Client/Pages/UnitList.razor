@@ -1,7 +1,22 @@
 ﻿@page "/unit"
 
 <SectionContent SectionName="top-bar">
-    <div>Properties</div>
+    <div class="row">
+        <div class="col">
+            <div>Properties</div>
+        </div>
+        <div class="col">
+            <a href="unitedit">Create New Property</a>
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
 </SectionContent>
 
 @if (units == null)
@@ -10,23 +25,6 @@
 }
 else
 {
-    <div class="page-content">
-        <div class="row">
-            <div class="col">
-                <a href="unitedit">Create New Property</a>
-            </div>
-            <div class="col">
-                @if (ActiveOnly)
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-                }
-                else
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-                }
-            </div>
-        </div>
-
         <div class="row">
             @foreach (var unit in units)
             {           
@@ -41,6 +39,5 @@ else
 
             }
         </div>
-    </div>
 
 }

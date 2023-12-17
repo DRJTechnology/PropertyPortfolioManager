@@ -2,7 +2,23 @@
 
 
 <SectionContent SectionName="top-bar">
-    <div>Accounts</div>
+    <div class="row">
+        <div class="col">
+            <div>Accounts</div>
+        </div>
+        <div class="col">
+            <a href="accountedit">Create New Account</a>
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
+
 </SectionContent>
 
 @if (accounts == null)
@@ -12,21 +28,6 @@
 else
 {
     <div class="page-content">
-        <div class="row">
-            <div class="col">
-                <a href="accountedit">Create New Account</a>
-            </div>
-            <div class="col">
-                @if (ActiveOnly)
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-                }
-                else
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-                }
-            </div>
-        </div>
 
         <table class="table">
             <thead>

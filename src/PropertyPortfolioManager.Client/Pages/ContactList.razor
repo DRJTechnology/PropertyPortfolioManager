@@ -1,7 +1,22 @@
 ﻿@page "/contact"
 
 <SectionContent SectionName="top-bar">
-    <div>Contacts</div>
+    <div class="row">
+        <div class="col">
+            <div>Contacts</div>
+        </div>
+        <div class="col">
+            <a href="contactedit">Create New Contact</a>
+            @if (ActiveOnly)
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+            }
+            else
+            {
+                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+            }
+        </div>
+    </div>
 </SectionContent>
 
 @if (contacts == null)
@@ -11,22 +26,6 @@
 else
 {
     <div class="page-content">
-        <div class="row">
-            <div class="col">
-                <a href="contactedit">Create New Contact</a>
-            </div>
-            <div class="col">
-                @if (ActiveOnly)
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
-                }
-                else
-                {
-                    <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
-                }
-            </div>
-        </div>
-
         <table class="table">
             <thead>
                 <tr>
