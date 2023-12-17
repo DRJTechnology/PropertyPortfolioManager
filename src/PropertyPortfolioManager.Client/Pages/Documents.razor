@@ -9,106 +9,107 @@
 }
 else
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            @foreach (var item in Breadcrumb)
-            {
-                @if (item.Id == CurrentFolder.Id)
+    <div class="page-content">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                @foreach (var item in Breadcrumb)
                 {
-                    <li class="breadcrumb-item active" aria-current="page">
-                        @item.Name
-                        <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
-                    </li>
+                    @if (item.Id == CurrentFolder.Id)
+                    {
+                        <li class="breadcrumb-item active" aria-current="page">
+                            @item.Name
+                            <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="breadcrumb-item">
+                            <a class="cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
+                            <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                        </li>
+                    }
                 }
-                else
-                {
-                    <li class="breadcrumb-item">
-                        <a class="cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
-                        <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
-                    </li>
-                }
-            }
-        </ol>
-    </nav>
+            </ol>
+        </nav>
 
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Name
-                    </th>
-                    <th>
-                        Modified
-                    </th>
-                    <th>
-                        Modified By
-                    </th>
-                    <th>
-                        Size
-                    </th>
-                    <th>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in CurrentFolder.DriveItemList)
-                {
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
                     <tr>
-                        <td>
-                            @if (item.IsFolder)
-                            {
-                                <div>
-                                    <i class="bi bi-folder-fill"></i><a class="ps-1 cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
-                                </div>
-                            }
-                            else
-                            {
-                                <div>
-                                    <i class="bi @GetFileTypeClass(item.Name) pe-2"></i>@item.Name
-                                </div>
-                            }
-                        </td>
-                        <td>
-                            @item.LastModifiedDateTime.Date.ToString("d MMMM yyyy")
-                        </td>
-                        <td>
-                            @item.LastModifiedByName
-                        </td>
-                        <td>
-                            @item.Size.ToFileSizeString()
-                        </td>
-                        <td>
-                            @if (item.IsFolder)
-                            {
-                                <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
-                            }
-                            else
-                            {
-                                if (SelectFileMode)
+                        <th>
+                            Name
+                        </th>
+                        <th>
+                            Modified
+                        </th>
+                        <th>
+                            Modified By
+                        </th>
+                        <th>
+                            Size
+                        </th>
+                        <th>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in CurrentFolder.DriveItemList)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.IsFolder)
                                 {
-                                    if (SelectImagesOnly)
+                                    <div>
+                                        <i class="bi bi-folder-fill"></i><a class="ps-1 cursor-pointer link-underline link-underline-opacity-0 link-underline-opacity-75-hover" @onclick="(() => SelectFolder(item.Id))">@item.Name</a>
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div>
+                                        <i class="bi @GetFileTypeClass(item.Name) pe-2"></i>@item.Name
+                                    </div>
+                                }
+                            </td>
+                            <td>
+                                @item.LastModifiedDateTime.Date.ToString("d MMMM yyyy")
+                            </td>
+                            <td>
+                                @item.LastModifiedByName
+                            </td>
+                            <td>
+                                @item.Size.ToFileSizeString()
+                            </td>
+                            <td>
+                                @if (item.IsFolder)
+                                {
+                                    <a href="@item.WebUrl" target="_blank"><i class="bi bi-box-arrow-up-right"></i></a>
+                                }
+                                else
+                                {
+                                    if (SelectFileMode)
                                     {
-                                        if (item.FileMimeType.StartsWith("image/"))
+                                        if (SelectImagesOnly)
                                         {
-                                            <button type="button" class="btn btn-outline-primary" @onclick="(() => SelectFile(item))">Select image</button>
+                                            if (item.FileMimeType.StartsWith("image/"))
+                                            {
+                                                <button type="button" class="btn btn-outline-primary" @onclick="(() => SelectFile(item))">Select image</button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <button type="button" class="btn btn-outline-primary" @onclick="(() => SelectFile(item))">Select file</button>
                                         }
                                     }
                                     else
-                                    {
-                                        <button type="button" class="btn btn-outline-primary" @onclick="(() => SelectFile(item))">Select file</button>
+                                    {                                    
+                                        <a href="@item.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
                                     }
                                 }
-                                else
-                                {                                    
-                                    <a href="@item.WebUrl" target="_blank"><i class="bi bi-file-earmark-arrow-down"></i></a>
-                                }
-                            }
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 }
-

@@ -4,7 +4,7 @@
 @if (!Saved & !Initialising)
 {
     <section class="">
-         @if (AccountModel.Id == 0)
+        @if (AccountModel.Id == 0)
         {
         <SectionContent SectionName="top-bar">
             <div>New Account</div>
@@ -16,7 +16,8 @@
             <div>Details for @AccountModel.AccountName</div>
         </SectionContent>
         }
-        <EditForm Model="@AccountModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
+        <div class="page-content">
+            <EditForm Model="@AccountModel" OnValidSubmit="@HandleValidSubmit" OnInvalidSubmit="@HandleInvalidSubmit">
 
             <DataAnnotationsValidator />
             <ValidationSummary />
@@ -63,6 +64,7 @@
             <button type="button" class="btn btn-outline-primary" @onclick="@NavigateToList">Back to list</button>
 
         </EditForm>
+        </div>
     </section>
 }
 else if (Initialising)
@@ -73,4 +75,4 @@ else
 {
     <div class="alert @StatusClass">@Message</div>
     <button type="button" class="btn btn-outline-primary ms-1" @onclick="@NavigateToList">Back to list</button>
-} 
+}
