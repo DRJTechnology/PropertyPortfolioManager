@@ -6,15 +6,15 @@
             <div>Portfolios</div>
         </div>
         <div class="col">
-            <a href="portfolioedit">Create New Portfolio</a>
             @if (ActiveOnly)
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+                <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
             }
             else
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
+            <a href="portfolioedit" class="btn btn-success btn-sm float-end">Create New Portfolio</a>
         </div>
     </div>
 </SectionContent>
