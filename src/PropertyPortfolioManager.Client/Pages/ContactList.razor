@@ -2,10 +2,10 @@
 
 <SectionContent SectionName="top-bar">
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <div>Contacts</div>
         </div>
-        <div class="col">
+        <div class="col-md">
             @if (ActiveOnly)
             {
                 <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
@@ -14,7 +14,7 @@
             {
                 <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
-            <a href="contactedit" class="btn btn-success btn-sm float-end">Create New Contact</a>
+            <a href="contactedit" class="btn btn-success btn-sm float-md-end">New Contact</a>
         </div>
     </div>
 </SectionContent>
@@ -25,7 +25,7 @@
 }
 else
 {
-    <div class="page-content">
+    <div class="page-content table-responsive">
         <table class="table">
             <thead>
                 <tr>

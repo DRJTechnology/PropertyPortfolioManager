@@ -3,7 +3,9 @@ using DRJTechnology.Cache;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
 using Microsoft.IdentityModel.Tokens;
+using PropertyPortfolioManager.Models.CacheKeys;
 using PropertyPortfolioManager.Models.Model.Document;
+using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 using PropertyPortfolioManager.Server.Shared.Configuration;
 
@@ -36,11 +38,19 @@ namespace PropertyPortfolioManager.Server.Services
             return driveItem;
         }
 
-        public async Task<string> GetImageBase64Async(string imageId)
+        public async Task<string> GetImageBase64Async(int portfolioId, string imageId)
         {
             if (imageId.IsNullOrEmpty())
             {
                 return string.Empty;
+            }
+
+            var cacheKey = $"{CacheKeys.KeyDocumentPrefix}{portfolioId}_{imageId}";
+            var returnPhotoStream = await this.cacheService.GetAsync<string>(cacheKey);
+
+            if (returnPhotoStream != null)
+            {
+                return returnPhotoStream;
             }
 
             var photoStream = await graphServiceClient.Drives[this.settings.SharepointSettings.DriveId].Items[imageId].Content.GetAsync();
@@ -52,7 +62,11 @@ namespace PropertyPortfolioManager.Server.Services
                     photoStream.CopyTo(ms);
                     photoBytes = ms.ToArray();
                 }
-                return Convert.ToBase64String(photoBytes);
+
+                returnPhotoStream = Convert.ToBase64String(photoBytes);
+                await this.cacheService.SetAsync(cacheKey, returnPhotoStream);
+
+                return returnPhotoStream;
             }
             else
             {

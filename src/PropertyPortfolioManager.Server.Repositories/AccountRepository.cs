@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using PropertyPortfolioManager.Models.Dto.Finance;
 using PropertyPortfolioManager.Models.Dto.General;
+using PropertyPortfolioManager.Models.Enums;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using System.Data;
 
@@ -47,6 +48,18 @@ namespace PropertyPortfolioManager.Server.Repositories
             return accounts.ToList(); ;
         }
 
+        public async Task<List<AccountDto>> GetByType(int portfolioId, AccountType accountType, bool activeOnly)
+        {
+            var parameters = new DynamicParameters();
+            parameters.Add("@PortfolioId", portfolioId);
+            parameters.Add("@AccountTypeId", (int)accountType);
+            parameters.Add("@ActiveOnly", activeOnly);
+
+            var accounts = await this.dbConnection.QueryAsync<AccountDto>("finance.Account_GetByType", parameters, commandType: CommandType.StoredProcedure);
+
+            return accounts.ToList(); ;
+        }
+
         public async Task<AccountDto> GetById(int id, int portfolioId)
         {
             var parameters = new DynamicParameters();
@@ -89,6 +102,5 @@ namespace PropertyPortfolioManager.Server.Repositories
 
             return true;
         }
-
     }
 }

@@ -33,7 +33,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             cacheServiceMock.Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<List<UnitBasicResponseModel>>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
 
             var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
-            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
 
             var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var units = await unitService.GetAll(portfolioId, false);
@@ -56,7 +56,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
             cacheServiceMock.Setup(s => s.SetAsync(It.IsAny<string>(), It.IsAny<List<UnitBasicResponseModel>>())).Returns(Task.FromResult<List<UnitBasicResponseModel>>(null));
 
             var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
-            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
 
             var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, cacheServiceMock.Object, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var units = await unitService.GetAll(portfolioId, false);
@@ -96,7 +96,7 @@ namespace PropertyPortfolioManager.Server.Services.Tests
                                         .Returns(Task.FromResult(this.GetById(unitId)));
 
             var documentServiceMock = new Mock<IDocumentService>(MockBehavior.Strict);
-            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
+            documentServiceMock.Setup(s => s.GetImageBase64Async(It.IsAny<int>(), It.IsAny<string>())).Returns(Task.FromResult(string.Empty));
 
             var unitService = new UnitService(TestExtensions.SettingsMock(), unitRepositoryMock.Object, null, documentServiceMock.Object, TestExtensions.MapperInstance(), null);
             var unit = await unitService.GetById(unitId, portfolioId);
