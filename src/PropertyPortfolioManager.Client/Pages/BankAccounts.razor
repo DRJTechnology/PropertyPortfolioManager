@@ -53,7 +53,7 @@ else
                     <th class="d-none d-md-table-cell text-end text-nowrap">
                         Money out
                     </th>
-                    <th class="d-block d-md-table-cell-none text-end">
+                    <th class="d-table-cell d-md-none text-end">
                         Amount
                     </th>
                 </tr>
@@ -84,7 +84,7 @@ else
                                 @string.Format("{0:N2}", transaction.Debit)
                             }
                         </td>
-                        <td class="d-block d-md-table-cell-none text-end">
+                        <td class="d-table-cell d-md-none text-end">
                             @string.Format("{0:N2}", transaction.Credit - transaction.Debit)
                         </td>
                     </tr>
