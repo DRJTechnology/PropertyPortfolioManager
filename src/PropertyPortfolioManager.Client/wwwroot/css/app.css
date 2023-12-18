@@ -40,6 +40,10 @@ ul.dropdown-menu .nav-link.active {
     line-height: 60px;
 }
 
+.property-card {
+    height: 100%;
+}
+
 h1:focus {
     outline: none;
 }

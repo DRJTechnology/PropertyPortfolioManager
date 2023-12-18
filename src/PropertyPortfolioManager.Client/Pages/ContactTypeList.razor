@@ -6,15 +6,15 @@
             <div>Contact Types</div>
         </div>
         <div class="col">
-            <a href="contacttypeedit">Create New Contact Type</a>
             @if (ActiveOnly)
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+                <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
             }
             else
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
+            <a href="contacttypeedit" class="btn btn-success btn-sm float-end">Create New Contact Type</a>
         </div>
     </div>
 </SectionContent>

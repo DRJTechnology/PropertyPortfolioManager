@@ -6,15 +6,15 @@
             <div>Properties</div>
         </div>
         <div class="col">
-            <a href="unitedit">Create New Property</a>
             @if (ActiveOnly)
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+                <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
             }
             else
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
+            <a href="unitedit" class="btn btn-success btn-sm float-end">Add Property</a>
         </div>
     </div>
 </SectionContent>

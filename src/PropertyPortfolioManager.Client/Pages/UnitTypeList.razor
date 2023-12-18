@@ -6,15 +6,15 @@
             <div>Unit Types</div>
         </div>
         <div class="col">
-            <a href="unittypeedit">Create New Unit Type</a>
             @if (ActiveOnly)
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(true))">Include Inactive</a>
+                <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
             }
             else
             {
-                <a class="float-end" @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
+                <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
+            <a href="unittypeedit" class="btn btn-success btn-sm float-end">Add Unit Type</a>
         </div>
     </div>
 </SectionContent>
