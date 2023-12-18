@@ -95,6 +95,11 @@ BEGIN
 	VALUES (6, 'Long-term Liability', -1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
 END
 
+IF NOT EXISTS(SELECT 1 FROM [finance].[AccountType] WHERE id = 7)
+BEGIN
+	INSERT INTO [finance].[AccountType] (Id, [Type], [CreditDebit], [Deleted], [CreateUserId], [CreateDate], [AmendUserId], [AmendDate])
+	VALUES (7, 'Bank Account', 1, 0, 1, SYSDATETIME(), 1, SYSDATETIME())
+END
 -- Populate finance Account Types - End
 
 -- Populate initial finance Accounts - Start

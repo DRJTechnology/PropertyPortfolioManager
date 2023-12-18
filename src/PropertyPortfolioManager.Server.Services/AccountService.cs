@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DRJTechnology.Cache;
 using PropertyPortfolioManager.Models.Dto.Finance;
+using PropertyPortfolioManager.Models.Enums;
 using PropertyPortfolioManager.Models.Model.Finance;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
 using PropertyPortfolioManager.Server.Services.Interfaces;
@@ -29,6 +30,12 @@ namespace PropertyPortfolioManager.Server.Services
         public async Task<List<AccountResponseModel>> GetAll(int portfolioId, bool activeOnly)
         {
             var accountList = await this.accountRepository.GetAll(portfolioId, activeOnly);
+            return this.mapper.Map<List<AccountResponseModel>>(accountList);
+        }
+
+        public async Task<List<AccountResponseModel>> GetByType(int portfolioId, AccountType accountType, bool activeOnly)
+        {
+            var accountList = await this.accountRepository.GetByType(portfolioId, accountType, activeOnly);
             return this.mapper.Map<List<AccountResponseModel>>(accountList);
         }
 

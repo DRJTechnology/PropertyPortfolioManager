@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PropertyPortfolioManager.Models.Enums;
 using PropertyPortfolioManager.Models.InternalObjects;
 using PropertyPortfolioManager.Models.Model.Finance;
 using PropertyPortfolioManager.Server.Services.Interfaces;
@@ -39,6 +40,30 @@ namespace PropertyPortfolioManager.Server.Controllers
             catch (Exception ex)
             {
                 logger.LogError(ex, $"GetAll");
+                return this.BadRequest();
+            }
+        }
+
+        [HttpGet]
+        [Route("GetByType/{accountType}/{activeOnly}")]
+        public async Task<IActionResult> GetByType(AccountType accountType, bool activeOnly)
+        {
+            try
+            {
+                var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
+                if (portfolioId == null)
+                {
+                    return this.Ok(new List<AccountResponseModel>());
+                }
+                else
+                {
+                    var accounts = await this.accountService.GetByType((int)portfolioId, accountType, activeOnly);
+                    return this.Ok(accounts);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, $"GeByType/{accountType}/{activeOnly}");
                 return this.BadRequest();
             }
         }

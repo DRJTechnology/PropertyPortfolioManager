@@ -2,10 +2,10 @@
 
 <SectionContent SectionName="top-bar">
     <div class="row">
-        <div class="col">
+        <div class="col-md">
             <div>Properties</div>
         </div>
-        <div class="col">
+        <div class="col-md">
             @if (ActiveOnly)
             {
                 <a @onclick="(() => IncludeInactive(true))">Include Inactive</a>
@@ -14,7 +14,7 @@
             {
                 <a @onclick="(() => IncludeInactive(false))">Hide Inactive</a>
             }
-            <a href="unitedit" class="btn btn-success btn-sm float-end">Add Property</a>
+            <a href="unitedit" class="btn btn-success btn-sm float-md-end">New Property</a>
         </div>
     </div>
 </SectionContent>

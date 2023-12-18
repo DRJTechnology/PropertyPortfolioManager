@@ -66,7 +66,7 @@ namespace PropertyPortfolioManager.Server.Services
             foreach (var unit in unitList)
             {
                 var basicUnit = this.mapper.Map<UnitBasicResponseModel>(unit);
-                basicUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPictureId);
+                basicUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(portfolioId, unit.MainPictureId);
                 returnList.Add(basicUnit);
             }
 
@@ -81,7 +81,7 @@ namespace PropertyPortfolioManager.Server.Services
             var returnUnit = this.mapper.Map<UnitResponseModel>(unit);
             if (unit?.MainPicture != null)
             {
-                returnUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(unit.MainPicture.ItemId);
+                returnUnit.MainPictureBase64 = await this.documentService.GetImageBase64Async(portfolioId, unit.MainPicture.ItemId);
             }
             return returnUnit;
         }

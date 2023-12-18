@@ -56,12 +56,12 @@ namespace PropertyPortfolioManager.Server.Controllers
 
         [HttpGet]
         [Route("ImageBase64/{driveItemId}")]
-        public async Task<IActionResult> ImageBase64(string driveItemId)
+        public async Task<IActionResult> ImageBase64(int portfolioId, string driveItemId)
         {
             try
             {
                 var imageContent = new ImageContent() { DriveItemId = driveItemId };
-                imageContent.ImageBase64 = await this.documentService.GetImageBase64Async(driveItemId);
+                imageContent.ImageBase64 = await this.documentService.GetImageBase64Async(portfolioId, driveItemId);
                 return this.Ok(imageContent);
             }
             catch (Exception ex)

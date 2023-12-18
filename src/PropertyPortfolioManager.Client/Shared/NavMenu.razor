@@ -41,16 +41,33 @@
                                 Documents
                             </NavLink>
                         </li>
-                        <li class="nav-item">
-                            <NavLink class="nav-link" href="transaction">
-                                Transactions
-                            </NavLink>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="accountingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Accounting
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="accountingDropdown">
+                                <li>
+                                    <NavLink class="nav-link" href="bankaccount">
+                                        Bank Accounts
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink class="nav-link" href="account">
+                                        Accounts
+                                    </NavLink>
+                                </li>
+                                <li>
+                                    <NavLink class="nav-link" href="transaction">
+                                        Transactions
+                                    </NavLink>
+                                </li>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <a class="nav-link dropdown-toggle" href="#" id="settingsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 Settings
                             </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                            <ul class="dropdown-menu" aria-labelledby="settingsDropdown">
                                 <li>
                                     <NavLink class="nav-link" href="userprofile">
                                         User
@@ -59,11 +76,6 @@
                                 <li>
                                     <NavLink class="nav-link" href="portfolio">
                                         Portfolios
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink class="nav-link" href="account">
-                                        Accounts
                                     </NavLink>
                                 </li>
                                 <li>

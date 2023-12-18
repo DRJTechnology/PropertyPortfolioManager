@@ -79,6 +79,7 @@
     <Build Include="Security\db_executor.sql" />
     <Build Include="Security\ppm-user-dev.sql" />
     <Build Include="Stored Procedures\dbo\InsertAppLog.sql" />
+    <Build Include="Stored Procedures\finance\Account_GetByType.sql" />
     <Build Include="Tables\dbo\AppLog.sql" />
     <Build Include="Tables\dbo\CombinedAccounts.sql" />
     <Build Include="Tables\general\Address.sql" />
