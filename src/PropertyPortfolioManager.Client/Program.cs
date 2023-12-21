@@ -16,26 +16,27 @@ builder.Services.AddHttpClient("PropertyPortfolioManager.ServerAPI", client => c
 // Supply HttpClient instances that include access tokens when making requests to the server project
 builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("PropertyPortfolioManager.ServerAPI"));
 
-builder.Services.AddScoped<IPortfolioDataService, PortfolioDataService>();
-builder.Services.AddScoped<IUnitDataService, UnitDataService>();
-builder.Services.AddScoped<IUnitTypeDataService, UnitTypeDataService>();
-builder.Services.AddScoped<IContactDataService, ContactDataService>();
-builder.Services.AddScoped<IContactTypeDataService, ContactTypeDataService>();
-builder.Services.AddScoped<IUserDataService, UserDataService>();
-builder.Services.AddScoped<ITenancyTypeDataService, TenancyTypeDataService>();
-builder.Services.AddScoped<ITenancyDataService, TenancyDataService>();
 builder.Services.AddScoped<IAccountDataService, AccountDataService>();
 builder.Services.AddScoped<IAccountTypeDataService, AccountTypeDataService>();
+builder.Services.AddScoped<IBankStatementService, BankStatementService>();
+builder.Services.AddScoped<IContactDataService, ContactDataService>();
+builder.Services.AddScoped<IContactTypeDataService, ContactTypeDataService>();
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IPortfolioDataService, PortfolioDataService>();
+builder.Services.AddScoped<ITenancyDataService, TenancyDataService>();
+builder.Services.AddScoped<ITenancyTypeDataService, TenancyTypeDataService>();
 builder.Services.AddScoped<ITransactionDetailDataService, TransactionDetailDataService>();
 builder.Services.AddScoped<ITransactionTypeDataService, TransactionTypeDataService>();
-builder.Services.AddScoped<IDocumentService, DocumentService>();
+builder.Services.AddScoped<IUnitDataService, UnitDataService>();
+builder.Services.AddScoped<IUnitTypeDataService, UnitTypeDataService>();
+builder.Services.AddScoped<IUserDataService, UserDataService>();
 builder.Services.AddScoped<ProfileState>();
 
 builder.Services.AddMsalAuthentication(options =>
 {
     builder.Configuration.Bind("AzureAd", options.ProviderOptions.Authentication);
     options.ProviderOptions.DefaultAccessTokenScopes.Add("api://2956eaa1-1d62-448d-9ac3-58ea18e4f302/API.Access");
-options.ProviderOptions.LoginMode = "Redirect";
+    options.ProviderOptions.LoginMode = "Redirect";
 });
 
 await builder.Build().RunAsync();
