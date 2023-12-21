@@ -1,0 +1,21 @@
+﻿@page "/uploadstatement"
+
+ <SectionContent SectionName="top-bar">
+    <div class="row">
+        <div class="col">
+            <div>Upload bank statement</div>
+        </div>
+    </div>
+</SectionContent>
+
+<div class="page-content">
+    <InputFile OnChange="HandleFileSelection" />
+</div>
+
+@if (file != null)
+{
+    <div class="page-content">
+        <p><strong>File Name:</strong> @file.Name</p>
+        <p><strong>File Size:</strong> @file.Size bytes</p>
+    </div>
+}

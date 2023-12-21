@@ -1,13 +1,18 @@
 ﻿using AutoMapper;
+using CsvHelper;
+using CsvHelper.Configuration;
 using DRJTechnology.Cache;
 using Microsoft.Extensions.Options;
 using Microsoft.Graph;
+using Microsoft.Graph.Models;
 using Microsoft.IdentityModel.Tokens;
 using PropertyPortfolioManager.Models.CacheKeys;
 using PropertyPortfolioManager.Models.Model.Document;
+using PropertyPortfolioManager.Models.Model.Finance;
 using PropertyPortfolioManager.Models.Model.Property;
 using PropertyPortfolioManager.Server.Services.Interfaces;
 using PropertyPortfolioManager.Server.Shared.Configuration;
+using System.Globalization;
 
 namespace PropertyPortfolioManager.Server.Services
 {
