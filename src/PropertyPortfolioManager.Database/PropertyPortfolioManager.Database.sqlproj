@@ -85,6 +85,7 @@
     <Build Include="Stored Procedures\finance\BankStatement_Upload.sql" />
     <Build Include="Tables\dbo\AppLog.sql" />
     <Build Include="Tables\dbo\CombinedAccounts.sql" />
+    <Build Include="Tables\finance\BankAccount.sql" />
     <Build Include="Tables\finance\BankAccountDetail.sql" />
     <Build Include="Tables\general\Address.sql" />
     <Build Include="Tables\profile\User.sql" />

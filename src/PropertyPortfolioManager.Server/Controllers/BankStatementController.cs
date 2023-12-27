@@ -32,11 +32,7 @@ namespace PropertyPortfolioManager.Server.Controllers
                 var portfolioId = (await this.GetCurrentUser()).SelectedPortfolioId;
                 if (portfolioId == null)
                 {
-                    return Ok( new PpmApiResponse()
-                    {
-                        Success = false,
-                        ErrorMessage = "UploadBankStatemente: User has no Selected Portfolio Id set."
-                    });
+                    return BadRequest("UploadBankStatemente: User has no Selected Portfolio Id set.");
                 }
                 else
                 {
@@ -45,13 +41,13 @@ namespace PropertyPortfolioManager.Server.Controllers
                         return BadRequest("Please select a file to upload.");
 
                     var stream = file.OpenReadStream();
-                    await this.bankStatementService.UploadBankStatement((await this.GetCurrentUser()).Id, (int)portfolioId, stream);
-                    return Ok();
+                    var response = await this.bankStatementService.UploadBankStatement((await this.GetCurrentUser()).Id, (int)portfolioId, stream);
+                    return Ok(response);
                 }
             }
             catch (Exception ex)
             {
-                throw;
+                return BadRequest("UploadBankStatement: Error - failed to upload bank statement.");
             }
         }
     }

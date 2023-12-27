@@ -1,4 +1,5 @@
 ﻿@page "/uploadstatement"
+@using PropertyPortfolioManager.Client.Helpers;
 
  <SectionContent SectionName="top-bar">
     <div class="row">
@@ -16,6 +17,14 @@
 {
     <div class="page-content">
         <p><strong>File Name:</strong> @file.Name</p>
-        <p><strong>File Size:</strong> @file.Size bytes</p>
+        <p><strong>File Size:</strong> @file.Size.ToFileSizeString()</p>
+        @if (uploading)
+        {
+            <p>Uploading...</p>
+        }
+        else
+        {
+            <p>@((MarkupString)uploadResponse)</p>
+        }
     </div>
 }

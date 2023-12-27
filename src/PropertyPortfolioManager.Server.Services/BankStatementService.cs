@@ -1,5 +1,6 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 using DRJTechnology.Cache;
 using Microsoft.Extensions.Options;
 using PropertyPortfolioManager.Models.Model.Finance;
@@ -24,7 +25,7 @@ namespace PropertyPortfolioManager.Server.Services
             this.bankStatementRepository = bankStatementRepository;
         }
 
-        public async Task UploadBankStatement(int currentUserId, int portfolioId, Stream stream)
+        public async Task<string> UploadBankStatement(int currentUserId, int portfolioId, Stream stream)
         {
             var config = new CsvConfiguration(new CultureInfo("en-GB"));
             config.MissingFieldFound = null;
@@ -40,8 +41,11 @@ namespace PropertyPortfolioManager.Server.Services
             }
             var dataTable = DataHelpers.ConvertToDataTable<BankStatementModel>(recordList);
 
-            await this.bankStatementRepository.AddBankStatementRecords(currentUserId, portfolioId, dataTable);
+            var uploadResults = await this.bankStatementRepository.AddBankStatementRecords(currentUserId, portfolioId, dataTable);
 
+            return $"Upload file contains {uploadResults.TotalRowCount} rows." + Environment.NewLine
+                    + $"{uploadResults.InsertedRowCount} rows were inserted." + Environment.NewLine
+                    + $"{uploadResults.TotalRowCount - uploadResults.InsertedRowCount} duplicate rows were found.";
         }
     }
 }

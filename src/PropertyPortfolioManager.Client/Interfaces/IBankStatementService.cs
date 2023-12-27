@@ -4,6 +4,6 @@ namespace PropertyPortfolioManager.Client.Interfaces
 {
     public interface IBankStatementService : IGenericDataService
     {
-        Task UploadBankStatement(Stream content, string filename);
+        Task<string> UploadBankStatement(Stream content, string filename);
     }
 }

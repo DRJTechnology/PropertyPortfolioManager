@@ -10,12 +10,18 @@ namespace PropertyPortfolioManager.Client.Pages
         public IBankStatementService bankStatementService { get; set; }
 
         private IBrowserFile file;
+        private string uploadResponse = string.Empty;
+        private bool uploading { get; set; } = false;
 
         private async Task HandleFileSelection(InputFileChangeEventArgs e)
         {
+            uploading = true;
             file = e.File;
             var stream = file.OpenReadStream();
-            await bankStatementService.UploadBankStatement(stream, file.Name);
+            var response = await bankStatementService.UploadBankStatement(stream, file.Name);
+            uploadResponse = response.Replace("\r\n", "<br />");
+            await InvokeAsync(() => StateHasChanged()).ConfigureAwait(false);
+            uploading = false;
         }
     }
 }

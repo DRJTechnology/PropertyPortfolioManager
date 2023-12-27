@@ -1,8 +1,6 @@
 ﻿using Dapper;
-using Microsoft.Graph.Models;
-using PropertyPortfolioManager.Models.Model.Finance;
+using PropertyPortfolioManager.Models.Dto.Finance;
 using PropertyPortfolioManager.Server.Repositories.Interfaces;
-using System.ComponentModel;
 using System.Data;
 
 namespace PropertyPortfolioManager.Server.Repositories
@@ -16,14 +14,16 @@ namespace PropertyPortfolioManager.Server.Repositories
             this.dbConnection = dbConnection;
         }
 
-        public async Task AddBankStatementRecords(int currentUserId, int accountId, DataTable recordList)
+        public async Task<UploadResultDto> AddBankStatementRecords(int currentUserId, int portfolioId, int accountId, DataTable recordList)
         {
             var parameters = new DynamicParameters();
             parameters.Add("@AccountId", accountId);
             parameters.Add("@Statement", recordList.AsTableValuedParameter("[finance].[StatementTableType]"));
+            parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@CurrentUserId", currentUserId);
 
-            await this.dbConnection.ExecuteAsync("finance.BankStatement_Upload", parameters, commandType: CommandType.StoredProcedure);
+            var result = await this.dbConnection.QueryAsync<UploadResultDto>("finance.BankStatement_Upload", parameters, commandType: CommandType.StoredProcedure);
+            return result.SingleOrDefault()!;
         }
     }
 }
