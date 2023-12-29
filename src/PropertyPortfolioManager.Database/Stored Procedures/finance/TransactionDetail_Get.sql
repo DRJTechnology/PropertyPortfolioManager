@@ -19,8 +19,8 @@ AS
 			td.AccountId, 
 			a.[Name] AS Account, 
 			td.[Description],
-			CASE WHEN direction = 1 THEN amount ELSE 0 END AS Debit, 
-			CASE WHEN direction = -1 THEN amount ELSE 0 END AS Credit
+			CASE WHEN Direction = 1 THEN Amount ELSE 0 END AS Debit, 
+			CASE WHEN Direction = -1 THEN Amount ELSE 0 END AS Credit
 	FROM	finance.TransactionDetail td
 	INNER JOIN	finance.[Transaction] t ON td.TransactionId = t.Id
 	INNER JOIN	finance.[TransactionType] tt ON t.TransactionTypeId = tt.Id

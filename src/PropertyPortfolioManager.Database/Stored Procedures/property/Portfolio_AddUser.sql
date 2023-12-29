@@ -9,9 +9,9 @@ CREATE PROCEDURE [property].[Portfolio_AddUser]
 	@CurrentUserId	INT
 AS
 
-	IF NOT EXISTS (SELECT 1 FROM property.PortfolioUser WHERE PortFolioId = @PortfolioId AND UserId = @UserId AND Deleted = 0)
+	IF NOT EXISTS (SELECT 1 FROM property.PortfolioUser WHERE PortfolioId = @PortfolioId AND UserId = @UserId AND Deleted = 0)
 	BEGIN
-		INSERT INTO property.PortfolioUser (PortFolioId, UserId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+		INSERT INTO property.PortfolioUser (PortfolioId, UserId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
 		VALUES		(@PortfolioId, @UserId, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 	END
 

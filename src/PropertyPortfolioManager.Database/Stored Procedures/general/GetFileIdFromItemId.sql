@@ -9,7 +9,7 @@ CREATE PROCEDURE [general].[GetFileIdFromItemId]
 	@FileName NVARCHAR(500),
 	@Size BIGINT,
 	@UserId INT,
-	@FileID INT OUTPUT
+	@FileId INT OUTPUT
 AS
 	DECLARE @OriginalFileName NVARCHAR(500)
 	DECLARE @OriginalSize BIGINT

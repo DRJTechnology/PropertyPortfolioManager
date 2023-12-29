@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [property].[PortfolioUser]
 (
 	[Id]                INT             IDENTITY NOT NULL,
-    [PortFolioId]       INT             NOT NULL, 
+    [PortfolioId]       INT             NOT NULL, 
     [UserId]            INT             NOT NULL,
 	[Deleted]           BIT             DEFAULT (0) NOT NULL,
     [CreateUserId]      INT             NOT NULL,

@@ -18,7 +18,7 @@ BEGIN
 			AmendUserId = @CurrentUserId,
 			AmendDate = SYSDATETIME()
 	FROM	[property].[Portfolio] p
-	INNER JOIN property.PortfolioUser pu on p.id = pu.PortFolioId AND pu.UserId = @CurrentUserId AND pu.Deleted = 0
+	INNER JOIN property.PortfolioUser pu on p.Id = pu.PortfolioId AND pu.UserId = @CurrentUserId AND pu.Deleted = 0
 	WHERE	p.Id = @Id
 		AND p.Deleted = 0
 

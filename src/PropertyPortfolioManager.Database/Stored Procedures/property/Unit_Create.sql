@@ -35,7 +35,7 @@ BEGIN
 
 	IF (@MainPictureId IS NOT NULL AND @MainPictureId != '')
 	BEGIN
-		EXEC [general].[GetFileIdFromItemId] @ItemId = @MainPictureId, @FileName = @MainPictureFileName, @Size = @MainPictureSize, @UserId = @CurrentUserId, @FileID = @MainImageFileId OUTPUT
+		EXEC [general].[GetFileIdFromItemId] @ItemId = @MainPictureId, @FileName = @MainPictureFileName, @Size = @MainPictureSize, @UserId = @CurrentUserId, @FileId = @MainImageFileId OUTPUT
 	END
 
 

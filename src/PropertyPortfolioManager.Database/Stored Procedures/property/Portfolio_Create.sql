@@ -17,7 +17,7 @@ BEGIN
 
 	SET @Id = SCOPE_IDENTITY()
 
-	INSERT INTO property.PortfolioUser (PortFolioId, UserId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+	INSERT INTO property.PortfolioUser (PortfolioId, UserId, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
 	VALUES (@Id, @CurrentUserId, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME())
 
 	EXEC [property].[Portfolio_Initialise] @PortfolioId = @Id, @CurrentUserId = @CurrentUserId

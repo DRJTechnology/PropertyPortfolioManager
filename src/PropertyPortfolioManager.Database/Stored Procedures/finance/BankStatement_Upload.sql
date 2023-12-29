@@ -4,7 +4,7 @@
 -- Description:	Creates an account record
 -- ==========================================================
 CREATE PROCEDURE [finance].[BankStatement_Upload]
-	@AccountId      INT,
+	@BankAccountId  INT,
 	@PortfolioId    INT,
   @Statement finance.StatementTableType READONLY,
   @CurrentUserId	INT
@@ -31,10 +31,10 @@ AS
   DECLARE @UploadId UNIQUEIDENTIFIER
   SET @UploadId = NEWID()
 
-  INSERT INTO [finance].[BankAccountDetail] (AccountId, UploadId, Date, Amount, [Description], TransactionType, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
-  SELECT  @AccountId, @UploadId, s.Date, s.Amount, REPLACE(s.Description, CHAR(9), ''), s.TransactionType, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME()
+  INSERT INTO [finance].[BankAccountDetail] (BankAccountId, UploadId, Date, Amount, [Description], TransactionType, Deleted, CreateUserId, CreateDate, AmendUserId, AmendDate)
+  SELECT  @BankAccountId, @UploadId, s.Date, s.Amount, REPLACE(s.Description, CHAR(9), ''), s.TransactionType, 0, @CurrentUserId, SYSDATETIME(), @CurrentUserId, SYSDATETIME()
   FROM        @Statement s
-  LEFT OUTER JOIN  [finance].[BankAccountDetail] bad ON bad.AccountId = @AccountId AND s.Amount = bad.Amount AND s.[Date] = bad.[Date] AND REPLACE(s.Description, CHAR(9), '') = REPLACE(bad.Description, CHAR(9), '') AND s.TransactionType = bad.TransactionType
+  LEFT OUTER JOIN  [finance].[BankAccountDetail] bad ON bad.BankAccountId = @BankAccountId AND s.Amount = bad.Amount AND s.[Date] = bad.[Date] AND REPLACE(s.Description, CHAR(9), '') = REPLACE(bad.Description, CHAR(9), '') AND s.TransactionType = bad.TransactionType
   WHERE bad.Id IS NULL
 
   SELECT @InsertedRowCount = @@ROWCOUNT

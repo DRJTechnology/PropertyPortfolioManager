@@ -77,7 +77,7 @@
     <Folder Include="Types" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Scripts\Transactions with running balance.sql" />
+    <None Include="Scripts\Transactions with running balance.sql" />
     <Build Include="Security\db_executor.sql" />
     <Build Include="Security\ppm-user-dev.sql" />
     <Build Include="Stored Procedures\dbo\InsertAppLog.sql" />

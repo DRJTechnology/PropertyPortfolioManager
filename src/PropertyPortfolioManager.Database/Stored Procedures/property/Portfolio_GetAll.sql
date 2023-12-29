@@ -12,7 +12,7 @@ BEGIN
 
     SELECT	p.Id, p.[Name], p.Active
 	FROM	[property].[Portfolio] p
-	INNER Join	[property].[PortfolioUser] pu ON p.Id = pu.PortFolioId AND pu.Deleted = 0
+	INNER Join	[property].[PortfolioUser] pu ON p.Id = pu.PortfolioId AND pu.Deleted = 0
 	Where	p.Deleted = 0
 		AND (@ActiveOnly != 1 OR Active = 1)
 		AND pu.UserId = @UserId
