@@ -36,12 +36,14 @@ namespace PropertyPortfolioManager.Server.Controllers
                 }
                 else
                 {
+                    var bankAccountId = 1; // TODO
+
                     var file = Request.Form.Files[0];
                     if (file == null || file.Length == 0)
                         return BadRequest("Please select a file to upload.");
 
                     var stream = file.OpenReadStream();
-                    var response = await this.bankStatementService.UploadBankStatement((await this.GetCurrentUser()).Id, (int)portfolioId, stream);
+                    var response = await this.bankStatementService.UploadBankStatement((await this.GetCurrentUser()).Id, (int)portfolioId, bankAccountId, stream);
                     return Ok(response);
                 }
             }

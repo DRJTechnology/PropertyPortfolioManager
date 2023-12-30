@@ -14,10 +14,10 @@ namespace PropertyPortfolioManager.Server.Repositories
             this.dbConnection = dbConnection;
         }
 
-        public async Task<UploadResultDto> AddBankStatementRecords(int currentUserId, int portfolioId, int accountId, DataTable recordList)
+        public async Task<UploadResultDto> AddBankStatementRecords(int currentUserId, int portfolioId, int bankAccountId, DataTable recordList)
         {
             var parameters = new DynamicParameters();
-            parameters.Add("@AccountId", accountId);
+            parameters.Add("@BankAccountId", bankAccountId);
             parameters.Add("@Statement", recordList.AsTableValuedParameter("[finance].[StatementTableType]"));
             parameters.Add("@PortfolioId", portfolioId);
             parameters.Add("@CurrentUserId", currentUserId);

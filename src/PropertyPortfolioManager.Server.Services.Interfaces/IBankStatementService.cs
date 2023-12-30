@@ -2,6 +2,6 @@
 {
     public interface IBankStatementService
     {
-        Task<string> UploadBankStatement(int currentUserId, int portfolioId, Stream stream);
+        Task<string> UploadBankStatement(int currentUserId, int portfolioId, int bankAccountId, Stream stream);
     }
 }

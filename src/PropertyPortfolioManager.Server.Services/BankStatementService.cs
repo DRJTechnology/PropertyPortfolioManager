@@ -25,7 +25,7 @@ namespace PropertyPortfolioManager.Server.Services
             this.bankStatementRepository = bankStatementRepository;
         }
 
-        public async Task<string> UploadBankStatement(int currentUserId, int portfolioId, Stream stream)
+        public async Task<string> UploadBankStatement(int currentUserId, int portfolioId, int bankAccountId, Stream stream)
         {
             var config = new CsvConfiguration(new CultureInfo("en-GB"));
             config.MissingFieldFound = null;
@@ -37,11 +37,11 @@ namespace PropertyPortfolioManager.Server.Services
             {
                 csv.Context.RegisterClassMap<BankStatementMap>();
                 var records = csv.GetRecords<BankStatementModel>();
-                recordList = records.ToList();
+                recordList = records.OrderBy(r => r.Date).ToList();
             }
             var dataTable = DataHelpers.ConvertToDataTable<BankStatementModel>(recordList);
 
-            var uploadResults = await this.bankStatementRepository.AddBankStatementRecords(currentUserId, portfolioId, dataTable);
+            var uploadResults = await this.bankStatementRepository.AddBankStatementRecords(currentUserId, portfolioId, bankAccountId, dataTable);
 
             return $"Upload file contains {uploadResults.TotalRowCount} rows." + Environment.NewLine
                     + $"{uploadResults.InsertedRowCount} rows were inserted." + Environment.NewLine
